@@ -1,0 +1,223 @@
+{% extends 'template/template.html' %}
+
+{% block title %}<$ constantUiMap.button.homeTitle $>{% endblock %}
+  {% block css %}
+  <style>
+    .card-body {
+      padding: 0.5rem
+    }
+
+    .list-group-light .list-group-item {
+      padding: 0.2rem 0;
+    }
+
+    .list-group-light .list-group-item-label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .list-group-light .list-group-item-label i {
+      padding-right: 10px;
+    }
+
+    .list-group-light .list-group-item:hover {
+      background-color: var(--vt-c-gray-light-6);
+      cursor: pointer;
+    }
+
+    .container .chapter-content {
+      padding: 20px;
+      margin: 0 0 20px 0;
+    }
+
+    .container .chapter-content .chapter-content-title {
+      font-size: 18px;
+      font-weight: 500;
+      text-align: left !important;
+      padding: 0px 0px 10px 10px !important;
+    }
+
+    .container .chapter-content .chapter-content-title i {
+      padding-right: 10px;
+    }
+    
+    .container .chapter-content-row .chapter-content-item {
+      width: 31%;
+      background-color: var(--vt-c-gray-light-5);
+      border-radius: 8px;
+      margin: 10px auto;
+      padding: 10px;
+      height: 100px;
+      text-align: left;
+    }
+
+    .container .chapter-content-row .chapter-content-item .chapter-content-item-title {
+      font-weight: 500;
+    }
+
+    .container .chapter-content-row .chapter-content-item .chapter-content-item-desc {
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 10px;
+      color: var(--vt-c-gray-dark-1);
+    }
+
+    .container .chapter-content-row .chapter-content-item:hover {
+      cursor: pointer;
+      background-color: var(--vt-c-gray-light-6);
+    }
+
+    .container .chapter-content-row .chapter-content-item .title {
+      color: var(--vt-c-green);
+    }
+
+    .container .chapter-content-row .chapter-content-item .content {
+      align-items: center;
+      margin-top: 5px;
+    }
+
+    .container .chapter-content-row .chapter-content-item .content img {
+      width: 36px;
+      height: 36px;
+    }
+
+  </style>
+  {% endblock %}
+
+  {% block content %}
+  {% include 'util/jianghu/jianghuHomeCss.html' %}
+  <!-- home -->
+  <main class="jianghu-home">
+    <hr class="divider-horizontal jianghu-home-divider" />
+    
+    <!-- Section: Summary -->
+    <div class="container mt-5">
+      <!--Section: Content-->
+      <section class="text-center">
+        <div class="row">
+          <!--Grid column-->
+          <div class="col-lg-2 col-md-4 mb-4">
+            <!-- Card -->
+            <div class="category-content card">
+              <div class="card-header bg-white py-3">
+                <p class="text-uppercase small mb-2"><strong>全部教程</strong></p>
+              </div>
+
+              <div class="card-body">
+                <ul class="list-group list-group-light">
+                  {% for xfPageItem in xfPage.xfPageConfig %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="list-group-item-label mb-1"><i class="far fa-share-from-square"></i><$ xfPageItem.label $></p>
+                      </div>
+                    </div>
+                    <span class="badge rounded-pill badge-success"><$ xfPageItem.type $></span>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+            <!-- Card -->
+          </div>
+          <!--Grid column-->
+          <div class="col-lg-10 col-md-8">
+            <!-- Card -->
+            {% for xfPageItem in xfPage.xfPageConfig %}
+            {% for columnItem in xfPageItem.columnList %}
+            <div class="chapter-content card <$ xfPageItem.label $>">
+              <p class="chapter-content-title"><i class="fas fa-bars"></i><$ columnItem[0].categoryName $></p> 
+              <div class="chapter-content-row d-flex flex-wrap justify-content-evenly">
+                {% for articleItem in columnItem[0].articleList %}
+                <div class="chapter-content-item">
+                  <a href="/<$ ctx.app.config.appId $>/page/article/<$ articleItem.articleId $>" class="text-reset">
+                    <div class="title">
+                      <span class="chapter-content-item-title"><$ articleItem.articleTitle $></span>
+                    </div>
+                    <div class="content d-flex justify-content-between"> 
+                      <img src="/<$ ctx.app.config.appId $>/public/homeIcon/custom 1@2x.png">
+                      <p class="chapter-content-item-desc">jianghu-init，可用于快速构建组件，可用于快速构建组件, 可用于快速。</p>
+                    </div>
+                  </a>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            <!-- Card -->
+          </div>
+        </div>
+      </section>
+      <!--Section: Content-->
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="text-center text-lg-start bg-light text-muted jianghu-footer">
+    <section class="jianghu-footer-links">
+      <div class="container text-center text-md-start jianghu-footer-links-container">
+        <div class="row">
+          {% for item in constantUiMap.links %}
+          <div class="col-md-3 col-lg-2 col-xl-3 mx-auto">
+            <h6 class="text-uppercase mb-4 jianghu-footer-links-title">
+              <$ item.label $>
+            </h6>
+            {% for it in item.list %}
+            <p class="mb-3 jianghu-footer-links-item">
+              {% if it.path.includes('http') %}
+              <a href="<$ it.path $>" target="_blank" class="text-reset">
+                <$ it.title $>
+              </a>
+              {% elif it.path === '' %}
+              <a href="javascript:void(0);" class="text-reset">
+                <$ it.title $>
+              </a>
+              {% else %}
+              <a href="/<$ ctx.app.config.appId $><$ it.path $>" class="text-reset">
+                <$ it.title $>
+              </a>
+              {% endif%}
+            </p>
+            {% endfor %}
+            {% if item.img %}
+            <img class="jianghu-footer-img" />
+            {% endif%}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <div class="text-center p-4 jianghu-footer-copyright">
+      <$ constantUiMap.footer.copyright $>
+    </div>
+  </footer>
+
+  <script type='text/javascript'>
+    $(function () {
+
+      $('.list-group-item').on('click', function(){
+         const targetClass = $(this).find('.list-group-item-label').text();
+         const chapterList = $('.chapter-content');
+         chapterList.each(function(){
+           if($(this).hasClass(targetClass)) {
+            $(this).show()
+           } else {
+            $(this).hide()
+           }
+         })
+      })
+    })
+  </script>
+  {% endblock %}
+  {% block javascript %}
+  <script>
+    // 错误提示
+    const searchParams = new URLSearchParams(location.search.substring(1));
+    const errorInfo = JSON.parse('<$ constantUiMap.errorInfo | dump | safe $>');
+    const errorCode = searchParams.get('errorCode');
+    const errorReason = searchParams.get('errorReason');
+    if (errorCode) {
+      showFailAlert(errorInfo.contentEnum[errorCode] || errorReason)
+    }
+  </script>
+  {% endblock %}

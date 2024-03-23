@@ -1,0 +1,1337 @@
+{% extends 'template/template.html' %}
+
+{% block title %}<$ constantUiMap.button.homeTitle $>{% endblock %}
+{% block css %}
+<style>
+  .api-section {
+    margin-bottom: 64px;
+  }
+  .api-section h2 {
+    font-size: 24px;
+    color: var(--vt-c-text-1);
+    margin: 36px 0;
+    transition: color .5s;
+    padding-top: 36px;
+  }
+  .api-section h3 {
+    letter-spacing: -.01em;
+    color: var(--vt-c-green);
+    font-size: 18px;
+    margin-bottom: 1em;
+    transition: color .5s;
+  }
+  .api-section ol, .api-section ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .api-section .api-group {
+    break-inside: avoid;
+    overflow: auto;
+    margin-bottom: 20px;
+    background-color: var(--vt-c-bg-soft);
+    border-radius: 8px;
+    padding: 28px 32px;
+    transition: background-color .5s;
+  }
+  .api-groups a {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 2;
+    color: var(--vt-c-text-code);
+    transition: color .5s;
+  }
+  #api-index {
+    padding: 64px 32px;
+
+    --mdb-accordion-btn-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%234f4f4f'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z'/%3E%3C/svg%3E");
+    --mdb-accordion-btn-icon-width: 1.25rem;
+    --mdb-accordion-btn-icon-transform: rotate(-180deg);
+    --mdb-accordion-btn-icon-transition: transform 0.2s;
+    --mdb-accordion-btn-active-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%233b71ca'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z'/%3E%3C/svg%3E");
+  }
+  #api-index h2 {
+    font-size: 24px;
+    color: var(--vt-c-text-1);
+    margin: 36px 0;
+    transition: color .5s;
+    padding-top: 36px;
+    border-top: 1px solid var(--vt-c-divider-light);
+    font-weight: 600;
+  }
+  #api-index .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #api-index .api-filter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+  .api-filter input {
+      border: 1px solid var(--vt-c-divider);
+      border-radius: 8px;
+      padding: 6px 12px;
+  }
+  .lesson-accordion-button {
+    display: flex;
+  }
+  .lesson-accordion-button:not(.collapsed):after {
+    background-image: var(--mdb-accordion-btn-active-icon);
+    transform: var(--mdb-accordion-btn-icon-transform);
+  }
+  .lesson-accordion-button:after {
+    display: inline-block;
+    flex-shrink: 0;
+    width: var(--mdb-accordion-btn-icon-width);
+    height: var(--mdb-accordion-btn-icon-width);
+    margin-left: auto;
+    content: "";
+    background-image: var(--mdb-accordion-btn-icon);
+    background-repeat: no-repeat;
+    background-size: var(--mdb-accordion-btn-icon-width);
+    transition: var(--mdb-accordion-btn-icon-transition);
+  }
+  @media (min-width: 1024px) {
+    .api-groups {
+      columns: 3;
+    }
+    .api-groups-accordion {
+      columns: 2;
+    }
+  }
+  @media (min-width: 768px) {
+    .api-groups {
+      columns: 4;
+    }
+    .api-groups-accordion {
+      columns: 4;
+    }
+  }
+
+
+</style>
+{% endblock %}
+
+  {% block content %}
+  {% include 'util/jianghu/jianghuHomeCss.html' %}
+  <!-- home -->
+  <main class="jianghu-home">
+    <div class="container" style="position:relative;">
+      <div >
+        <div id="api-index" class="lesson-plan-container">
+          <div class="header">
+            <h1 style="font-size: 38px;">
+              江湖培训
+            </h1>
+            <div class="api-filter">
+              <label class="spread">
+                全部收起
+              </label> 
+              <!-- <label for="api-filter">
+                Filter
+              </label> -->
+              <input type="search" placeholder="Enter keyword" class="search-input" id="api-filter">
+            </div>
+          </div>
+          {% for lesson in constantUiMap.lessonPlan %}
+          {% set lessonIndex = loop.index %}
+          <div class="api-section">
+            <h2 id="global-api">
+              <$ lesson.label $>
+            </h2>
+            <div class="api-groups">
+              {% for block in lesson.block %}
+              {% set blockIndex = loop.index %}
+              <div class="api-group" id="api-group-<$ lessonIndex $>-<$  blockIndex $>">
+                <h3 class="lesson-accordion-button"  data-mdb-toggle="collapse"  data-mdb-target="#collapse-<$ lessonIndex $>-<$  blockIndex $>" aria-expanded="false">
+                  <$ block.title $>
+                </h3>
+                <ul class="collapse show" id="collapse-<$ lessonIndex $>-<$  blockIndex $>" aria-labelledby="api-group-<$ lessonIndex $>-<$  blockIndex $>">
+                  {% for item in block.list %}
+                  <li>
+                    <a href="/api/application.html#createapp">
+                      <$ item $>
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+          <!---->
+        </div>
+      </div>
+    </div>
+    <section class="jianghu-home-hero">
+      <div>
+        <p class="jianghu-home-hero-tagline">
+          <$ constantUiMap.body.title | safe $>
+        </p>
+        <p class="jianghu-home-hero-description">
+          <$ constantUiMap.body.desc $>
+        </p>
+      </div>
+      <div class="jianghu-home-hero-actions">
+        <a role="button" href="/<$ ctx.app.config.appId $>/page/article/10005"
+          class="jianghu-home-hero-button jianghu-home-hero-button-start">
+          <$ constantUiMap.body.btnGettingStarted $><i class="fas fa-arrow-right jianghu-home-hero-icon-right"></i>
+        </a>
+        <a role="button" href="https://github.com/jianghujs"
+          class="jianghu-home-hero-button jianghu-home-hero-button-github"><i
+            class="fab fa-github jianghu-home-hero-icon-github"></i>GitHub</a>
+      </div>
+    </section>
+    <hr class="divider-horizontal jianghu-home-divider" />
+    <section class="jianghu-home-highlights">
+      {% for item in constantUiMap.features %}
+      <div class="jianghu-home-highlights-box">
+        <h2 class="jianghu-home-highlights-title">
+          <$ item.title $>
+        </h2>
+        <p class="jianghu-home-highlights-description">
+          <$ item.content $>
+        </p>
+      </div>
+      {% endfor %}
+    </section>
+    <!-- Section: Summary -->
+    <div class="container">
+      <!--Section: Content-->
+      <section class="text-center">
+        <!-- <h4 class="mb-4"><strong>课程表</strong></h4> -->
+        <h2 class="mb-3" style="font-size: 20px;
+        font-weight: 600;">课程表</h2>
+
+        <div class="row">
+
+          <!--Grid column-->
+          <div class="col-lg-3 col-md-6 mb-4">
+
+            <!-- Card -->
+            <div class="card">
+
+              <div class="card-header bg-white py-3">
+                <p class="text-uppercase small mb-2"><strong>初级</strong></p>
+                <h5 class="mb-0">Free</h5>
+              </div>
+
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                </ul>
+              </div>
+
+              <div class="card-footer bg-white py-3">
+                <button type="button" class="btn btn-success btn-sm">Get it</button>
+              </div>
+
+            </div>
+            <!-- Card -->
+
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-lg-3 col-md-6 mb-4">
+
+            <!-- Card -->
+            <div class="card">
+
+              <div class="card-header bg-white py-3">
+                <p class="text-uppercase small mb-2"><strong>中级</strong></p>
+                <h5 class="mb-0">$19/month</h5>
+              </div>
+
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                </ul>
+              </div>
+
+              <div class="card-footer bg-white py-3">
+                <button type="button" class="btn btn-primary btn-sm">Buy now</button>
+              </div>
+
+            </div>
+            <!-- Card -->
+
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-lg-3 col-md-6 mb-4">
+
+            <!-- Card -->
+            <div class="card">
+
+              <div class="card-header bg-white py-3">
+                <p class="text-uppercase small mb-2"><strong>高级</strong></p>
+                <h5 class="mb-0">$49/month</h5>
+              </div>
+
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                </ul>
+              </div>
+
+              <div class="card-footer bg-white py-3">
+                <button type="button" class="btn btn-info btn-sm">Buy now</button>
+              </div>
+
+            </div>
+            <!-- Card -->
+
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-lg-3 col-md-6 mb-4">
+
+            <!-- Card -->
+            <div class="card">
+
+              <div class="card-header bg-white py-3">
+                <p class="text-uppercase small mb-2"><strong>进阶</strong></p>
+                <h5 class="mb-0">$189/month</h5>
+              </div>
+
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                  <li class="list-group-item">Feature</li>
+                </ul>
+              </div>
+
+              <div class="card-footer bg-white py-3">
+                <button type="button" class="btn btn-info btn-sm">Buy now</button>
+              </div>
+
+            </div>
+            <!-- Card -->
+
+          </div>
+          <!--Grid column-->
+
+        </div>
+      </section>
+      <!--Section: Content-->
+    </div>
+
+    <div class="mb-5 rounded-6" style="background-color: hsl(0, 0%, 96%)">
+      <div class="container py-5">
+        <!-- Section: Plans -->
+        <section class="py-5">
+
+          <div class="row gx-lg-5 justify-content-center">
+
+            <div class="col-lg-5 col-md-12 mb-4 mb-lg-0">
+
+              <div class="card h-100">
+                <div class="card-header py-3">
+                  <p class="fw-bold mb-0 h6">
+                    MDB Free
+                  </p>
+                  <small><a href="#license-free" data-mdb-smooth-scroll="smooth-scroll" data-mdb-offset="50">MIT
+                      license</a></small>
+
+                </div>
+                <div class="card-body pb-3">
+
+                  <p class="text-muted mb-4">Top-class frontend libraries integrated with the most popular
+                    technologies.
+                  </p>
+
+                  <a class="btn btn-secondary me-2 mb-2" href="#license-free" data-mdb-smooth-scroll="smooth-scroll" data-mdb-offset="50" role="button">View license</a>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-lg-5 mb-4 mb-lg-0">
+
+              <div class="card h-100">
+                <div class="card-header py-3">
+                  <p class="fw-bold mb-0">
+                    MDB Pro
+                  </p>
+                  <small><a href="#license-commercial" data-mdb-smooth-scroll="smooth-scroll" data-mdb-offset="80">Commercial license</a></small>
+                </div>
+                <div class="card-body pb-3">
+
+                  <p class="text-muted mb-4">Countless premium components dedicated to professional projects.</p>
+
+
+                  <a class="btn btn-primary mb-2" data-mdb-smooth-scroll="smooth-scroll" data-mdb-offset="80" href="#license-commercial" role="button">View license &amp; request a
+                    demo
+                  </a>
+
+                </div>
+              </div>
+
+            </div>
+
+
+
+          </div>
+
+        </section>
+        <!-- Section: Plans -->
+      </div>
+    </div>
+
+    <div class="api-section container">
+      <h2 id="composition-api">
+        Composition API
+      </h2>
+      <div class="api-groups-accordion" id="accordionContainer">
+        <div class="api-group" id="accordionBasic">
+          <h3 class="" data-mdb-toggle="collapse"  data-mdb-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"
+          >
+            初级
+          </h3>
+          <ul class="collapse show" id="collapseOne" aria-labelledby="accordionBasic"
+          >
+            <li>
+              <a href="/api/composition-api-setup.html#basic-usage">
+                Basic Usage
+              </a>
+            </li>
+            <li>
+              <a href="/api/composition-api-setup.html#accessing-props">
+                Accessing Props
+              </a>
+            </li>
+            <li>
+              <a href="/api/composition-api-setup.html#setup-context">
+                Setup Context
+              </a>
+            </li>
+            <li>
+              <a href="/api/composition-api-setup.html#usage-with-render-functions">
+                Usage with Render Functions
+              </a>
+            </li>
+            <li>
+              <a href="/api/composition-api-setup.html#setup-context">
+                Setup Context
+              </a>
+            </li>
+            <li>
+              <a href="/api/composition-api-setup.html#usage-with-render-functions">
+                Usage with Render Functions
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="api-group" id="accordionBasic2">
+          <h3 class="" data-mdb-toggle="collapse"  data-mdb-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
+          >
+            中级
+          </h3>
+          <ul class="collapse show" id="collapseTwo" aria-labelledby="accordionBasic2"
+          >
+            <li>
+              <a href="/api/reactivity-core.html#ref">
+                ref()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#computed">
+                computed()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#reactive">
+                reactive()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#readonly">
+                readonly()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#watcheffect">
+                watchEffect()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#watchposteffect">
+                watchPostEffect()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#watchsynceffect">
+                watchSyncEffect()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#watch">
+                watch()
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="api-group" id="accordionBasic3">
+          <h3 class="" data-mdb-toggle="collapse"  data-mdb-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"
+          >
+            高级
+          </h3>
+          <ul class="collapse show" id="collapseThree" aria-labelledby="accordionBasic3"
+          >
+            <li>
+              <a href="/api/reactivity-utilities.html#isref">
+                isRef()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#unref">
+                unref()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#toref">
+                toRef()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#torefs">
+                toRefs()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#isproxy">
+                isProxy()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#isreactive">
+                isReactive()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#isreadonly">
+                isReadonly()
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="api-group" id="accordionBasic4">
+          <h3 class="" data-mdb-toggle="collapse"  data-mdb-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour"
+          >
+            进阶
+          </h3>
+          <ul class="collapse show" id="collapseFour" aria-labelledby="accordionBasic4"
+          >
+            <li>
+              <a href="/api/reactivity-advanced.html#shallowref">
+                shallowRef()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#triggerref">
+                triggerRef()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#customref">
+                customRef()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#shallowreactive">
+                shallowReactive()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#shallowreadonly">
+                shallowReadonly()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#toraw">
+                toRaw()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#onscopedispose">
+                onScopeDispose()
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="api-section jianghu-home-sponsors">
+      <h2 id="composition-api">
+        Composition API
+      </h2>
+      <div class="api-groups">
+        <div class="api-group">
+          <h3>
+            Setup()
+          </h3>
+          <ul>
+            <li>
+              <a href="/api/composition-api-setup.html#basic-usage">
+                Basic Usage
+              </a>
+            </li>
+            <li>
+              <a href="/api/composition-api-setup.html#accessing-props">
+                Accessing Props
+              </a>
+            </li>
+            <li>
+              <a href="/api/composition-api-setup.html#setup-context">
+                Setup Context
+              </a>
+            </li>
+            <li>
+              <a href="/api/composition-api-setup.html#usage-with-render-functions">
+                Usage with Render Functions
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="api-group">
+          <h3>
+            Reactivity: Core
+          </h3>
+          <ul>
+            <li>
+              <a href="/api/reactivity-core.html#ref">
+                ref()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#computed">
+                computed()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#reactive">
+                reactive()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#readonly">
+                readonly()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#watcheffect">
+                watchEffect()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#watchposteffect">
+                watchPostEffect()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#watchsynceffect">
+                watchSyncEffect()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-core.html#watch">
+                watch()
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="api-group">
+          <h3>
+            Reactivity: Utilities
+          </h3>
+          <ul>
+            <li>
+              <a href="/api/reactivity-utilities.html#isref">
+                isRef()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#unref">
+                unref()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#toref">
+                toRef()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#torefs">
+                toRefs()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#isproxy">
+                isProxy()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#isreactive">
+                isReactive()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-utilities.html#isreadonly">
+                isReadonly()
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="api-group">
+          <h3>
+            Reactivity: Advanced
+          </h3>
+          <ul>
+            <li>
+              <a href="/api/reactivity-advanced.html#shallowref">
+                shallowRef()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#triggerref">
+                triggerRef()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#customref">
+                customRef()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#shallowreactive">
+                shallowReactive()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#shallowreadonly">
+                shallowReadonly()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#toraw">
+                toRaw()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#markraw">
+                markRaw()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#effectscope">
+                effectScope()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#getcurrentscope">
+                getCurrentScope()
+              </a>
+            </li>
+            <li>
+              <a href="/api/reactivity-advanced.html#onscopedispose">
+                onScopeDispose()
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <section class="jianghu-home-sponsors container">
+      <h2 class="mb-3">Platinum Sponsors</h2>
+      <div class="sponsor-container platinum landing mb-3"><a
+          class="sponsor-item" href="https://www.vuemastery.com/" target="_blank" rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/vuemastery.avif"><img
+              src="https://sponsors.vuejs.org/images/vuemastery.png" alt="VueMastery">
+          </picture>
+        </a><a class="sponsor-item"
+          href="https://vueschool.io/?utm_source=Vuejs.org&amp;utm_medium=Banner&amp;utm_campaign=Sponsored%20Banner&amp;utm_content=V1"
+          target="_blank" rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/vueschool.avif"><img
+              src="https://sponsors.vuejs.org/images/vueschool.png" alt="VueSchool">
+          </picture>
+        </a><a class="sponsor-item" href="https://vehikl.com/" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/vehikl.avif"><img
+              src="https://sponsors.vuejs.org/images/vehikl.png" alt="Vehikl">
+          </picture>
+        </a><a class="sponsor-item" href="https://passionatepeople.io/" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif"
+              srcset="https://sponsors.vuejs.org/images/passionate_people.avif"><img
+              src="https://sponsors.vuejs.org/images/passionate_people.png" alt="Passionate People">
+          </picture>
+        </a><a class="sponsor-item" href="https://www.storyblok.com" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/storyblok.avif"><img
+              src="https://sponsors.vuejs.org/images/storyblok.png" alt="Storyblok">
+          </picture>
+        </a><a class="sponsor-item"
+          href="https://ionicframework.com/vue?utm_source=partner&amp;utm_medium=referral&amp;utm_campaign=vuesponsorship&amp;utm_content=vuedocs"
+          target="_blank" rel="sponsored noopener"><img
+            src="https://sponsors.vuejs.org/images/ionic.png?v2" alt="Ionic"></a><a
+          class="sponsor-item"
+          href="https://buttercms.com/vuejs-cms/?utm_source=vuejs.org&amp;utm_medium=banner&amp;utm_campaign=sponsorship"
+          target="_blank" rel="sponsored noopener"><img
+            src="https://sponsors.vuejs.org/images/buttercms.svg" alt="ButterCMS"></a><a
+          class="sponsor-item" href="https://www.sanofi.com/" target="_blank" rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/sanofi.avif"><img
+              src="https://sponsors.vuejs.org/images/sanofi.png" alt="Sanofi">
+          </picture>
+        </a><a class="sponsor-item" href="https://code-dict.com" target="_blank"
+          rel="sponsored noopener"><img src="https://sponsors.vuejs.org/images/codedict.svg"
+            alt="CodeDict"></a><a class="sponsor-item"
+          href="https://opencollective.com/2021-frameworks-fund" target="_blank" rel="sponsored noopener">
+          <picture>
+            <source type="image/avif"
+              srcset="https://sponsors.vuejs.org/images/chrome_frameworks_fund.avif"><img
+              src="https://sponsors.vuejs.org/images/chrome_frameworks_fund.png" alt="Chrome Frameworks Fund">
+          </picture>
+        </a><a class="sponsor-item" href="https://www.herodevs.com/support/vue" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/herodevs.avif"><img
+              src="https://sponsors.vuejs.org/images/herodevs.png" alt="HeroDevs">
+          </picture>
+        </a><a href="/sponsor/" class="sponsor-item action">Your logo</a></div>
+      <h2>Gold Sponsors</h2>
+      <div class="sponsor-container gold landing pb-5"><a
+          class="sponsor-item" href="https://volta.net/?utm_source=vuejs.org&amp;utm_campaign=sponsoring/"
+          target="_blank" rel="sponsored noopener"><img
+            src="https://sponsors.vuejs.org/images/volta.svg" alt="Volta"></a><a class="sponsor-item"
+          href="https://laravel.com" target="_blank" rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/laravel.avif"><img
+              src="https://sponsors.vuejs.org/images/laravel.png" alt="Laravel">
+          </picture>
+        </a><a class="sponsor-item" href="https://htmlburger.com" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/html_burger.avif">
+            <img src="https://sponsors.vuejs.org/images/html_burger.png" alt="HTML Burger">
+          </picture>
+        </a><a class="sponsor-item" href="https://tidelift.com/subscription/npm/vue" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/tidelift.avif"><img
+              src="https://sponsors.vuejs.org/images/tidelift.png" alt="Tidelift">
+          </picture>
+        </a><a class="sponsor-item" href="https://intygrate.com/" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/intygrate.avif"><img
+              src="https://sponsors.vuejs.org/images/intygrate.png" alt="Intygrate">
+          </picture>
+        </a><a class="sponsor-item" href="https://www.bacancytechnology.com/hire-vuejs-developer"
+          target="_blank" rel="sponsored noopener">
+          <picture>
+            <source type="image/avif"
+              srcset="https://sponsors.vuejs.org/images/bacancy_technology.avif"><img
+              src="https://sponsors.vuejs.org/images/bacancy_technology.png" alt="Bacancy Technology">
+          </picture>
+        </a><a class="sponsor-item" href="https://www.y8.com/" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/y8.avif"><img
+              src="https://sponsors.vuejs.org/images/y8.png" alt="Y8">
+          </picture>
+        </a><a class="sponsor-item" href="https://js.devexpress.com/" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/devexpress.avif"><img
+              src="https://sponsors.vuejs.org/images/devexpress.png" alt="DevExpress">
+          </picture>
+        </a><a class="sponsor-item" href="https://fastcoding.jp/javascript/ " target="_blank"
+          rel="sponsored noopener"><img src="https://sponsors.vuejs.org/images/fastcoding_inc.svg"
+            alt="FASTCODING Inc"></a><a class="sponsor-item" href="https://linecorp.com"
+          target="_blank" rel="sponsored noopener">
+          <picture>
+            <source type="image/avif"
+              srcset="https://sponsors.vuejs.org/images/line_corporation.avif"><img
+              src="https://sponsors.vuejs.org/images/line_corporation.png" alt="LINE Corporation">
+          </picture>
+        </a><a class="sponsor-item" href="https://www.emqx.com" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/emq.avif"><img
+              src="https://sponsors.vuejs.org/images/emq.png" alt="EMQ">
+          </picture>
+        </a><a class="sponsor-item" href="https://www.fenetre.nl/" target="_blank"
+          rel="sponsored noopener"><img
+            src="https://sponsors.vuejs.org/images/fen_tre_online_solutions.svg" alt="Fenêtre Online Solutions"></a><a
+          class="sponsor-item" href="https://antdv.com" target="_blank" rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/ant_design_vue.avif">
+            <img src="https://sponsors.vuejs.org/images/ant_design_vue.png" alt="Ant Design Vue">
+          </picture>
+        </a><a class="sponsor-item" href="https://mqttx.app" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/mqtt_x.avif"><img
+              src="https://sponsors.vuejs.org/images/mqtt_x.png" alt="MQTT X">
+          </picture>
+        </a><a class="sponsor-item" href="https://crisp.chat/en/" target="_blank"
+          rel="sponsored noopener">
+          <picture>
+            <source type="image/avif" srcset="https://sponsors.vuejs.org/images/crisp.avif"><img
+              src="https://sponsors.vuejs.org/images/crisp.png" alt="Crisp">
+          </picture>
+        </a></div>
+    </section>
+    
+    <!-- Section: Summary -->
+    <section class="p-5" style="background-color: hsl(0, 0%, 96%);">
+
+      <div class="row gx-xl-5">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="card shadow-0">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <div class="p-3 badge-primary rounded-4">
+                    <i class="fas fa-dollar-sign fa-lg fa-fw"></i>
+                  </div>
+                </div>
+                <div class="flex-grow-1 ms-4">
+                  <p class="text-muted mb-1">Total balance</p>
+                  <h2 class="mb-0">
+                    710,897
+                    <span class="" style="font-size: 0.875rem">
+                      USD</span>
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="card shadow-0">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <div class="p-3 badge-primary rounded-4">
+                    <i class="fas fa-chart-line fa-lg fa-fw"></i>
+                  </div>
+                </div>
+                <div class="flex-grow-1 ms-4">
+                  <p class="text-muted mb-1">24h portfolio change</p>
+                  <h2 class="mb-0">
+                    9,428.82
+                    <span class="" style="font-size: 0.875rem">
+                      USD</span>
+                    <span class="text-success" style="font-size: 0.875rem"><i class="fas fa-arrow-up fa-sm"></i>
+                      <span> 8.3%</span></span>
+                  </h2>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="mt-4 text-center container">
+      <style>
+        /* Custom shadow styles */
+        .shadow-custom {
+          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2),
+            0 3px 10px 0 rgba(0, 0, 0, 0.1) !important;
+        }
+      </style>
+    
+      <div class="mb-5">
+        <h2 style="font-size: 20px;
+        font-weight: 600;">Share these experimental design projects with your friends</h2>
+      </div>
+    
+      <div class="row">
+    
+        <!-- Single project -->
+        <div class="col-lg-4 mb-4">
+          <div class="card shadow-custom">
+            <div class="bg-image hover-overlay border-bottom" data-mdb-ripple-color="light">
+              <picture>
+                <source srcset="
+                    https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/github-homepage.webp
+                  " type="image/webp">
+                <img data-lazysrc="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/github-homepage.webp" class="w-100" alt="Bootstrap 5 GitHub LAB Project">
+              </picture>
+              <a href="/docs/standard/lab/github-homepage/">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+              </a>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title my-2 fw-bold">GitHub homepage</h5>
+            </div>
+          </div>
+        </div>
+        <!-- Single project -->
+    
+        <!-- Single project -->
+        <div class="col-lg-4 mb-4">
+          <div class="card shadow-custom">
+            <div class="bg-image hover-overlay border-bottom" data-mdb-ripple-color="light">
+              <picture>
+                <source srcset="
+                    https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/medium-homepage.webp
+                  " type="image/webp">
+                <img data-lazysrc="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/medium-homepage.webp" class="w-100" alt="Bootstrap 5 Medium LAB Project">
+              </picture>
+              <a href="/docs/standard/lab/medium-homepage/">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+              </a>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title my-2 fw-bold">Medium homepage</h5>
+            </div>
+          </div>
+        </div>
+        <!-- Single project -->
+    
+        <!-- Single project -->
+        <div class="col-lg-4 mb-4">
+          <div class="card shadow-custom">
+            <div class="bg-image hover-overlay border-bottom" data-mdb-ripple-color="light">
+              <picture>
+                <source srcset="
+                    https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/linkedin-homepage.webp
+                  " type="image/webp">
+                <img data-lazysrc="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/linkedin-homepage.webp" class="w-100" alt="Bootstrap 5 Linkedin LAB Project">
+              </picture>
+              <a href="/docs/standard/lab/linkedin-homepage/">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+              </a>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title my-2 fw-bold">Linkedin homepage</h5>
+            </div>
+          </div>
+        </div>
+        <!-- Single project -->
+    
+        <!-- Single project -->
+        <div class="col-lg-4 mb-4">
+          <div class="card shadow-custom">
+            <div class="bg-image hover-overlay border-bottom" data-mdb-ripple-color="light">
+              <picture>
+                <source srcset="
+                    https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/tripadvisor-homepage.webp
+                  " type="image/webp">
+                <img data-lazysrc="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/tripadvisor-homepage.webp" class="w-100" alt="Bootstrap 5 Tripadvisor LAB Project">
+              </picture>
+              <a href="/docs/standard/lab/tripadvisor-homepage/">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+              </a>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title my-2 fw-bold">Tripadvisor homepage</h5>
+            </div>
+          </div>
+        </div>
+        <!-- Single project -->
+    
+        <!-- Single project -->
+        <div class="col-lg-4 mb-4">
+          <div class="card shadow-custom">
+            <div class="bg-image hover-overlay border-bottom" data-mdb-ripple-color="light">
+              <picture>
+                <source srcset="
+                    https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/twitter-newsfeed.webp
+                  " type="image/webp">
+                <img data-lazysrc="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/twitter-newsfeed.webp" class="w-100" alt="Bootstrap 5 Twitter LAB Project">
+              </picture>
+              <a href="/docs/standard/lab/twitter-newsfeed/">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+              </a>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title my-2 fw-bold">Twitter newsfeed</h5>
+            </div>
+          </div>
+        </div>
+        <!-- Single project -->
+    
+        <!-- Single project -->
+        <div class="col-lg-4 mb-4">
+          <div class="card shadow-custom">
+            <div class="bg-image hover-overlay border-bottom" data-mdb-ripple-color="light">
+              <picture>
+                <source srcset="
+                    https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/wikipedia-article-page.webp
+                  " type="image/webp">
+                <img data-lazysrc="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/wikipedia-article-page.webp" class="w-100" alt="Bootstrap 5 Wikipedia LAB Project">
+              </picture>
+              <a href="/docs/standard/lab/wikipedia-article-page/">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+              </a>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title my-2 fw-bold">Wikipedia article page</h5>
+            </div>
+          </div>
+        </div>
+        <!-- Single project -->
+    
+        <!-- Single project -->
+        <div class="col-lg-4 mb-4">
+          <div class="card shadow-custom">
+            <div class="bg-image hover-overlay border-bottom" data-mdb-ripple-color="light">
+              <picture>
+                <source srcset="
+                    https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/spotify-player.webp
+                  " type="image/webp">
+                <img data-lazysrc="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/spotify-player.webp" class="w-100" alt="Bootstrap 5 Spotify LAB Project">
+              </picture>
+              <a href="/docs/standard/lab/spotify-player/">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+              </a>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title my-2 fw-bold">Spotify player</h5>
+            </div>
+          </div>
+        </div>
+        <!-- Single project -->
+    
+        <!-- Single project -->
+        <div class="col-lg-4 mb-4">
+          <div class="card shadow-custom">
+            <div class="bg-image hover-overlay border-bottom" data-mdb-ripple-color="light">
+              <picture>
+                <source srcset="
+                    https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/imdb-homepage.webp
+                  " type="image/webp">
+                <img data-lazysrc="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/imdb-homepage.webp" class="w-100" alt="Bootstrap 5 IMDB LAB Project">
+              </picture>
+              <a href="/docs/standard/lab/imdb-homepage/">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+              </a>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title my-2 fw-bold">IMDb homepage</h5>
+            </div>
+          </div>
+        </div>
+        <!-- Single project -->
+    
+        <!-- Single project -->
+        <div class="col-lg-4 mb-4">
+          <div class="card shadow-custom">
+            <div class="bg-image hover-overlay border-bottom" data-mdb-ripple-color="light">
+              <picture>
+                <source srcset="
+                    https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/netflix-homepage.webp
+                  " type="image/webp">
+                <img data-lazysrc="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/lab/_main/assets/projects/netflix-homepage.webp" class="w-100" alt="Bootstrap 5 Netflix LAB Project">
+              </picture>
+              <a href="/docs/standard/lab/netflix-homepage/">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+              </a>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title my-2 fw-bold">Netflix homepage</h5>
+            </div>
+          </div>
+        </div>
+        <!-- Single project -->
+      </div>
+    </section>
+    <section class="mt-4 container">
+
+      <style>
+        .btn-tag {
+          background-color: #ECEFF1;
+          text-transform: capitalize !important;
+          margin-bottom: 10px;
+          box-shadow: none;
+        }
+  
+        .btn-tag:hover {
+          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .25), 0 3px 10px 5px rgba(0, 0, 0, 0.05) !important;
+        }
+  
+      </style>
+  
+      <h2 style="font-size: 20px;
+      font-weight: 600;">Related resources</h2>
+  
+        <!--Chips with links-->
+        <div class="justify-content-start text-start w-100 pb-5 mt-4">
+  
+            <!--Tutorials-->
+            <a href="https://mdbootstrap.com/learn/mdb-foundations/bootstrap/footer/" class="btn btn-tag btn-rounded ripple-surface" data-mdb-close="true">
+              Footer tutorial</a>
+  
+            <a href="https://mdbootstrap.com/docs/standard/design-blocks/admin/navigation/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+            <i class="fas fa-layer-group me-2"></i> Admin Navigation Sections</a> 
+  
+            <a href="https://mdbootstrap.com/docs/standard/design-blocks/ecommerce/navigation/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+            <i class="fas fa-layer-group me-2"></i> eCommerce Sections</a> 
+  
+            <a href="https://mdbootstrap.com/freebies/dark-theme/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+            Free Dark Theme Template</a> 
+  
+            <!--How to?-->
+            <a href="https://mdbootstrap.com/how-to/bootstrap/footer-add/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+            How to add Footer in Bootstrap</a>
+  
+            <!--Main docs-->
+            <a href="https://mdbootstrap.com/docs/standard/content-styles/colors/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+            Colors</a>
+            
+            <a href="https://mdbootstrap.com/docs/standard/content-styles/icons/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+            Icons</a>
+            
+            <a href="https://mdbootstrap.com/docs/standard/content-styles/theme/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+            Theme</a>
+            
+            <a href="https://mdbootstrap.com/docs/standard/layout/grid/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+            Grid</a>
+  
+            <!-- extended -->
+  
+            <a href="https://mdbootstrap.com/docs/standard/extended/cookie-consent/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+              Cookie Consent</a>
+  
+              <a href="https://mdbootstrap.com/docs/standard/extended/social-media-icons-footer/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+                Social media icons footer</a>
+  
+                <a href="https://mdbootstrap.com/docs/standard/extended/sticky-footer/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+                  Sticky footer</a>
+            
+            <!--Other-->                            
+            <a href="https://mdbootstrap.com/docs/standard/tools/builders/footer/" class="btn btn-tag btn-rounded" data-mdb-close="true">
+            <i class="fas fa-cogs me-2"></i> Footer generator</a>
+  
+            <a target="_blank" href="https://www.youtube.com/watch?v=UEfFpk4sSxE&amp;ab_channel=Keepcoding" class="btn btn-tag btn-rounded" data-mdb-close="true">
+            <i class="fab fa-youtube me-2"></i> Bootstrap Footer Tutorial</a>
+  
+        </div>
+    </section>
+  </main>
+  <!-- Footer -->
+  <footer class="text-center text-lg-start bg-light text-muted jianghu-footer">
+    <section class="jianghu-footer-links">
+      <div class="container text-center text-md-start jianghu-footer-links-container">
+        <div class="row">
+          {% for item in constantUiMap.links %}
+          <div class="col-md-3 col-lg-2 col-xl-3 mx-auto">
+            <h6 class="text-uppercase mb-4 jianghu-footer-links-title">
+              <$ item.label $>
+            </h6>
+            {% for it in item.list %}
+            <p class="mb-3 jianghu-footer-links-item">
+              {% if it.path.includes('http') %}
+              <a href="<$ it.path $>" target="_blank" class="text-reset">
+                <$ it.title $>
+              </a>
+              {% elif it.path === '' %}
+              <a href="javascript:void(0);" class="text-reset">
+                <$ it.title $>
+              </a>
+              {% else %}
+              <a href="/<$ ctx.app.config.appId $><$ it.path $>" class="text-reset">
+                <$ it.title $>
+              </a>
+              {% endif%}
+            </p>
+            {% endfor %}
+            {% if item.img %}
+            <img class="jianghu-footer-img" />
+            {% endif%}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <div class="text-center p-4 jianghu-footer-copyright">
+      <$ constantUiMap.footer.copyright $>
+    </div>
+  </footer>
+
+  <script type='text/javascript'>
+    $(function () {
+      let spread = 'open';
+      $('.search-input').on('input', function () {
+        const value = $(this).val().trim();
+        const list = $('.lesson-plan-container').find('.api-group');
+        list.each(function () {
+          const textTagList = $(this).find('ul li a');
+          let includes = false;
+          textTagList.each(function () {
+            const text = $(this).text().trim();
+            if (text.includes(value)) {
+              includes = true;
+              // 中断当前 each
+              return false;
+            }
+          })
+          // console.log(text, '===', value, text.includes(value));
+          if (includes) {
+            $(this).removeClass('d-none');
+          } else {
+            $(this).addClass('d-none');
+          }
+        })
+      })
+      $('.spread').on('click', function () {
+        const list = $('.lesson-plan-container').find('ul li a');
+        if (spread === 'open') {
+          list.each(function () {
+            $(this).parent().parent().removeClass('show');
+          })
+          $(this).text('全部展开');
+          spread = 'close';
+        } else {
+          list.each(function () {
+            $(this).parent().parent().addClass('show');
+          })
+          $(this).text('全部收起');
+          spread = 'open';
+        }
+      })
+    })
+  </script>
+  {% endblock %}
+  {% block javascript %}
+  <script>
+    // 错误提示
+    const searchParams = new URLSearchParams(location.search.substring(1));
+    const errorInfo = JSON.parse('<$ constantUiMap.errorInfo | dump | safe $>');
+    const errorCode = searchParams.get('errorCode');
+    const errorReason = searchParams.get('errorReason');
+    if (errorCode) {
+      showFailAlert(errorInfo.contentEnum[errorCode] || errorReason)
+    }
+  </script>
+  {% endblock %}

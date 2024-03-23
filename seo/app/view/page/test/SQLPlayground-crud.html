@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SQL Playground</title>
+    <!-- 引入 AlaSQL 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/alasql@0.5.5/dist/alasql.min.js"></script>
+  </head>
+  <body>
+    <h1>SQL Playground Demo</h1>
+
+    <form id="myForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name"><br>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email"><br>
+
+      <button type="button" onclick="create()">Create</button>
+      <button type="button" onclick="read()">Read</button>
+      <button type="button" onclick="update()">Update</button>
+      <button type="button" onclick="delete1()">Delete</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+      // 创建表格
+      alasql("CREATE TABLE users (id INT IDENTITY, name STRING, email STRING)");
+
+      function create() {
+        // 从表单中获取数据
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+
+        // 插入数据
+        alasql("INSERT INTO users (name, email) VALUES ('" + name + "', '" + email + "')");
+
+        // 清空表单
+        document.getElementById("myForm").reset();
+
+        // 显示结果
+        document.getElementById("result").innerHTML = "User created!";
+      }
+
+      function read() {
+        // 查询所有用户
+        var results = alasql("SELECT * FROM users");
+
+        // 显示结果
+        var output = "";
+        for (var i = 0; i < results.length; i++) {
+          output += "ID: " + results[i].id + ", Name: " + results[i].name + ", Email: " + results[i].email + "<br>";
+        }
+        document.getElementById("result").innerHTML = output;
+      }
+
+      function update() {
+        // 从表单中获取数据
+        var id = parseInt(prompt("Enter user ID:"));
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+
+        // 更新数据
+        alasql("UPDATE users SET name = '" + name + "', email = '" + email + "' WHERE id = " + id);
+
+        // 清空表单
+        document.getElementById("myForm").reset();
+
+        // 显示结果
+        document.getElementById("result").innerHTML = "User updated!";
+      }
+
+      function delete1 () {
+        // 获取要删除的用户ID
+        var id = parseInt(prompt("Enter user ID:"));
+
+        // 删除数据
+        alasql("DELETE FROM users WHERE id = " + id);
+
+        // 显示结果
+        document.getElementById("result").innerHTML = "User deleted!";
+      }
+    </script>
+  </body>
+</html>

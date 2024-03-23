@@ -1,0 +1,361 @@
+{% extends 'template/jhTemplateV4.html'%}
+
+{% block vueTemplate %}
+
+<script type="text/html" id="app-template">
+<div>
+<v-app mobile-breakpoint="sm">
+  <jh-menu />
+  <v-main class="mt-15">
+    <!-- 头部内容 >>>>>>>>>>>>> -->
+    <div class="jh-page-second-bar px-8">
+      <v-row class="align-center">
+        <v-col cols="12" xs="12" sm="12" md="4" xl="3">
+          <div class="py-4 text-body-1 font-weight-bold">xfpage管理
+            <!-- 帮助页按钮 -->
+            <span role="button" class="success--text font-weight-regular jh-font-size-13 ml-2" @click="isHelpPageDrawerShown = true">
+              <v-icon size="13" class="success--text">mdi-help-circle-outline</v-icon>帮助
+            </span>
+          </div>
+        </v-col>
+        <!-- pc端的搜索条件表单 >>>>>>>> -->
+        <v-col cols="12" xs="12" sm="12" md="8" xl="9">
+          <v-row class="jh-backend-form-container justify-end ma-0 py-3">
+            <v-col cols="12" xs="12" sm="6" md="4" xl="3" class="pa-0 pr-0 pr-md-2 pt-0">
+              <v-text-field v-model="serverSearchForm.xfPageTitle" prefix="文章标题：" color="success" class="jh-v-input bg-white" dense filled single-line hide-details></v-text-field>
+            </v-col>
+            <v-col cols="12" xs="12" sm="6" md="6" xl="5" class="pa-0 pr-0 pr-md-2 pt-2 pt-sm-0">
+              <v-select class="jh-v-input bg-white" v-model="serverSearchForm.xfPagePublishStatus" label="发布状态"
+              :items="constantObj.xfPagePublishStatus"  prefix="发布状态：" item-text="text" item-value="value" dense filled single-line multiple hide-details></v-select>
+            </v-col>
+            <div class="jh-backend-search-btn">
+              <v-btn class="elevation-0 float-right mt-2 mt-md-0" color="success" small @click="doUiAction('getTableData')">
+                查询
+              </v-btn>
+            </div>
+          </v-row>
+        </v-col>
+        <!-- <<<<<<<< pc端的搜索条件表单 -->
+      </v-row>
+    </div>
+    <!-- <<<<<<<<<<<<< 头部内容 -->
+
+    <!-- 页面主要内容 -->
+    <div class="jh-page-body-container px-8">
+      <v-card class="rounded-lg">
+        <v-row class="ma-0 pa-4">
+          <v-col cols="12" xs="4" sm="4" md="4" xl="4" class="pa-0">
+            <v-btn color="success" dark class="elevation-0 mr-2" @click="doUiAction('createItem')" small>新增</v-btn>
+            <!-- <span class="body-2">共{{ tableData.length }}条记录</span> -->
+          </v-col>
+          <v-spacer></v-spacer>
+          <v-col cols="12" xs="8" sm="4" md="3" xl="3" class="pa-0">
+            <v-text-field v-model="tableFilterKeyword" prefix="表格过滤：" class="jh-v-input" dense filled single-line hide-details></v-text-field>
+          </v-col>
+        </v-row>
+        <v-data-table 
+          :headers="headers" 
+          :items="tableData" 
+          :search="tableFilterKeyword"
+          :items-per-page="15" 
+          mobile-breakpoint="0"
+          :loading="isTableLoading" 
+          checkbox-color="success" 
+          :class="{'zebraLine': isTableZebraLineShown }"
+          class="jh-fixed-table-height elevation-0 mt-0 mb-xs-4 flex-fill d-flex flex-column">
+          <template v-slot:item.xfPagePublishStatus="{ item }">
+            <v-chip small :color="item.xfPagePublishStatus | statusColor">
+              {{ item.xfPagePublishStatus | parseStatus }}
+            </v-chip>
+          </template>
+          <template v-slot:item.xfPageConfig="{ item }">
+              <div class="text-truncate" style="max-width: 300px;">{{item.xfPageConfig}}</div>
+          </template>
+          <template v-slot:item.action="{ item }">
+            <!-- pc端 -->
+            <template v-if="!isMobile">
+              <span role="button" class="success--text font-weight-medium font-size-2 mr-2" @click="doUiAction('updateItem', item)">
+                <v-icon size="16" class="success--text">mdi-note-edit-outline</v-icon>修改
+              </span>
+              <span role="button" class="success--text font-weight-medium font-size-2 mr-2" @click="doUiAction('historyItem',item)">
+                <v-icon size="16" class="success--text">mdi-file-document-outline</v-icon>历史版本
+              </span>
+              <span v-if="item.xfPagePublishStatus !== 'deleted'" role="button" class="error--text font-weight-medium font-size-2 mr-2" @click="doUiAction('handleTableButton', { text: '回收站', buttonType: 'delete', item })">
+                <v-icon size="16" class="error--text">mdi-trash-can-outline</v-icon>回收站
+              </span>
+              <span v-if="item.xfPagePublishStatus === 'deleted'" role="button" class="success--text font-weight-medium font-size-2" @click="doUiAction('handleTableButton', { text: '恢复', buttonType: 'restore', item })">
+                <v-icon size="16" class="success--text">mdi-arrow-u-left-top</v-icon>恢复
+              </span>
+            </template>
+            <!-- 手机端 -->
+            <v-menu offset-y v-if="isMobile">
+              <template v-slot:activator="{ on, attrs }">
+                <span role="button" class="success--text font-weight-medium font-size-2"
+                  v-bind="attrs" v-on="on">
+                  操作<v-icon size="14" class="success--text">mdi-chevron-down</v-icon>
+                </span>
+              </template>
+              <v-list dense>
+                <v-list-item @click="doUiAction('updateItem', item)">
+                  <v-list-item-title>修改</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="doUiAction('historyItem',item)">
+                  <v-list-item-title>历史版本</v-list-item-title>
+                </v-list-item>
+                <v-list-item v-if="item.xfPagePublishStatus !== 'deleted'" @click="doUiAction('handleTableButton', { text: '回收站', buttonType: 'delete', item })">
+                  <v-list-item-title>回收站</v-list-item-title>
+                </v-list-item>
+                <v-list-item v-if="item.xfPagePublishStatus === 'deleted'" @click="doUiAction('handleTableButton', { text: '恢复', buttonType: 'restore', item })">
+                  <v-list-item-title>恢复</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </template>
+          <!-- 没有数据 -->
+          <template v-slot:loading>
+            <div class="jh-no-data">数据加载中</div>
+          </template>
+          <template v-slot:no-data>
+            <div class="jh-no-data">暂无数据</div>
+          </template>
+          <template v-slot:no-results>
+            <div class="jh-no-data">暂无数据</div>
+          </template>
+          <!-- 表格分页 -->
+          <template v-slot:footer.page-text="pagination">
+            <span>{{pagination.pageStart}}-{{pagination.pageStop}}</span>
+            <span class="ml-1">共{{pagination.itemsLength}}条</span>
+          </template>
+        </v-data-table>
+      </v-card> 
+    </div>
+
+    <!-- 帮助页抽屉 >>>>>>>>>>>>> -->
+    <v-navigation-drawer v-if="isHelpPageDrawerLoaded" v-model="isHelpPageDrawerShown" :permanent="isHelpPageDrawerShown" fixed temporary right width="80%" class="elevation-24">
+      <iframe style="border: 0" :src="`/${appInfo.appId}/pageDoc#xfpage.md`" width="100%" height="100%"></iframe>
+      <v-btn elevation="0" color="success" fab absolute top left small tile class="drawer-close-float-btn" @click="isHelpPageDrawerShown = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-navigation-drawer>
+    <!-- <<<<<<<<<<<<< 帮助页抽屉 -->
+
+  </v-main>
+</v-app>
+
+<jh-toast />
+<jh-mask />
+<jh-confirm-dialog />
+</div>
+</script>
+
+<div id="app">
+</div>
+
+{% endblock %}
+
+{% block vueScript %}
+{% include 'common/jianghuJs/fixedTableHeightV4.html' %}
+{% include 'component/globalHandler.html' %}
+{% include 'component/vueFilters.html' %}
+<script type="module">
+  new Vue({
+    el: '#app',
+    template: '#app-template',
+    vuetify: new Vuetify(),
+    data: () => ({
+      isHelpPageDrawerShown: false,
+      isHelpPageDrawerLoaded: false,
+      isMobile: window.innerWidth < 500,
+      // 表格相关数据
+      isTableZebraLineShown: true,
+      globalHandler: new GlobalHandler(),
+      // 表格相关数据
+      isFormValid: true,
+      constantObj: {
+        xfPagePublishStatus: [
+          { text: "公开", value: "public" },
+          { text: "登录可见", value: "login" },
+          { text: "草稿", value: "draft" },
+          { text: "回收站", value: "deleted" },
+        ],
+      },
+
+      serverSearchForm: {
+        xfPageTitle: null,
+        xfPagePublishStatus: ['public', 'login', 'draft', 'deleted']
+      },
+      isEditDrawerShown: false,
+      tableFilterKeyword: null,
+      isTableLoading : true,
+      tableDataBackups: [],
+      headers: [
+        // { text: "ID", value: "id", width: 120, class: 'fixed', cellClass: 'fixed' },
+        { text: "旋风页面ID", value: "xfPageId", width: 100 },
+        { text: "标题", value: "xfPageTitle", width: 300 },
+        { text: "类型(状态)", value: "xfPagePublishStatus", width: 120 },
+        { text: "发布时间", value: "xfPagePublishTime", width: 150 },
+        { text: "标签", value: "xfPageTagList", width: 220 },
+        { text: "默认音频", value: "xfPageAudioUrl", width: 220 },
+        { text: "默认视频", value: "xfPageVideoUrl", width: 220 },
+        { text: "创建者用户名", value: "xfPageCreateUsername", width: 120 },
+        { text: "创建时间", value: "xfPageCreateTime", width: 150 },
+        { text: "更新者用户名", value: "xfPageUpdateUsername", width: 120 },
+        { text: "更新时间", value: "xfPageUpdateTime", width: 150 },
+        { text: "配置", value: "xfPageConfig", width: 220 },
+        { text: '操作', value: 'action', align: 'center', sortable: false, width: window.innerWidth < 600 ? 80 : 220, class: 'fixed', cellClass: 'fixed' },
+      ],
+
+      currentClickButton: { title: '新增', action: 'add' },
+      editItem: {},
+      tableRowActionList: [
+        { text: '修改', buttonType: 'edit', color: 'success', },
+        { text: '删除', buttonType: 'delete', color: 'error', },
+      ],
+    }),
+    computed: {
+      isMobile() {
+        return window.innerWidth < 600;
+      },
+      tableData() {
+        return this.tableDataBackups;
+      },
+      getEditItem() {
+        return this.editItem;
+      }
+    },
+    watch: {
+      isHelpPageDrawerShown(val) {
+        if (val) {
+          this.isHelpPageDrawerLoaded = true;
+        }
+      }
+    },
+    async created() {
+      await this.getTableData();
+    },
+    mounted() { },
+    methods: {
+      async doUiAction(uiActionId, uiActionData) {
+        switch (uiActionId) {
+          case 'getTableData':
+            await this.getTableData(uiActionData);
+            break;
+          case 'createItem':
+          case 'updateItem':
+            await this.openEditPage(uiActionData);
+            break;
+          case 'handleTableButton':
+            await this.globalHandler.handleTableButton(uiActionData, this)
+            break;
+          case 'historyItem':
+            await this.openHistoryPage(uiActionData);
+            break;
+          case 'deleteItem':
+            await this.globalHandler.confirmEditItemDialog('删除');
+            await this.prepareItemData(uiActionData);
+            await this.doDeleteItem(uiActionData);
+            await this.getTableData(uiActionData);
+            break;
+          case 'restoreItem':
+            await this.globalHandler.confirmEditItemDialog('恢复');
+            await this.prepareItemData(uiActionData);
+            await this.doRestoreItem(uiActionData);
+            await this.getTableData(uiActionData);
+            break;
+          default:
+            console.error("[doUiAction] uiActionId not find", { uiActionId });
+            break;
+        }
+      },
+      /**
+       * 获取表格数据
+       */
+      async getTableData() {
+        this.isTableLoading  = true;
+        const { rows } = (await window.jianghuAxios({
+          data: {
+            appData: {
+              pageId: 'xfPageManagement',
+              actionId: 'selectItemList',
+              actionData: {},
+              where: {},
+              whereIn: {
+                xfPagePublishStatus: this.serverSearchForm.xfPagePublishStatus
+              },
+              whereLike: {
+                xfPageTitle: this.serverSearchForm.xfPageTitle,
+              },
+              orderBy: [{ column: 'operationAt', order: 'desc' }]
+            }
+          }
+        })).data.appData.resultData;
+        rows.forEach((row) => {
+          row.xfPagePublishTime = dayjs(row.xfPagePublishTime).format('YYYY-MM-DD HH:mm:ss');
+          row.xfPageCreateTime = dayjs(row.xfPageCreateTime).format('YYYY-MM-DD HH:mm:ss');
+          row.xfPageUpdateTime = dayjs(row.xfPageUpdateTime).format('YYYY-MM-DD HH:mm:ss');
+        });
+        this.tableDataBackups = rows;
+        this.isTableLoading  = false;
+      },
+
+      async prepareItemData(item) {
+        this.editItem = { ...item };
+      },
+
+      /**
+       * 删除数据
+       */
+      async doDeleteItem() {
+
+        const { xfPageId } = this.editItem;
+        await window.vtoast.loading("回收文章");
+        await window.jianghuAxios({
+          data: {
+            appData: {
+              pageId: 'xfPageEdit',
+              actionId: 'deletedItem',
+              actionData: { xfPageId }
+            }
+          }
+        });
+        await window.vtoast.success("回收文章成功");
+      },
+
+
+      /**
+       * 恢复数据
+       */
+
+      async doRestoreItem() {
+        const { xfPageId } = this.editItem;
+        await window.vtoast.loading("恢复文章");
+        await window.jianghuAxios({
+          data: {
+            appData: {
+              pageId: 'xfPageEdit',
+              actionId: 'restoreItem',
+              actionData: { xfPageId }
+            }
+          }
+        });
+        await window.vtoast.success("恢复文章成功");
+      },
+      openEditPage(item) {
+        if (item) {
+          const { xfPageId, xfPageTitle } = item;
+          window.open(`/${window.appInfo.appId}/page/xfPageEdit?xfPageId=${xfPageId}&title=${xfPageTitle}`);
+        } else {
+          window.open(`/${window.appInfo.appId}/page/xfPageEdit`);
+        }
+      },
+      openHistoryPage(item) {
+        const { xfPageId, xfPageTitle } = item;
+        window.open(`/${window.appInfo.appId}/page/xfPageHistoryManagement?xfPageId=${xfPageId}&title=${xfPageTitle}`);
+      },
+    }
+  })
+</script>
+
+<style scoped>
+</style>
+{% endblock %}

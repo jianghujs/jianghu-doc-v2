@@ -1,0 +1,732 @@
+{% extends 'template/jhTemplateV4.html'%}
+
+{% block vueTemplate %}
+
+<script type="text/html" id="app-template">
+<div>
+<v-app mobile-breakpoint="sm">
+  <jh-menu />
+  <v-main class="mt-15">
+    <!-- 头部内容 >>>>>>>>>>>>> -->
+    <div class="jh-page-second-bar px-8">
+      <v-row>
+        <v-col cols="12" xs="12" sm="12" md="4" xl="3">
+          <div class="py-4 text-body-1 font-weight-bold">文章编辑
+            <!-- 帮助页按钮 -->
+            <v-icon @click="isHelpPageDrawerShown = true" color="success" small>mdi-help-circle-outline
+            </v-icon>
+          </div>
+        </v-col>
+        <!-- pc端的搜索条件表单 >>>>>>>> -->
+        <v-col cols="12" xs="12" sm="12" md="8" xl="9">
+          <v-row class="jh-backend-form-container justify-end ma-0 py-3">
+            <v-btn class="mr-2" v-if="editItem.xfPageId && editItem.xfPagePublishStatus !== 'deleted'" @click="deletedxfPage" color="error" small>移到回收站
+            </v-btn>
+            <v-btn class="mr-2" v-if="editItem.xfPagePublishStatus === 'deleted'" @click="restorexfPage" color="error" small>恢复文章
+            </v-btn>
+            <div class="jh-backend-search-btn">
+              <v-btn class="elevation-0 float-right mt-2 mt-md-0" color="success" small @click="saveInfo">
+                <v-icon class="mr-1" small>mdi-content-save-all</v-icon>
+                保存
+              </v-btn>
+            </div>
+          </v-row>
+        </v-col>
+        <!-- <<<<<<<< pc端的搜索条件表单 -->
+      </v-row>
+    </div>
+    <!-- 页面主要内容 -->
+    <div class="jh-page-body-container px-8" style="min-height: calc(100vh - 200px); max-height: calc(100vh - 200px); ">
+      <v-form v-model="isFormValid" ref="form">
+        <div class="d-flex flex-column">
+          <v-row dense no-gutters>
+            <v-col cols="12" xs="12" sm="4" md="3" xl="2">
+              <v-card class="pa-4" flat>
+
+                <span class="jh-input-label">文章标题</span>
+                <v-text-field class="mb-2" dense filled single-line hide-details color="success"
+                              v-model="editItem.xfPageTitle"
+                              :rules="validationRules.requireRules">
+                </v-text-field>
+
+                <span class="jh-input-label">标签</span>
+                <v-row class="pt-0 ma-0 mb-2">
+                  <v-textarea class="jh-v-input" rows="2" dense filled single-line v-model="editItem.xfPageTagList">
+                  </v-textarea>
+                </v-row>
+
+                <span class="jh-input-label">描述</span>
+                <v-textarea class="jh-v-input mb-4" rows="2" :counter="120" dense filled single-line
+                            v-model="editItem.xfPageDescription"
+                            :rules="[v => (v|| '').length <= 120 || 'Max 120 characters']">
+                </v-textarea>
+                <!-- <v-row class="pt-0 ma-0 pl-2 mb-2">
+                  <v-text-field hide-details dense filled single-line color="success" label="文章分组" v-model="editItem.xfPageGroupName">
+                  </v-text-field>
+                </v-row> -->
+                <span class="jh-input-label">发布状态</span>
+                <v-row class="pt-0 ma-0 mb-2">
+                  <v-select v-model="editItem.xfPagePublishStatus" :items="constantObj.xfPagePublishStatus"
+                            :rules="validationRules.requireRules" label="发布状态" hide-details dense filled single-line hide-no-data
+                            hide-selected/>
+                </v-row>
+
+                <span class="jh-input-label">发布时间</span>
+                <v-row class="pt-0 ma-0 mb-2">
+                  <v-menu offset-y max-width="290">
+                    <template v-slot:activator="{ on, attrs }">
+                      <DatetimePicker okText="确定" clearText="清除" label="发布时间" v-model="editItem.xfPagePublishTime"
+                                      :disabled="false"></DatetimePicker>
+                    </template>
+                    <div>
+                    </div>
+                  </v-menu>
+                </v-row>
+
+                <span class="jh-input-label">选择模板</span>
+                <v-row class="pt-0 ma-0 mb-2">
+                  <v-select dense filled single-line persistent-hint v-model="editItem.template"
+                            :items="xfPageTemplateOptions" label="选择模板" item-text="text"
+                            item-value="value" @change="changeTemplate"></v-select>
+                </v-row>
+              </v-card>
+
+              <v-card class="pa-4 mt-4" flat>
+                <v-toolbar flat dense>
+                  <p class="font-weight-medium mb-0" style="font-size: 16px;">
+                    封面
+                  </p>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      style="width: 20px;height:20px"
+                      @click="pickerImage"
+                  >
+                    <v-icon small>mdi-upload-outline</v-icon>
+                  </v-btn>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      class="ml-2"
+                      color="error"
+                      style="width: 20px;height:20px"
+                      @click.stop="clearImage"
+                      v-if="editItem.xfPageCoverImage"
+                  >
+                    <v-icon small>mdi-trash-can-outline</v-icon>
+                  </v-btn>
+                </v-toolbar>
+
+                <v-card-text class="pa-0 text-center">
+                  <img v-if="editItem.xfPageCoverImage" :src="upload + editItem.xfPageCoverImage" alt=""
+                      style="width: 100%; height: 100%; object-fit: cover;">
+                  <p v-else class="text-center">暂无封面~</p>
+                </v-card-text>
+              </v-card>
+
+              <v-card class="pa-4 mt-4" flat>
+                <v-toolbar flat dense>
+                  <p class="font-weight-medium mb-0" style="font-size: 16px;">
+                    音频
+                  </p>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      style="width: 20px;height:20px"
+                      @click="audioPicker"
+                  >
+                    <v-icon small>mdi-upload-outline</v-icon>
+                  </v-btn>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      class="ml-2"
+                      color="error"
+                      style="width: 20px;height:20px"
+                      @click.stop="clearAudio"
+                      v-if="editItem.xfPageAudioUrl"
+                  >
+                    <v-icon small>mdi-trash-can-outline</v-icon>
+                  </v-btn>
+                </v-toolbar>
+                <v-card-text class="pa-0 text-center">
+                  <v-text-field class="mb-2" dense filled single-line color="success" label="音频链接"
+                                v-model="editItem.xfPageAudioUrl" hide-details>
+                  </v-text-field>
+                  <audio style="max-width: 100%;" v-if="editItem.xfPageAudioUrl"
+                        :src="`/<$ ctx.app.config.appId $>/upload/${editItem.xfPageAudioUrl}?v=${new Date().getTime()}`"
+                        controls>
+                    <source :src="`/<$ ctx.app.config.appId $>/upload/${editItem.xfPageAudioUrl}?v=${new Date().getTime()}`"
+                            type="audio/mpeg">
+                  </audio>
+                  <p v-else class="text-center">暂无音频~</p>
+                </v-card-text>
+              </v-card>
+
+              <v-card class="pa-4 mt-4 mb-4" flat>
+                <v-toolbar flat dense>
+                  <p class="font-weight-medium mb-0" style="font-size: 16px;">
+                    视频
+                  </p>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      style="width: 20px;height:20px"
+                      @click="videoPicker"
+                  >
+                    <v-icon small>mdi-upload-outline</v-icon>
+                  </v-btn>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      class="ml-2"
+                      color="error"
+                      style="width: 20px;height:20px"
+                      @click.stop="clearVideo"
+                      v-if="editItem.xfPageVideoUrl"
+                  >
+                    <v-icon small>mdi-trash-can-outline</v-icon>
+                  </v-btn>
+                </v-toolbar>
+                <v-card-text class="pa-0">
+                  <video style="max-width: 100%;" v-if="editItem.xfPageVideoUrl"
+                        :src="`/<$ ctx.app.config.appId $>/upload/${editItem.xfPageVideoUrl}?v=${new Date().getTime()}`"
+                        controls>
+                    <source :src="`/<$ ctx.app.config.appId $>/upload/${editItem.xfPageVideoUrl}?v=${new Date().getTime()}`"
+                            type="video/mp4">
+                  </video>
+                  <p v-else class="text-center">暂无视频~</p>
+                </v-card-text>
+              </v-card>
+            </v-col>
+            <v-col cols="12" xs="12" sm="8" md="9" xl="10" class="pl-4" style="height: calc(100vh - 160px);">
+              <div>
+                <vue-json-editor v-model="editItem.xfPageConfig" @has-error="onError" height="calc(100vh - 140px)"></vue-json-editor>
+              </div>
+            </v-col>
+          </v-row>
+        </div>
+      </v-form>
+
+    </div>
+    <!-- 选择素材 -->
+    <v-dialog v-model="isEditDrawerShown" hide-overlay fullscreen transition="dialog-bottom-transition">
+      <v-card>
+        <v-toolbar
+            dark
+            width="100%"
+            style="background-color: #fff;"
+        >
+          <div class="black--text ml-2" style="font-size: 16px;">选择素材</div>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn
+                text
+                @click="isEditDrawerShown = false"
+            >
+              <v-icon class="black--text">mdi-close</v-icon>
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <v-divider style="border-color: #eff2f5;opacity:0.8;"></v-divider>
+        <file-browser v-if="isEditDrawerShown" v-on:use-material="useMaterial"
+                      v-on:close-material-picker="closeMaterialPicker" :material-type="materialType">
+        </file-browser>
+      </v-card>
+    </v-dialog>
+
+    <!-- 帮助页抽屉 >>>>>>>>>>>>> -->
+    <v-navigation-drawer v-if="isHelpPageDrawerLoaded" v-model="isHelpPageDrawerShown" :permanent="isHelpPageDrawerShown" fixed temporary right width="80%" class="elevation-24">
+      <iframe style="border: 0" :src="`/${appInfo.appId}/pageDoc#xfpageEdit.md`" width="100%" height="100%"></iframe>
+      <v-btn elevation="0" color="success" fab absolute top left small tile class="drawer-close-float-btn" @click="isHelpPageDrawerShown = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-navigation-drawer>
+    <!-- <<<<<<<<<<<<< 帮助页抽屉 -->
+
+  </v-main>
+  </v-app>
+
+<jh-toast />
+<jh-mask />
+<jh-confirm-dialog />
+</div>
+</script>
+
+<div id="app">
+</div>
+{% endblock %}
+
+{% block vueScript %}
+
+<link href="/<$ ctx.app.config.appId $>/public/plugins/jsoneditor/jsoneditor.min.css" rel="stylesheet">
+<script src="/<$ ctx.app.config.appId $>/public/plugins/jsoneditor/jsoneditor.min.js"></script>
+{% include 'component/fileBrowser/FileBrowser.html' %}
+{% include 'component/datetimePicker.html' %}
+{% include 'component/vueJsonEditor.html' %}
+
+<script type="module">
+new Vue({
+  el: '#app',
+  template: '#app-template',
+  vuetify: new Vuetify(),
+  data: () => ({
+    isHelpPageDrawerShown: false,
+    isHelpPageDrawerLoaded: false,
+    // 表格相关数据
+    isTableZebraLineShown: true,
+    validationRules: {
+      requireRules: [
+        v => !!v || 'This is required',
+      ],
+    },
+    xfPageId: null,
+    isSelectCategoryDialogShow: false,
+    // 表格相关数据
+    isFormValid: true,
+    constantObj: {
+      xfPageTagList: [],
+      xfPagePublishStatus: [
+        {text: "公开", value: "public"},
+        {text: "登录可见", value: "login"},
+        {text: "草稿", value: "draft"},
+        {text: "回收站", value: "deleted"},
+      ],
+    },
+    newXfPageTagList: [],
+    upload: window.appInfo.upload,
+    localImage: null,
+    localAudio: null,
+    localVideo: null,
+    localImageBase64: null,
+    isEditDrawerShown: false,
+    tableFilterKeyword: null,
+    isTableLoading: true,
+    tableDataBackups: [],
+    currentClickButton: {
+      title: '新增文章',
+      action: 'add'
+    },
+    editItem: {},
+    tableRowActionList: [{
+      text: '修改',
+      buttonType: 'edit',
+      color: 'success',
+    }, {
+      text: '删除',
+      buttonType: 'delete',
+      color: 'error',
+    },],
+    xfPageTemplateOptions: JSON.parse('<$ constantUiMap.template | dump | safe $>'),
+    materialType: '',
+    writeBackType: '',
+    editor: null,
+    jsonError: false,
+  }),
+  computed: {
+    tableData() {
+      return this.tableDataBackups;
+    },
+    getEditItem() {
+      const {xfPageConfig, ...data} = this.editItem
+      return {...data, xfPageConfig: JSON.stringify(xfPageConfig)};
+    }
+  },
+  watch: {
+    isHelpPageDrawerShown(val) {
+      if (val) {
+        this.isHelpPageDrawerLoaded = true;
+      }
+    }
+  },
+  async created() {
+    const searchParams = new URLSearchParams(location.search.substring(1));
+    this.xfPageId = searchParams.get('xfPageId');
+  },
+  async mounted() {
+    if (this.xfPageId) {
+      await this.getTableData();
+    }
+  },
+  methods: {
+    // 选择模板
+    changeTemplate(val) {
+      const temp = this.xfPageTemplateOptions.find(template => template.value === val);
+      this.editItem.xfPageConfig = temp.defaultConfig;
+    },
+    onProgress(total, loaded, file) {
+      // TODO: that.progress <v-overlay :value="uploading"  ==>  不好使
+      const progress = Number((loaded * 100 / total).toFixed(2));
+      window.vtoast.loading(`${file.name} 上传进度: ${progress}%`);
+      if (loaded === total) {
+        window.vtoast.success(`${file.name} 上传进度: 100%`);
+      }
+    },
+    async setLocalImage(event) {
+      const file = event.target.files[0];
+      window.vtoast.loading(`${file.name} 上传进度: 0.00%`);
+      const {downloadPath} = (await window.jianghuAxios.httpUploadByStream({
+        file,
+        fileDirectory: `xfPageMaterial/${this.xfPageId}`,
+        onProgress: (total, loaded) => this.onProgress(total, loaded, file)
+      })).data.appData.resultData;
+      this.editItem.xfPageCoverImage = downloadPath;
+    },
+    async setLocalAudio(event) {
+      const file = event.target.files[0];
+      window.vtoast.loading(`${file.name} 上传进度: 0.00%`);
+      const {downloadPath} = (await window.jianghuAxios.httpUploadByStream({
+        file,
+        fileDirectory: `xfPageMaterial/${this.xfPageId}`,
+        onProgress: (total, loaded) => this.onProgress(total, loaded, file)
+      })).data.appData.resultData;
+      if (downloadPath) {
+        this.localAudio = `/${window.appInfo.appId}/upload${downloadPath}`;
+        this.editItem.xfPageAudioUrl = downloadPath;
+      }
+    },
+    async setLocalVideo(event) {
+      const file = event.target.files[0];
+      window.vtoast.loading(`${file.name} 上传进度: 0.00%`);
+      const {downloadPath} = (await window.jianghuAxios.httpUploadByStream({
+        file,
+        fileDirectory: `xfPageMaterial/${this.xfPageId}`,
+        onProgress: (total, loaded) => this.onProgress(total, loaded, file)
+      })).data.appData.resultData;
+      if (downloadPath) {
+        this.localVideo = `/${window.appInfo.appId}/upload${downloadPath}`;
+        this.editItem.xfPageVideoUrl = downloadPath;
+      }
+    },
+    clearImage() {
+      this.editItem.xfPageCoverImage = null;
+    },
+    clearAudio() {
+      this.editItem.xfPageAudioUrl = null;
+    },
+    clearVideo() {
+      this.editItem.xfPageVideoUrl = null;
+    },
+    closeMaterialPicker() {
+      this.isEditDrawerShown = false;
+    },
+    async pickerImage() {
+      if (!await this.xfPageIdCheck()) {
+        window.vtoast.fail("请填写文章信息后,再点击上传文件!");
+        return
+      }
+      // document.getElementById('imageInput').click();
+      this.materialType = 'image';
+      this.writeBackType = 'attachment';
+      this.isEditDrawerShown = true;
+    },
+    async audioPicker() {
+      if (!await this.xfPageIdCheck()) {
+        window.vtoast.fail("请填写文章信息后,再点击上传文件!");
+        return
+      }
+      // document.getElementById('audioInput').click();
+      this.materialType = 'audio';
+      this.writeBackType = 'attachment';
+      this.isEditDrawerShown = true;
+    },
+    async videoPicker() {
+      if (!await this.xfPageIdCheck()) {
+        window.vtoast.fail("请填写文章信息后,再点击上传文件!");
+        return
+      }
+      // document.getElementById('videoInput').click();
+      this.materialType = 'video';
+      this.writeBackType = 'attachment';
+      this.isEditDrawerShown = true;
+    },
+    async openImageUploadDrawer() {
+      if (await this.xfPageIdCheck()) {
+        this.materialType = 'image';
+        this.writeBackType = 'editor';
+        this.isEditDrawerShown = true;
+      }
+    },
+    /**
+     * 获取表格数据
+     */
+    async getTableData() {
+      this.isTableLoading = true;
+      const result = await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'xfPageEdit',
+            actionId: 'selectItemList',
+            where: {
+              xfPageId: this.xfPageId
+            },
+          }
+        }
+      });
+      const editItem = result.data.appData.resultData.rows[0];
+      editItem.xfPageConfig = !editItem.xfPageConfig ? {} : JSON.parse(editItem.xfPageConfig);
+
+      this.editItem = editItem;
+      this.isTableLoading = false;
+    },
+    async xfPageIdCheck() {
+      if (!this.xfPageId) {
+        return await this.insertItem();
+      }
+      return true;
+    },
+    /**
+     * 移除到回收站
+     */
+    async deletedxfPage() {
+      const dialogTapDone = await window.confirmDialog({
+        title: '回收站',
+        content: '确定将文章移到回收站吗？'
+      });
+      if (dialogTapDone) {
+        await window.vtoast.loading("回收文章");
+        await window.jianghuAxios({
+          data: {
+            appData: {
+              pageId: 'xfPageEdit',
+              actionId: 'deletedxfPage',
+              actionData: {xfPageId: this.xfPageId}
+            }
+          }
+        });
+        await window.vtoast.success("回收文章成功");
+        this.getTableData();
+      }
+    },
+    async restorexfPage() {
+      const dialogTapDone = await window.confirmDialog({
+        title: '恢复',
+        content: '确定将文章恢复吗？'
+      });
+      if (dialogTapDone) {
+        await window.vtoast.loading("恢复文章");
+        await window.jianghuAxios({
+          data: {
+            appData: {
+              pageId: 'xfPageEdit',
+              actionId: 'restorexfPage',
+              actionData: {xfPageId: this.xfPageId}
+            }
+          }
+        });
+        await window.vtoast.success("恢复文章成功");
+        this.getTableData();
+      }
+    },
+    /**
+     * 保存数据
+     */
+    async saveInfo() {
+      // 处理 xfPageTagList
+      if (!this.editItem.xfPageTagList) {
+        this.editItem.xfPageTagList = '';
+      }
+
+      const parts = this.editItem.xfPageTagList.replace(/，/g, ',').split(',')
+      this.editItem.xfPageTagList = parts.map(item => item.trim()).join(',')
+      this.editItem.xfPagePublishTime = dayjs(this.editItem.xfPagePublishTime).format();
+      if (this.getEditItem.id) {
+        await this.updateItem();
+      } else {
+        await this.insertItem();
+      }
+    },
+    // 保存并预览
+    async saveInfoAndPreview() {
+      await this.saveInfo();
+      window.location.href = `/${window.appInfo.appId}/page/xfPage/${this.getEditItem.xfPageId}`;
+    },
+    /**
+     * 新增文章
+     */
+    async insertItem() {
+      if (!this.$refs.form.validate()) {
+        window.vtoast.fail({message: "请完善文章信息"})
+        return false;
+      }
+      const {id, xfPageList, categoryName, ...saveInfo} = this.getEditItem;
+      await window.vtoast.loading("新增文章");
+      const result = await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'xfPageEdit',
+            actionId: 'jhInsertItem',
+            actionData: saveInfo
+          }
+        }
+      });
+      await window.vtoast.success("新增文章成功");
+      // 按id获取新文章并跳转新 url
+      await this.reopenEditByArticleId(result.data.appData.resultData.rows[0]);
+      return true;
+    },
+    async reopenEditByArticleId(id) {
+      const rows = (await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'xfPageEdit',
+            actionId: 'selectItemList',
+            actionData: {},
+            where: {id},
+          }
+        }
+      })).data.appData.resultData.rows;
+      const newXfPage = rows[0];
+      const {xfPageId, xfPageTitle} = newXfPage
+      this.xfPageId = xfPageId;
+      await this.getTableData();
+      const newUrl = `/${window.appInfo.appId}/page/xfPageEdit?xfPageId=${xfPageId}&title=${xfPageTitle}`;
+      history.pushState({}, null, newUrl);
+    },
+    /**
+     * 保存文章
+     */
+    async updateItem() {
+      if (!this.$refs.form.validate()) return false;
+      const {id, xfPageList, categoryName, ...saveInfo} = this.getEditItem;
+      await window.vtoast.loading("修改文章");
+      await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'xfPageEdit',
+            actionId: 'jhUpdateItem',
+            actionData: saveInfo,
+            where: {
+              xfPageId: this.getEditItem.xfPageId
+            }
+          }
+        }
+      })
+      await window.vtoast.success("修改文章成功");
+      await this.getTableData();
+      const newUrl = `/${window.appInfo.appId}/page/xfPageEdit?xfPageId=${this.getEditItem.xfPageId}&title=${this.getEditItem.xfPageTitle}`;
+      history.pushState({}, null, newUrl);
+    },
+    async useMaterial({path}) {
+      let filename, downloadPath = null;
+      if (this.materialType === 'image') {
+        const resultData = (await window.jianghuAxios({
+          data: {
+            appData: {
+              pageId: 'xfPageEdit',
+              actionId: 'useMaterial',
+              actionData: {
+                xfPageId: this.xfPageId,
+                path,
+              },
+            }
+          }
+        })).data.appData.resultData;
+        filename = resultData.filename;
+        downloadPath = resultData.downloadPath;
+      } else {
+        downloadPath = `/materialRepo${path}`;
+        filename = path.substring(path.lastIndexOf('/') + 1);
+      }
+
+      this.isEditDrawerShown = false;
+      if (this.writeBackType === 'editor') {
+        this.editHandlerWhenUseMaterial(filename, downloadPath)
+      } else {
+        this.saveHandlerWhenUseMaterial(downloadPath)
+      }
+    },
+    saveHandlerWhenUseMaterial(downloadPath) {
+      switch (this.materialType) {
+        case 'image':
+          if (downloadPath) {
+            this.editItem.xfPageCoverImage = downloadPath
+          }
+          break;
+        case 'audio':
+          if (downloadPath) {
+            this.editItem.xfPageAudioUrl = downloadPath
+          }
+          break;
+        case 'video':
+          if (downloadPath) {
+            this.editItem.xfPageVideoUrl = downloadPath
+          }
+          break;
+        case 'attachment':
+          // attachment如何渲染
+          break;
+      }
+    },
+    editHandlerWhenUseMaterial(filename, downloadPath) {
+      switch (this.materialType) {
+        case 'image':
+          if (downloadPath) {
+            this.editor.insertValue(`\n![${filename}](/upload${downloadPath})`);
+          }
+          break;
+        case 'audio':
+          if (downloadPath) {
+            this.editor.insertValue(`\n![=audio](/upload${downloadPath})`);
+          }
+          break;
+        case 'video':
+          if (downloadPath) {
+            this.editor.insertValue(`\n![=video](/upload${downloadPath})`);
+          }
+          break;
+        case 'attachment':
+          if (downloadPath) {
+            // attachment如何渲染
+            this.editor.insertValue(`\n[${filename}](/upload${downloadPath})`);
+          }
+          break;
+      }
+    },
+    closePage() {
+      window.history.back();
+    },
+    getFileName(path) {
+      if (path) {
+        return path.substring(path.lastIndexOf('/') + 1);
+      }
+      return "点击上传";
+    },
+    // json 错误
+    onError(res) {
+      this.jsonError = res;
+    },
+  }
+})
+</script>
+
+<style scoped>
+body {
+  overflow: auto;
+}
+
+.v-card {
+  height: unset;
+}
+
+:root {
+  --border-color: #eff2f5;
+}
+
+.v-dialog--fullscreen .v-sheet {
+  height: auto;
+  position: relative;
+  background: #fff;
+  display: block;
+}
+</style>
+{% endblock %}

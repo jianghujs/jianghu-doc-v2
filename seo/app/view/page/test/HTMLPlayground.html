@@ -1,0 +1,292 @@
+{% set appId = ctx.app.config.appId %}
+{% set userId = userInfo.userId %}
+{% set username = userInfo.username %}
+{% set adminUrl = ctx.app.config.adminUrl %}
+{% set static = "/" + appId + "/public" %}
+{% set pageUrl = "/" + appId + "/page" %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Jianghu Playground</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- MDB -->
+  <link href="<$ static $>/mdbootstrap/font-awesome.min.css?v=6.0.0" rel="stylesheet" />
+  <link href="<$ static $>/mdbootstrap/roboto-font.css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <link href="<$ static $>/mdbootstrap/mdb.min.css?v=4.2.0" rel="stylesheet" />
+
+  <!-- codemirror -->
+  <script src="https://cdn.staticfile.org/codemirror/5.40.2/codemirror.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/codemirror/5.40.2/codemirror.min.css">
+  <script src="https://cdn.staticfile.org/codemirror/5.40.2/mode/htmlmixed/htmlmixed.min.js"></script>
+  <!-- <script src="https://cdn.staticfile.org/codemirror/5.40.2/mode/css/css.min.js"></script> -->
+  <!-- <script src="https://cdn.staticfile.org/codemirror/5.40.2/mode/javascript/javascript.min.js"></script> -->
+  <!-- <script src="https://cdn.staticfile.org/codemirror/5.40.2/mode/xml/xml.min.js"></script> -->
+  <script src="https://cdn.staticfile.org/codemirror/5.40.2/addon/edit/closetag.min.js"></script>
+  <script src="https://cdn.staticfile.org/codemirror/5.40.2/addon/edit/closebrackets.min.js"></script>
+  <script src="https://cdn.staticfile.org/split.js/1.6.5/split.min.js"></script>
+  <!--[if lt IE 9]>
+<script src="//cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+<![endif]-->
+  <style>
+    body {
+      background: #f6f6f6;
+    }
+
+    .split {
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+    }
+
+    header {
+      box-shadow: 0 0 4px #00000054;
+      background-color: white;
+      position: relative;
+    }
+
+    .editor-container {
+      height: calc(100% - 55px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .jh-repl {
+      --bg: #fff;
+      --bg-soft: #f8f8f8;
+      --border: #ddd;
+      --text-light: #888;
+      --font-code: Menlo, Monaco, Consolas, "Courier New", monospace;
+      --color-branding: #42b883;
+      --color-branding-dark: #416f9c;
+      --header-height: 38px;
+      font-size: 13px;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
+      margin: 0;
+      overflow: hidden;
+      background-color: var(--bg-soft);
+      height: calc(100vh - 56px);
+    }
+
+    .CodeMirror {
+      height: 100%;
+    }
+
+
+    #iframeResult {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+
+    .gutter {
+      background-color: #f6f6f6;
+      background-repeat: no-repeat;
+      background-position: 50%;
+    }
+
+    .gutter.gutter-horizontal {
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+      cursor: col-resize;
+    }
+
+    /* 屏幕小于600 则改变 split-0 split-1 为上下排列 */
+    @media screen and (max-width: 600px) {
+      .split {
+        flex-direction: column;
+        height: calc(100vh - 56px);
+      }
+
+      #split-0,
+      #split-1 {
+        height: 50%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <header class="py-2">
+    <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 2fr 1fr;">
+      <h5 class="mb-0"><img height="40px" src="/<$ ctx.app.config.appId $>/public/logo02.png">&nbsp;&nbsp;<span
+          class="ml-3">Jianghu Playground</span></h5>
+
+      <div class="d-flex justify-content-end align-items-center">
+        <button type="button" class="btn btn-success float-end btn-sm" onclick="share()" id="submitBTN">
+          <i class="fas fa-share-alt"></i>&nbsp;分享
+        </button>
+      </div>
+    </div>
+  </header>
+
+
+  <div class="container-fluid p-0 jh-repl">
+    <div class="split">
+      <div id="split-0" class="bg-body rounded shadow-sm ">
+        <div style="height: 100%;">
+          <div class="card-header">
+            <button type="button" onclick="resetCode()" class="btn btn-outline-warning btn-sm">重置</button>
+            <!-- <button type="button" onclick="downloadCode()" class="btn btn-outline-dark p-2"><svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-cloud-download-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z">
+                </path>
+              </svg> 下载代码</button> -->
+            <button type="button" class="btn btn-success float-end btn-sm" onclick="submitTryit()" id="submitBTN">
+              点击运行&nbsp;<i class="fas fa-arrow-right jianghu-home-hero-icon-right"></i>
+            </button>
+          </div>
+          <div class="editor-container">
+            <textarea class="form-control" id="textareaCode" name="textareaCode" style="display: none;">
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <div id="split-1" class="bg-body rounded shadow-sm">
+        <div style="height: 100%;">
+          <div class="card-header">
+            <!-- <button type="button" class="btn btn-sm" data-mdb-ripple-color="dark">运行结果：</button> -->
+            <button type="button" class="btn btn-sm" disabled>运行结果</button>
+            <!-- <button type="button" class="btn btn-warning float-end" id="framesize">尺寸: <span>813 x 645</span></button> -->
+          </div>
+          <div class="editor-container">
+            <div id="iframewrapper" style="height: 100%;">
+              <iframe frameborder="0" id="iframeResult" style="height: 100%;" src=""></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var mixedMode = {
+      name: "htmlmixed",
+      scriptTypes: [{
+        matches: /\/x-handlebars-template|\/x-mustache/i,
+        mode: null
+      },
+      {
+        matches: /(text|application)\/(x-)?vb(a|script)/i,
+        mode: "vbscript"
+      }]
+    };
+    var editor = CodeMirror.fromTextArea(document.getElementById("textareaCode"), {
+      mode: mixedMode,
+      selectionPointer: true,
+      lineNumbers: true,
+      matchBrackets: true,
+      indentUnit: 4,
+      indentWithTabs: true
+    });
+
+    window.addEventListener("resize", autodivheight);
+
+    var x = 0;
+    function autodivheight() {
+      // var winHeight=0;
+      // if (window.innerHeight) {
+      //     winHeight = window.innerHeight;
+      // } else if ((document.body) && (document.body.clientHeight)) {
+      //     winHeight = document.body.clientHeight;
+      // }
+      // //通过深入Document内部对body进行检测，获取浏览器窗口高度
+      // if (document.documentElement && document.documentElement.clientHeight) {
+      //     winHeight = document.documentElement.clientHeight;
+      // }
+      // height = winHeight*0.68 + 4
+      // editor.setSize('100%', height+28); 
+      // document.getElementById("iframeResult").style.height= "100%";
+      // showFrameSize();
+
+    }
+    function resetCode() {
+      var initCode = `<$ codeView.codeContent | safe $>`;
+      editor.getDoc().setValue(initCode);
+      submitTryit();
+    }
+    function submitTryit() {
+      var text = editor.getValue();
+      var patternHtml = /<html[^>]*>((.|[\n\r])*)<\/html>/im
+      var patternHead = /<head[^>]*>((.|[\n\r])*)<\/head>/im
+      var array_matches_head = patternHead.exec(text);
+      var patternBody = /<body[^>]*>((.|[\n\r])*)<\/body>/im;
+
+      var array_matches_body = patternBody.exec(text);
+      var basepath_flag = 1;
+      var basepath = '';
+      if (basepath_flag) {
+        basepath = '<base href="https://www.runoob.com/try/demo_source/" target="_blank">';
+      }
+      if (array_matches_head) {
+        text = text.replace('<head>', '<head>' + basepath);
+      } else if (patternHtml) {
+        text = text.replace('<html>', '<head>' + basepath + '</head>');
+      } else if (array_matches_body) {
+        text = text.replace('<body>', '<body>' + basepath);
+      } else {
+        text = basepath + text;
+      }
+      var ifr = document.createElement("iframe");
+      ifr.setAttribute("frameborder", "0");
+      ifr.setAttribute("id", "iframeResult");
+
+      document.getElementById("iframewrapper").innerHTML = "";
+      document.getElementById("iframewrapper").appendChild(ifr);
+
+      var ifrw = (ifr.contentWindow) ? ifr.contentWindow : (ifr.contentDocument.document) ? ifr.contentDocument.document : ifr.contentDocument;
+      ifrw.document.open();
+      ifrw.document.write(text);
+      ifrw.document.close();
+      autodivheight();
+    }
+    submitTryit();
+    autodivheight();
+    // 屏幕大于 600 运行
+    if (window.innerWidth > 600) {
+      var mySplit = Split(['#split-0', '#split-1'], {
+        sizes: [50, 50], gutterSize: 2
+      });
+    }
+
+    // 分享功能，点击分享按钮，复制当前页面链接，并弹出复制成功提示
+    function share() {
+      var Url2 = document.getElementById("iframeResult").contentWindow.location.href;
+      var oInput = document.createElement('input');
+      oInput.value = Url2;
+      document.body.appendChild(oInput);
+      oInput.select(); // 选择对象
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      oInput.className = 'oInput';
+      oInput.style.display = 'none';
+      alert('复制分享链接成功，快分享给你的好友吧')
+    }
+
+    function runoob_getStyleValue(elmnt, style) {
+      if (window.getComputedStyle) {
+        return window.getComputedStyle(elmnt, null).getPropertyValue(style);
+      } else {
+        return elmnt.currentStyle[style];
+      }
+    }
+    function showFrameSize() {
+      var t;
+      var width, height;
+      width = Number(runoob_getStyleValue(document.getElementById("iframeResult"), "width").replace("px", "")).toFixed();
+      height = Number(runoob_getStyleValue(document.getElementById("iframeResult"), "height").replace("px", "")).toFixed();
+      document.getElementById("framesize").innerHTML = "尺寸: <span>" + width + " x " + height + "</span>";
+
+    }
+
+    function downloadCode() {
+      download(editor.getValue(), "runoob-tryhtml_intro.html", "text/html");
+    }
+    resetCode()
+  </script>
+
+</body>
+</html>

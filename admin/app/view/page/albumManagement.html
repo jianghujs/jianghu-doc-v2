@@ -1,0 +1,496 @@
+{% extends 'template/jhTemplateV4.html'%}
+
+{% block vueTemplate %}
+
+<script type="text/html" id="app-template">
+<div>
+<v-app mobile-breakpoint="sm">
+  <jh-menu />
+  <v-main class="mt-15">
+    <!-- 头部内容 >>>>>>>>>>>>> -->
+    <div class="jh-page-second-bar px-8">
+      <div class="py-4 text-body-1 font-weight-bold">精选集管理
+        <!-- 帮助页按钮 -->
+        <span role="button" class="success--text font-weight-regular jh-font-size-13 ml-2" @click="isHelpPageDrawerShown = true">
+          <v-icon size="13" class="success--text">mdi-help-circle-outline</v-icon>帮助
+        </span>
+      </div>
+    </div>
+    <!-- <<<<<<<<<<<<< 头部内容 -->
+
+    <div class="jh-page-body-container px-8">
+      <v-card>
+        <v-row class="ma-0 pa-4">
+          <v-col cols="12" xs="4" sm="4" md="4" xl="4" class="pa-0">
+            <v-btn color="success" dark class="elevation-0 mr-2" small
+                  @click="doUiAction('handleTableButton', { text: '新增', buttonType: 'add' })">新增
+            </v-btn>
+            <!-- <span class="body-2">共{{ tableDataFromBackend.length }}条记录</span> -->
+          </v-col>
+          <v-spacer></v-spacer>
+          <v-col cols="12" xs="8" sm="4" md="3" xl="3" class="pa-0">
+            <v-text-field v-model="searchInput" prefix="表格过滤：" class="jh-v-input" dense filled
+                          single-line></v-text-field>
+          </v-col>
+        </v-row>
+        <v-data-table 
+          fixed-header 
+          :headers="headers" 
+          :items="tableDataFromBackend" 
+          :search="searchInput"
+          :footer-props="{ itemsPerPageOptions: [20, 40, 60, 100, -1] }" :items-per-page="20"
+          mobile-breakpoint="0"
+          :loading="isTableLoading" checkbox-color="success"
+          class="jh-fixed-table-height elevation-0 mt-0 mb-xs-4 flex-fill d-flex flex-column"
+          :class="{'zebraLine': isTableZebraLineShown }"
+        >
+          <template v-slot:item.albumQuery="{ item }">
+            {{ JSON.stringify(item.albumQuery) }}
+          </template>
+          <template v-slot:item.albumStatus="{ item }">
+            <v-chip small :color="item.albumStatus | statusColor">
+              {{ item.albumStatus | parseStatus }}
+            </v-chip>
+          </template>
+          <template v-slot:item.action="{ item }">
+            <template v-if="!isMobile">
+              <span role="button" class="success--text font-weight-medium font-size-2 mr-2" @click="doUiAction('handleTableButton', { text: '修改', buttonType: 'edit', item })">
+                <v-icon size="16" class="success--text">mdi-note-edit-outline</v-icon>修改
+              </span>
+              <span role="button" class="success--text font-weight-medium font-size-2 mr-2" @click="doUiAction('getDrawerData', { item })">
+                <v-icon size="16" class="success--text">mdi-file-document-outline</v-icon>查看精选集
+              </span>
+              <span v-if="item.xfPagePublishStatus !== 'deleted'" role="button" class="error--text font-weight-medium font-size-2" @click="doUiAction('handleTableButton', { text: 'item', buttonType: 'delete', item })">
+                <v-icon size="16" class="error--text">mdi-trash-can-outline</v-icon>删除
+              </span>
+            </template>
+            <!-- 手机端 -->
+            <v-menu offset-y v-if="isMobile">
+              <template v-slot:activator="{ on, attrs }">
+                <span role="button" class="success--text font-weight-medium font-size-2"
+                  v-bind="attrs" v-on="on">
+                  操作<v-icon size="14" class="success--text">mdi-chevron-down</v-icon>
+                </span>
+              </template>
+              <v-list dense>
+                <v-list-item @click="doUiAction('handleTableButton', { text: '修改', buttonType: 'edit', item })">
+                  <v-list-item-title>修改</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="doUiAction('getDrawerData', { item })">
+                  <v-list-item-title>查看精选集</v-list-item-title>
+                </v-list-item>
+                <v-list-item v-if="item.xfPagePublishStatus !== 'deleted'" @click="doUiAction('handleTableButton', { text: 'item', buttonType: 'delete', item })">
+                  <v-list-item-title>删除</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </template>
+          <!-- 没有数据 -->
+          <template v-slot:loading>
+            <div class="jh-no-data">数据加载中</div>
+          </template>
+          <template v-slot:no-data>
+            <div class="jh-no-data">暂无数据</div>
+          </template>
+          <template v-slot:no-results>
+            <div class="jh-no-data">暂无数据</div>
+          </template>
+          <!-- 表格分页 -->
+          <template v-slot:footer.page-text="pagination">
+            <span>{{pagination.pageStart}}-{{pagination.pageStop}}</span>
+            <span class="ml-1">共{{pagination.itemsLength}}条</span>
+          </template>
+        </v-data-table>
+
+      </v-card>
+    </div>
+    <drawer-form v-model="isEditDrawerShown"
+                ref="form"
+                :headers="headers"
+                :editItem="editItem"
+                :currentClickButton="currentClickButton"
+                :constantObj="constantObj"
+                @save="doUiAction"
+    >
+      <span class="jh-input-label">精选集查询sql配置</span>
+      <vue-json-editor v-model="editItem.albumQuery" :show-btns="true" :mode="'code'" lang="zh" @json-change="onJsonChange"
+                      @json-save="onJsonSave" @has-error="onError"></vue-json-editor>
+    </drawer-form>
+    <v-navigation-drawer v-model="isArticleDrawerShown" :permanent="isArticleDrawerShown" fixed temporary right width="80%" class="elevation-24 pa-5">
+      <v-data-table 
+        fixed-header
+        :headers="articleHeaders"
+        :items="articleTableData"
+        :footer-props="{ itemsPerPageOptions: [20, 40, 60, 100, -1] }"
+        :items-per-page="20"
+        mobile-breakpoint="0" class="elevation-0 mt-0 mb-xs-4 flex-fill d-flex flex-column"
+        :class="{'zebraLine': isTableZebraLineShown }"
+      >
+        <template v-slot:item.articlePublishStatus="{ item }">
+          <v-chip small :color="item.articlePublishStatus | statusColor">
+            {{ item.articlePublishStatus | parseStatus }}
+          </v-chip>
+        </template>
+        <template v-slot:item.action="{ item }">
+          <span role="button" class="success--text font-weight-medium font-size-2" @click="doUiAction('viewArticleContent', {item})">
+            <v-icon size="16" class="success--text">mdi-file-document-outline</v-icon>查看
+          </span>
+        </template>
+        <!-- 没有数据 -->
+        <template v-slot:loading>
+          <div class="jh-no-data">数据加载中</div>
+        </template>
+        <template v-slot:no-data>
+          <div class="jh-no-data">暂无数据</div>
+        </template>
+        <template v-slot:no-results>
+          <div class="jh-no-data">暂无数据</div>
+        </template>
+        <!-- 表格分页 -->
+        <template v-slot:footer.page-text="pagination">
+          <span>{{pagination.pageStart}}-{{pagination.pageStop}}</span>
+          <span class="ml-1">共{{pagination.itemsLength}}条</span>
+        </template>
+      </v-data-table>
+      <!-- 抽屉关闭按钮 -->
+      <v-btn
+        elevation="0" color="success" fab absolute top left small tile class="drawer-close-float-btn"
+        @click="isArticleDrawerShown = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-navigation-drawer>
+    <!-- 帮助页抽屉 >>>>>>>>>>>>> -->
+    <v-navigation-drawer v-if="isHelpPageDrawerLoaded" v-model="isHelpPageDrawerShown" :permanent="isHelpPageDrawerShown" fixed temporary right width="80%" class="elevation-24">
+      <iframe
+        style="border: 0" :src="`/${appInfo.appId}/pageDoc#album.md`" width="100%"
+        height="100%"></iframe>
+
+      <v-btn
+        elevation="0" color="success" fab absolute top left small tile class="drawer-close-float-btn"
+        @click="isHelpPageDrawerShown = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-navigation-drawer>
+    <!-- <<<<<<<<<<<<< 帮助页抽屉 -->
+</v-main>
+</v-app>
+
+<jh-toast />
+<jh-mask />
+<jh-confirm-dialog />
+
+</div>
+</script>
+
+<div id="app">
+</div>
+
+{% endblock %}
+
+{% block vueScript %}
+<link href="/<$ ctx.app.config.appId $>/public/plugins/jsoneditor/jsoneditor.css" rel="stylesheet">
+<script src="/<$ ctx.app.config.appId $>/public/plugins/jsoneditor/jsoneditor.js"></script>
+{% include 'common/jianghuJs/fixedTableHeightV4.html' %}
+{% include 'component/drawerForm.html' %}
+{% include 'component/vueJsonEditor.html' %}
+{% include 'component/vueFilters.html' %}
+{% include 'component/globalHandler.html' %}
+<script type="module">
+new Vue({
+  el: '#app',
+  template: '#app-template',
+  vuetify: new Vuetify(),
+  mixins: [window.jianghuUiActionMixins],
+  data: () => ({
+    isHelpPageDrawerShown: false,
+    isHelpPageDrawerLoaded: false,
+    // 表格相关数据
+    isTableZebraLineShown: true,
+    validationRules: {
+      requireRules: [
+        v => !!v || 'This is required',
+      ],
+    },
+    globalHandler: new GlobalHandler(),
+    // 表格相关数据
+    constantObj: {
+      albumStatus: [
+        {text: "启用", value: "active"},
+        {text: "禁用", value: "disabled"},
+      ],
+      articlePublishStatus: [
+        {text: "登录可见", value: "login"},
+        {text: "草稿", value: "draft"},
+        {text: "回收站", value: "deleted"},
+      ],
+    },
+    isEditDrawerShown: false,
+    searchInput: null,
+    isTableLoading: true,
+    tableDataFromBackend: [],
+    headers: [
+      // {text: "ID", value: "id", width: 120, class: 'fixed', cellClass: 'fixed', edit: false},
+      {text: "精选集ID", value: "albumId", width: 120, required: true},
+      {text: "精选集标题", value: "albumTitle", width: 120, required: true},
+      {text: "排序", value: "albumSort", width: 80, type: 'number', required: true},
+      {text: "精选集状态", value: "albumStatus", width: 120, type: 'select', required: true},
+      {text: "精选集查询sql配置", value: "albumQuery", width: 120, type: 'slot'},
+      {text: "操作者", value: "operationByUser", width: 120, edit: false},
+      {text: "操作时间", value: "operationAt", width: 150, edit: false},
+      {text: '操作', value: 'action', align: 'center', sortable: false, width: window.innerWidth < 600 ? 80 : 220, class: 'fixed', cellClass: 'fixed', edit: false},
+    ],
+
+    currentClickButton: {title: '新增', action: 'add', uiAction: 'insertItem'},
+    editItem: {},
+    nextPageNum: null,
+
+    isArticleDrawerShown: null,
+    articleIsTableLoading: null,
+    articleTableData: [],
+    articleHeaders: [
+      {text: '操作', value: 'action', align: 'center', sortable: false, width: 50},
+      // {text: "ID", value: "id", width: 120, class: 'fixed', cellClass: 'fixed'},
+      {text: "文章ID", value: "articleId", width: 120},
+      {text: "文章标题", value: "articleTitle", width: 250},
+      {text: "归属分类", value: "categoryName", width: 120},
+      {text: "发布状态", value: "articlePublishStatus", width: 120, type: 'select', required: true},
+      {text: "发布时间", value: "articlePublishTime", width: 220},
+      {text: "音频URL", value: "articleAudioUrl", width: 120},
+      {text: "视频URL", value: "articleVideoUrl", width: 120},
+      {text: "修改者", value: "articleUpdateUsername", width: 120, edit: false},
+      {text: "修改时间", value: "articleUpdateTime", width: 220, edit: false},
+      {text: "创建者", value: "articleCreateUsername", width: 120, edit: false},
+      {text: "创建时间", value: "articleCreateTime", width: 220, edit: false},
+    ],
+  }),
+  computed: {
+    isMobile() {
+      return window.innerWidth < 600;
+    }
+  },
+  watch: {
+    isHelpPageDrawerShown(val) {
+      if (val) {
+        this.isHelpPageDrawerLoaded = true;
+      }
+    }
+  },
+  async created() {
+    this.doUiAction('getTableData');
+  },
+  methods: {
+    async doUiAction(uiActionId, uiActionData) {
+      switch (uiActionId) {
+        case 'getTableData':
+          await this.getTableData();
+          break;
+        case 'getDrawerData':
+          await this.getArticleTableData(uiActionData);
+          break;
+        case 'handleTableButton':
+          await this.globalHandler.handleTableButton(uiActionData, this)
+          break;
+        case 'insertItem':
+          await this.globalHandler.validateSaveItem(this);
+          await this.globalHandler.confirmEditItemDialog('新增');
+          await this.insertItem();
+          await this.globalHandler.editItemSuccess('新增', this);
+          await this.getTableData();
+          break;
+        case 'updateItem':
+          await this.globalHandler.validateSaveItem(this);
+          await this.globalHandler.confirmEditItemDialog('修改');
+          await this.updateItem();
+          await this.globalHandler.editItemSuccess('修改', this);
+          await this.getTableData();
+          break;
+        case 'deleteItem':
+          await this.globalHandler.confirmEditItemDialog('删除');
+          await this.deleteItem();
+          await this.globalHandler.editItemSuccess('删除', this);
+          await this.getTableData();
+          break;
+        default:
+          console.error("[doUiAction] uiActionId not find", {uiActionId});
+          break;
+      }
+    },
+    async getTableData() {
+      this.isTableLoading = true;
+      const rows = (await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'albumManagement',
+            actionId: 'selectItemList',
+            actionData: {},
+            where: {},
+            orderBy: [{column: 'albumSort', order: 'asc'}]
+          }
+        }
+      })).data.appData.resultData.rows;
+
+      for (const item of rows) {
+        item.albumQuery = JSON.parse(item.albumQuery || '{}')
+        item.operationAt = dayjs(item.operationAt).format('YYYY-MM-DD HH:mm:ss');
+      }
+      this.tableDataFromBackend = rows;
+      this.isTableLoading = false;
+    },
+
+    async getArticleTableData({item}) {
+      this.editItem = {...item};
+      const albumId = item.albumId
+      this.articleTableData = [];
+      this.articleIsTableLoading = albumId;
+      const rows = (await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'albumManagement',
+            actionId: 'viewAlbumArticleList',
+            actionData: { albumId,  offset: 10000 },
+          }
+        }
+      })).data.appData.resultData.rows;
+      this.isArticleDrawerShown = true;
+      this.articleTableData = rows;
+      this.articleIsTableLoading = null;
+    },
+
+    async closeisArticleDrawerShown() {
+      this.isArticleDrawerShown = false;
+    },
+
+    // startCreateItem
+    async clearItemData() {
+      this.editItem = {};
+    },
+
+    async openCreateItemDialog() {
+      this.currentClickButton = {action: 'add', title: '新增', uiAction: 'insertItem'};
+      this.isEditDrawerShown = true;
+    },
+
+    // createItem
+    async prepareValidate() {
+      if (!this.$refs.form.validate()) return false;
+    },
+
+    async confirmCreateItemDialog() {
+      return window.confirmDialog({title: '新增', content: '确定新增吗？'})
+    },
+
+    /**
+     * 新增数据
+     */
+    async insertItem() {
+      await window.vtoast.loading("保存中");
+      await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'albumManagement',
+            actionId: 'insertItem',
+            actionData: this.editItem
+          }
+        }
+      })
+    },
+
+    async closeDrawerShow() {
+      this.isEditDrawerShown = false;
+    },
+
+    // startUpdateItem
+    async prepareItemData({item}) {
+      this.editItem = {...item};
+    },
+
+    async openUpdateItemDialog() {
+      this.currentClickButton = {action: 'edit', title: '修改', uiAction: 'updateItem'};
+      this.isEditDrawerShown = true;
+    },
+
+
+    /**
+     * 保存
+     */
+    async updateItem() {
+      const id = this.editItem.id;
+      delete this.editItem.id;
+      await window.vtoast.loading("修改数据中");
+      await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'albumManagement',
+            actionId: 'updateItem',
+            actionData: {...this.editItem, albumQuery: JSON.stringify(this.editItem.albumQuery)},
+            where: {id: id}
+          }
+        }
+      })
+    },
+
+    /**
+     * 删除数据
+     */
+    async deleteItem() {
+      const {id} = this.editItem;
+      await window.vtoast.loading("删除数据");
+      await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'albumManagement',
+            actionId: 'deleteItem',
+            actionData: {},
+            where: {id: id}
+          }
+        }
+      });
+    },
+
+    async viewAlbumContent() {
+      const {albumId} = this.editItem;
+      const resultData = (await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'albumManagement',
+            actionId: 'viewAlbumArticleList',
+            actionData: {albumId},
+          }
+        }
+      })).data.appData.resultData;
+      const articleTitleList = resultData.rows.map(row => row.title);
+      const {total, pageSize, nextPageNum} = resultData;
+      this.nextPageNum = nextPageNum;
+    },
+
+    parseConstantValue(key, _value) {
+      const constantObjItemFind = this.constantObj[key].find(({value}) => value === _value);
+      if (constantObjItemFind) {
+        return constantObjItemFind.text;
+      }
+      return _value;
+    },
+    dialogIsOpen() {
+      return window.dialogIsOpen;
+    },
+    onJsonChange() {
+
+    },
+    onJsonSave(value) {
+      if (this.jsonObj.type === 'ui') {
+        this.ui.list[this.jsonObj.index][this.jsonObj.key] = JSON.stringify(value);
+      } else {
+        this.resource.list[this.jsonObj.index][this.jsonObj.key] = JSON.stringify(value);
+      }
+      this.editJsonDialog = false;
+    },
+    onError(res) {
+      this.jsonError = res;
+    },
+  }
+})
+</script>
+
+<style scoped>
+</style>
+{% endblock %}

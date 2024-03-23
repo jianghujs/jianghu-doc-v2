@@ -1,0 +1,424 @@
+{% set appId = ctx.app.config.appId %}
+{% set userId = userInfo.userId %}
+{% set username = userInfo.username %}
+{% set adminUrl = ctx.app.config.adminUrl %}
+{% set static = "/" + appId + "/public" %}
+{% set pageUrl = "/" + appId + "/page" %}
+{% set seoResource = "/" + appId + "/upload/seoResource" %}
+{% import "component/macro.html" as macro %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- 设置网站的favicon -->
+  <link rel="icon" href="/<$ appId $>/upload/seoResource/image/favicon.ico" type="image/x-icon">
+  <meta name=renderer content=webkit>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="max-age=7200" />
+  <!-- <meta name="referrer" content="no-referrer"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="{% block keyword %}{% endblock %}<$ site_keywords $>" />
+  <meta name="description" content="{% block description %}{% endblock %}" />
+  <!-- OGP分享协议开始 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{% block ogp_title %}{% endblock %}">
+  <meta property="og:description" content="{% block ogp_desc %}{% endblock %}">
+  <meta property="og:pageUrl" content="<$ request.scheme $>://<$ request.META.HTTP_HOST $><$ request.path_info $>">
+
+
+  <script type="text/javascript">
+    window.appInfo = {
+      appId: '<$ ctx.app.config.appId $>',
+      upload: '/<$ ctx.app.config.appId $>/upload',
+      public: '/<$ ctx.app.config.appId $>/public',
+      userAgent: navigator.userAgent || '',
+    }
+    if (window.appInfo.userAgent.length > 127) {
+      window.appInfo.userAgent = window.appInfo.userAgent.substring(0, 126);
+    }
+  </script>
+
+  <!-- OGP分享协议结束 -->
+  <title>{% block title %}{% endblock %} - <$ ctx.app.config.appTitle $></title>
+  <!-- MDB -->
+  <link href="<$ static $>/mdbootstrap/font-awesome.min.css?v=6.0.0" rel="stylesheet"/>
+  <link href="<$ static $>/mdbootstrap/roboto-font.css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+  <link href="<$ static $>/mdbootstrap/mdb.min.css?v=4.2.0" rel="stylesheet"/>
+  <!-- css -->
+  {% include 'util/jianghu/jianghuUiCss.html' %}
+  {% include 'util/jianghu/jianghuCommonCss.html' %}
+  <!-- js -->
+  <script src="<$ static $>/lib/jquery/jquery.min.js?v=1.0.5"></script>
+  <script src="<$ static $>/lib/jquery/jquery.cookie.min.js?v=1.0.5"></script>
+  <script src="<$ static $>/lib/lodash/lodash.min.js?v=1.0.5"></script>
+  <!-- meilisearch docs-searchbar.min.css -->
+  <link href="<$ static $>/meilisearch/docs-searchbar.min.css" rel="stylesheet">
+  <script src="<$ static $>/meilisearch/docs-searchbar.min.js"></script>
+  <script src='<$ static $>/meilisearch/meilisearch.umd.js'></script>
+  <script src='<$ static $>/lib/axios/axios.min.js'></script>
+  <!-- <script async defer type='module' data-host-url='<$ ctx.app.config.junshiHost $>'
+    data-website-id='<$ ctx.app.config.junshiWebsiteUuid $>'
+    src='<$ ctx.app.config.junshiHost $>/junshi/public/client/junshi.js'></script> -->
+  {% block css %}{% endblock %}
+</head>
+
+<body data-mdb-target="#scrollspy" data-mdb-offset="0" class="grey-bg">
+  <!-- 遮罩 -->
+  <div class="vt-backdrop backdrop"></div>
+
+  <!-- header -->
+  <header class="VPNav nav-bar">
+    <div class="VPNavBar">
+      <div class="jianghu-header-mobile-container">
+        <a class="VPNavBarTitle jianghu-logo-text" href="/">
+          <img
+              src="<$ ctx.app.config.appLogo $>"
+              class="jianghu-header-mobile-logo"
+              alt="openjianghu"
+          />
+          <span class="text"><$ constantUiMap.header.title | safe $></span>
+        </a>
+
+        <!-- 搜索-pc -->
+        <div class="VPNavBarSearch search jh-header-search-pc">
+          <div id="docsearch" data-mdb-toggle="modal" data-mdb-target="#searchModal">
+            <button type="button" class="DocSearch DocSearch-Button" aria-label="Search">
+              <span class="DocSearch-Button-Container">
+                <svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20">
+                  <path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <span class="DocSearch-Button-Placeholder">Search</span>
+              </span>
+              <span class="DocSearch-Button-Keys"><kbd class="DocSearch-Button-Key" id="search-ctrlKey">⌘</kbd><kbd class="DocSearch-Button-Key">K</kbd></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="jianghu-header-mobile-content">
+
+            <!-- 搜索-移动端 -->
+            <div class="VPNavBarSearch search jh-header-search-mobile">
+              <div id="docsearch" data-mdb-toggle="modal" data-mdb-target="#searchModal">
+                <button type="button" class="DocSearch DocSearch-Button" aria-label="Search">
+                  <span class="DocSearch-Button-Container">
+                    <svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20">
+                      <path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 菜单 -->
+            <nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu menu-list pe-2">
+              {% for menu in constantUiMap.header.menuList %}
+                {% if menu.isLogin == false %}
+                  <$ macro.webMueuItem(menu, ctx.app.config.appId) $>
+                {% endif %}
+                {% if menu.isLogin == true and userId %}
+                  <$ macro.webMueuItem(menu, ctx.app.config.appId) $>
+                {% endif %}
+              {% endfor %}
+            </nav>
+
+            {% if constantUiMap.header.userAction.isOpen %}
+              {% if username %}
+              <nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu ms-2">
+                <div class="vt-flyout VPNavBarMenuGroup">
+                  <button type="button" class="vt-flyout-button" aria-haspopup="true" aria-expanded="false" aria-label="extra navigation">
+                    <span class="vt-flyout-button-text"><$ username $>
+                      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="vt-flyout-button-text-icon">
+                        <path d="M12,16c-0.3,0-0.5-0.1-0.7-0.3l-6-6c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l5.3,5.3l5.3-5.3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-6,6C12.5,15.9,12.3,16,12,16z"></path></svg>
+                    </span>
+                  </button>
+                  <div class="vt-flyout-menu">
+                    <div class="vt-menu">
+                      <div class="vt-menu-items">
+                        {% if constantUiMap.header.userAction.admin %}
+                        <a class="vt-link link vt-menu-link" href="<$ adminUrl $>" title="<$ constantUiMap.button.manage $>" target="_blank"><$ constantUiMap.button.manage $></a>
+                        {% endif %}
+                        {% if constantUiMap.header.userAction.password %}
+                        <a class="vt-link link vt-menu-link" href="javascript:void(0);" title="<$ constantUiMap.button.changePassword $>" data-mdb-toggle="modal" data-mdb-target="#changePwdModal"><$ constantUiMap.button.changePassword $></a>
+                        {% endif %}
+                        {% if constantUiMap.header.userAction.logout %}
+                        <a class="vt-link link vt-menu-link" href="javascript:void(0);" title="<$ constantUiMap.button.logout $>" onclick="logout()"><$ constantUiMap.button.logout $></a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+              {% else %}
+              <nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu ms-2">
+                <div class="vt-flyout VPNavBarMenuGroup">
+                  <button type="button" class="vt-flyout-button" aria-haspopup="true" aria-expanded="false" aria-label="extra navigation">
+                    <span class="vt-flyout-button-text"><$ constantUiMap.button.visitor $>
+                      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="vt-flyout-button-text-icon">
+                        <path d="M12,16c-0.3,0-0.5-0.1-0.7-0.3l-6-6c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l5.3,5.3l5.3-5.3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-6,6C12.5,15.9,12.3,16,12,16z"></path></svg>
+                    </span>
+                  </button>
+                  <div class="vt-flyout-menu">
+                    <div class="vt-menu">
+                      <div class="vt-menu-items">
+                        <a class="vt-link link vt-menu-link" href="<$ pageUrl $>/login"><$ constantUiMap.button.login $></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+              {% endif %}
+            {% endif %}
+
+            <button id="jianghu-mobile-toggle-navBarMenus" type="button" class="vt-hamburger VPNavBarHamburger hamburger" aria-label="mobile navigation" aria-expanded="false" aria-controls="VPNavScreen">
+              <svg t="1656740813244" class="icon jianghu-toggleNavBarMenus-menuIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13445" width="18" height="18"><path d="M128 170.666667h768v85.333333H128V170.666667z m256 298.666666h512v85.333334H384v-85.333334z m-256 298.666667h768v85.333333H128v-85.333333z" p-id="13446" fill="#213547"></path></svg>
+              <svg t="1656740533679" class="icon closeIcon jianghu-toggleNavBarMenus-closeIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6749" width="18" height="18"><path d="M597.795527 511.488347 813.564755 295.718095c23.833825-23.833825 23.833825-62.47489 0.001023-86.307691-23.832801-23.832801-62.47489-23.833825-86.307691 0L511.487835 425.180656 295.717583 209.410404c-23.833825-23.833825-62.475913-23.833825-86.307691 0-23.832801 23.832801-23.833825 62.47489 0 86.308715l215.769228 215.769228L209.410915 727.258599c-23.833825 23.833825-23.833825 62.47489 0 86.307691 23.832801 23.833825 62.473867 23.833825 86.307691 0l215.768205-215.768205 215.769228 215.769228c23.834848 23.833825 62.475913 23.832801 86.308715 0 23.833825-23.833825 23.833825-62.47489 0-86.307691L597.795527 511.488347z" p-id="6750" fill="#767676"></path></svg>
+            </button>
+            {% if constantUiMap.header.userAction.isOpen %}
+            <button id="jianghu-mobile-toggle-userCenter" type="button" class="vt-hamburger VPNavBarHamburger hamburger" aria-label="mobile navigation" aria-expanded="false" aria-controls="VPNavScreen">
+              <svg t="1656740949404" class="icon jianghu-toggleUserCenter-userIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="14557" width="18" height="18"><path d="M858.5 763.6c-18.9-44.8-46.1-85-80.6-119.5-34.5-34.5-74.7-61.6-119.5-80.6-0.4-0.2-0.8-0.3-1.2-0.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-0.4 0.2-0.8 0.3-1.2 0.5-44.8 18.9-85 46-119.5 80.6-34.5 34.5-61.6 74.7-80.6 119.5C146.9 807.5 137 854 136 901.8c-0.1 4.5 3.5 8.2 8 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c0.1 4.4 3.6 7.8 8 7.8h60c4.5 0 8.1-3.7 8-8.2-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z" p-id="14558" fill="#213547"></path></svg>
+              <svg t="1656740533679" class="icon closeIcon jianghu-toggleUserCenter-closeIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6749" width="18" height="18"><path d="M597.795527 511.488347 813.564755 295.718095c23.833825-23.833825 23.833825-62.47489 0.001023-86.307691-23.832801-23.832801-62.47489-23.833825-86.307691 0L511.487835 425.180656 295.717583 209.410404c-23.833825-23.833825-62.475913-23.833825-86.307691 0-23.832801 23.832801-23.833825 62.47489 0 86.308715l215.769228 215.769228L209.410915 727.258599c-23.833825 23.833825-23.833825 62.47489 0 86.307691 23.832801 23.833825 62.473867 23.833825 86.307691 0l215.768205-215.768205 215.769228 215.769228c23.834848 23.833825 62.475913 23.832801 86.308715 0 23.833825-23.833825 23.833825-62.47489 0-86.307691L597.795527 511.488347z" p-id="6750" fill="#767676"></path></svg>
+            </button>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="VPNavScreen" id="jianghu-header-mobile-navBarMenus">
+      <div class="jianghu-header-mobile-NavScreen-container">
+        <nav class="VPNavScreenMenu menu" id="jianghu-mobile-navBarMenus">
+          {% for menu in constantUiMap.header.menuList %}
+            {% if menu.isLogin == false %}
+            <$ macro.mobileMueuItem(menu, ctx.app.config.appId, loop.index) $>
+            {% endif %}
+
+            {% if menu.isLogin == true and userId %}
+            <$ macro.mobileMueuItem(menu, ctx.app.config.appId, loop.index) $>
+            {% endif %}
+          {% endfor %}
+        </nav>
+      </div>
+    </div>
+    <div class="VPNavScreen" id="jianghu-header-mobile-userCenter">
+      <div class="jianghu-header-mobile-NavScreen-container">
+        <nav class="VPNavScreenMenu menu">
+          {% if username %}
+            {% if constantUiMap.header.userAction.admin %}
+            <a class="vt-link link VPNavScreenMenuLink" href="<$ adminUrl $>" title="<$ constantUiMap.button.manage $>" target="_blank"><$ constantUiMap.button.manage $></a>
+            {% endif %}
+            {% if constantUiMap.header.userAction.password %}
+            <a class="vt-link link VPNavScreenMenuLink" href="javascript:void(0);" title="<$ constantUiMap.button.changePassword $>" data-mdb-toggle="modal" data-mdb-target="#changePwdModal"><$ constantUiMap.button.changePassword $></a>
+            {% endif %}
+            {% if constantUiMap.header.userAction.logout %}
+            <a class="vt-link link VPNavScreenMenuLink" href="javascript:void(0);" title="<$ constantUiMap.button.logout $>" onclick="logout()"><$ constantUiMap.button.logout $></a>
+            {% endif %}
+          {% else %}
+          <a class="vt-link link VPNavScreenMenuLink" href="<$ pageUrl $>/login"><$ constantUiMap.button.login $></a>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- 修改密码 -->
+  <div class="modal fade" id="changePwdModal" data-mdb-backdrop="static"
+   data-mdb-keyboard="false" tabindex="-1" aria-labelledby="changePwdModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h6 class="modal-title" id="changePwdModalLabel"><$ constantUiMap.button.changePassword $></h6>
+           <a role="button" data-mdb-dismiss="modal">
+             <svg t="1656740533679" class="icon closeIcon jianghu-toggleUserCenter-closeIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6749" width="18" height="18"><path d="M597.795527 511.488347 813.564755 295.718095c23.833825-23.833825 23.833825-62.47489 0.001023-86.307691-23.832801-23.832801-62.47489-23.833825-86.307691 0L511.487835 425.180656 295.717583 209.410404c-23.833825-23.833825-62.475913-23.833825-86.307691 0-23.832801 23.832801-23.833825 62.47489 0 86.308715l215.769228 215.769228L209.410915 727.258599c-23.833825 23.833825-23.833825 62.47489 0 86.307691 23.832801 23.833825 62.473867 23.833825 86.307691 0l215.768205-215.768205 215.769228 215.769228c23.834848 23.833825 62.475913 23.832801 86.308715 0 23.833825-23.833825 23.833825-62.47489 0-86.307691L597.795527 511.488347z" p-id="6750" fill="#767676"></path></svg>
+           </a>
+         </div>
+         <div class="modal-body">
+           <form>
+             <div class="form-outline mb-3">
+               <input type="password" id="oldPwd" class="form-control" />
+               <label class="form-label" for="oldPwd"><$ constantUiMap.button.oldPassword $></label>
+             </div>
+             <div class="form-outline mb-3">
+               <input type="password" id="newPwd1" class="form-control" />
+               <label class="form-label" for="newPwd1"><$ constantUiMap.button.newPassword $></label>
+             </div>
+              <div class="form-outline mb-3">
+               <input type="password" id="newPwd2" class="form-control" />
+               <label class="form-label" for="newPwd2"><$ constantUiMap.button.newPasswordAgain $></label>
+             </div>
+           </form>
+         </div>
+         <div class="modal-footer">
+           <a role="button" class="jianghu-button-light" data-mdb-dismiss="modal"><$ constantUiMap.button.cancel $></a>
+           <a role="button" class="jianghu-button-primary" onclick="changePwd()"><$ constantUiMap.button.modify $></a>
+         </div>
+       </div>
+     </div>
+  </div>
+
+  <!-- 搜索 -->
+  <div class="modal fade" id="searchModal" data-mdb-keyboard="false" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="changePwdModalLabel"><$ constantUiMap.button.search $></h6>
+          <a role="button" data-mdb-dismiss="modal">
+            Cancel
+          </a>
+        </div>
+         <div class="modal-body">
+              <input id="search-bar-input" autofocus class="form-control" />
+         </div>
+       </div>
+     </div>
+  </div>
+
+  {% include 'utility/jianghuJs/jianghuAxiosV4.html' %}
+  {% block content %}{% endblock %}
+  <!-- js -->
+  <!-- <script type="text/javascript" src="<$ static $>/mdbootstrap/mdb.min.js?v=4.2.0"></script> -->
+  {% include 'util/jianghu/jianghuJs.html' %}
+  
+  <script type='text/javascript'>
+      function currentLink() {
+
+        const { pathname, search, hash } = window.location;
+        const href = decodeURI(`${pathname}${search}`)
+        const hrefTarget = decodeURI(`${pathname}${search}${hash}`)
+        let currentLinkObj = $('.VPNavBarMenu').find(`a[data-path="${hrefTarget}"]`);
+        if (!currentLinkObj.length) {
+          currentLinkObj = $('.VPNavBarMenu').find(`a[data-path="${href}"]`);
+        }
+        return currentLinkObj;
+      }
+      function setActiveMenu() {
+        const currentLinkObj = currentLink();
+        if (currentLinkObj) {
+          const isDropdown = currentLinkObj.parent().hasClass('vt-menu-items'); 
+          if (isDropdown) {
+            // 设置 4层 父 .VPNavBarMenuGroup 添加 active
+            currentLinkObj.parent().parent().parent().parent().addClass('active')
+          } else {
+            $('.VPNavBarMenu').find('a').removeClass('active');
+          }
+          currentLinkObj.addClass('active')
+        }
+      }
+      const { pathname, search, hash } = window.location;
+      const href = decodeURI(`${pathname}${search}`)
+      const mobileLinkObj = $('.VPNavScreenMenu').find(`a[href="${href}"]`);
+      if (mobileLinkObj) {
+        const currentLinkObj = currentLink();
+        const isDropdown = currentLinkObj.parent().hasClass('vt-menu-items'); 
+        if (isDropdown) {
+          // 设置 4层 父 .VPNavBarMenuGroup 添加 active
+          mobileLinkObj.parent().parent().addClass('show')
+          mobileLinkObj.parent().parent().prev().removeClass('collapsed')
+        }
+        mobileLinkObj.addClass('active')
+      }
+      setActiveMenu()
+      function toMenuPath(path) {
+        location.href = path;
+        // console.log('toMenuPath', path)
+        $('.VPNavScreen').removeClass('open')
+        // $('.vt-hamburger VPNavBarHamburger').removeClass('is-active')
+        // html overflow: auto
+        $('html').css('overflow', 'auto')
+        setActiveMenu()
+      }
+  </script>
+  <script type="text/javascript">
+    const pageUrl = "<$ pageUrl $>";
+    const adminUrl = "<$ adminUrl $>";
+    const userId = "<$ userId $>";
+    const username = "<$ username $>";
+
+    // 使用docsSearchBar初始化搜索框
+    docsSearchBar({
+      hostUrl: '<$ ctx.app.config.meilisearch.host $>',
+      apiKey: '<$ ctx.app.config.meilisearch.apiKey $>',
+      indexUid: '<$ userId $>' ? '<$ ctx.app.config.meilisearch.allIndexUid $>' : '<$ ctx.app.config.meilisearch.publicIndexUid $>',
+      inputSelector: '#search-bar-input',
+      debug: true, // Set debug to true if you want to inspect the dropdown
+      enableDarkMode: false,
+      enhancedSearchInput: true
+    })
+    // 全局提示
+    window.vtoast = {
+      success: ({message}) => {
+        showSuccessAlert(message)
+      },
+      fail: ({message}) => {
+        showFailAlert(message)
+      },
+      loading: () => {
+        showLoading()
+      },
+      hideLoading: () => {
+        showLoading()
+      }
+    };
+    // 退出登录
+    async function logout() {
+        $.removeCookie('<$ appId $>_authToken', { path: '/' });
+        localStorage.removeItem('<$ appId $>_authToken');
+        setTimeout(() => {
+          location.reload();
+        }, 360)
+    }
+    //修改用户密码
+    async function changePwd(){
+      const oldPwd = $("#oldPwd").val();
+      const newPwd1 = $("#newPwd1").val();
+      const newPwd2 = $("#newPwd2").val();
+
+      if (oldPwd === '' || newPwd1 === '' || newPwd2 === '') {
+        showFailAlert('将表单填写完整')
+        return;
+      }
+      if (newPwd1 !== newPwd2) {
+        showFailAlert('两次输入的密码不一致')
+        return;
+      }
+
+      await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'allPage',
+            actionId: 'resetPassword',
+            actionData: {
+              oldPassword: oldPwd,
+              newPassword: newPwd1
+            }
+          }
+        }
+      })
+
+      showSuccessAlert('密码修改成功')
+      location.reload();
+    };
+    $(function() {
+      const searchModal = new mdb.Modal($('#searchModal'))
+      // 键盘事件
+      $(document).keydown(function (event) {
+          const keyname = event.key.toLocaleLowerCase();
+          // 【ctrl + k || command + k】 打开搜索框
+          if ((event.ctrlKey || event.metaKey) && keyname === 'k') {
+            event.preventDefault();
+            searchModal.show()
+            $('#search-bar-input').focus();
+          }
+      })
+      // search 快捷键提示
+      let userAgent = navigator.userAgent.toLowerCase();
+      if (userAgent.indexOf('mac') > -1) {
+        $('#search-ctrlKey').text('⌘')
+      }else{
+        $('#search-ctrlKey').text('ctrl')
+      }
+    })
+  </script>
+  {% block javascript %}{% endblock %}
+</body>

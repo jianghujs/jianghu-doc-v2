@@ -1,0 +1,199 @@
+{% set appId = ctx.app.config.appId %}
+{% set userId = userInfo.userId %}
+{% set username = userInfo.username %}
+{% set adminUrl = ctx.app.config.adminUrl %}
+{% set static = "/" + appId + "/public" %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AlaSQL SQL Demo</title>
+    <!-- MDB -->
+    <link href="<$ static $>/mdbootstrap/font-awesome.min.css?v=6.0.0" rel="stylesheet" />
+    <link href="<$ static $>/mdbootstrap/roboto-font.css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="<$ static $>/mdbootstrap/mdb.min.css?v=4.2.0" rel="stylesheet" />
+
+    <!-- codemirror -->
+    <script src="https://cdn.staticfile.org/codemirror/5.40.2/codemirror.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/codemirror/5.40.2/codemirror.min.css">
+    <script src="https://cdn.staticfile.org/codemirror/5.40.2/mode/sql/sql.min.js"></script>
+    <script src="https://cdn.staticfile.org/codemirror/5.40.2/addon/edit/closetag.min.js"></script>
+    <script src="https://cdn.staticfile.org/codemirror/5.40.2/addon/edit/closebrackets.min.js"></script>
+    <!-- 引入 AlaSQL 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/alasql@0.5.5/dist/alasql.min.js"></script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .output {
+        margin-top: 20px;
+        background-color: #f7f7f7;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+      }
+
+      .output pre {
+        white-space: pre-wrap;
+        font-family: monospace;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .error {
+        color: red;
+        font-weight: bold;
+      }
+      .CodeMirror {
+        border: 1px solid #666;
+        border-radius: 5px;     
+        height: 150px;   
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="row gx-5">
+        <div class="col col-12 col-md-9">
+          <h4 class="mt-4" for="sql">SQL Statement:</h4>
+          <textarea id="sql" name="sql"></textarea>
+
+          <button type="button" class="btn btn-success btn-sm" onclick="execute()" id="submitBTN">
+            点击运行&nbsp;<i class="fas fa-arrow-right jianghu-home-hero-icon-right"></i>
+          </button>
+
+          <div class="output" id="result">
+          </div>
+        </div>
+        <div class="col col-12 col-md-3">
+          <div class="p-3">Your Database:</div>
+           <table class="table table-sm table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Tablename</th>
+                <th scope="col">Records</th>
+              </tr>
+            </thead>
+            <tbody class="table-data-list">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <script>
+
+        var editor = CodeMirror.fromTextArea(document.getElementById("sql"), {
+          mode: 'text/x-sql',
+          selectionPointer: true,
+          matchBrackets: true,
+          indentUnit: 4,
+          indentWithTabs: true
+        });
+        
+        function resetCode() {
+          var initCode = `<$ codeView.codeContent | safe $>` || 'select * from user;';
+          editor.getDoc().setValue(initCode);
+          execute();
+        }
+        
+        // 默认数据====start 
+        alasql("CREATE TABLE user (id INT IDENTITY, name STRING, email STRING)");
+        alasql("INSERT INTO user (name, email) VALUES ('111', '111@openjianghu.com')");
+        alasql("INSERT INTO user (name, email) VALUES ('222', '222@openjianghu.com')");
+        alasql("INSERT INTO user (name, email) VALUES ('333', '333@openjianghu.com')");
+
+        alasql("CREATE TABLE user_bank (id INT IDENTITY, userId INT IDENTITY, bankName STRING, bankNumber STRING)");
+        alasql("INSERT INTO user_bank (name, email) VALUES ('1', '111', '建设银行', '111111111111111111')");
+        alasql("INSERT INTO user_bank (name, email) VALUES ('2', '222', '工商银行', '222222222222222222')");
+        alasql("INSERT INTO user_bank (name, email) VALUES ('3', '333', '农业银行', '333333333333333333')");
+
+        document.getElementById("sql").value = 'select * from user;';
+        // 默认数据====end  
+
+        function execute() {
+          // 获取SQL语句
+          var sql = editor.getValue();
+
+          try {
+            // 执行SQL语句
+            const results = alasql(sql);
+            const tableStr = buildTable(results);
+            // 显示结果
+            document.getElementById("result").innerHTML = tableStr;
+          } catch (e) {
+            // 显示错误消息
+            document.getElementById("result").innerHTML = "<div class='error'>" + e.message + "</div>";
+          }
+        }
+        function buildTableList() {
+          var allTables = alasql('show tables'); // 获取所有表的信息
+          for (const table of allTables) {
+            var tableName = table.tableid; // 获取表名
+            var tableData = alasql('SELECT * FROM '+ tableName); // 查询表中所有数据
+            var tableDataCount = tableData.length; // 获取表数据的数量
+            // class table-data-list append
+            var tableDataList = document.querySelector('.table-data-list');
+            var tableDataListStr = `<tr>
+                <td scope="row">${tableName}</td>
+                <td>${tableDataCount}</td>
+              </tr>`;
+            tableDataList.insertAdjacentHTML('beforeend', tableDataListStr);
+          }
+        }
+
+
+        function buildTable(list = []) {
+          // example 
+
+          // <table class="table">
+          //   <thead>
+          //     <tr>
+          //       <th scope="col">#</th>
+          //       <th scope="col">First</th>
+          //       <th scope="col">Last</th>
+          //       <th scope="col">Handle</th>
+          //     </tr>
+          //   </thead>
+          //   <tbody>
+          //     <tr>
+          //       <th scope="row">1</th>
+          //       <td>Mark</td>
+          //       <td>Otto</td>
+          //       <td>@mdo</td>
+          //     </tr>
+          //   </tbody>
+          // </table>
+          let tableStr = `<table class="table table-sm table-striped table-bordered">
+                <thead>
+                  <tr>`
+          for (let key in list[0]) {
+            tableStr += `<th scope="col">${key}</th>`
+          }
+          tableStr += `</tr>
+                </thead>
+                <tbody>`
+          list.forEach((item, index) => {
+            tableStr += `<tr>`
+            for (let key in item) {
+              tableStr += `<td>${item[key]}</td>`
+            }
+            tableStr += `</tr>`
+          })
+          tableStr += `</tbody>
+              </table>`
+          return tableStr;
+        }
+
+        resetCode();
+        buildTableList();
+
+      </script>
+    </div>
+  </body>
+</html>

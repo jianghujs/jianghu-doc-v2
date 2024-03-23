@@ -1,0 +1,85 @@
+{% set appId = ctx.app.config.appId %}
+{% set userId = userInfo.userId %}
+{% set username = userInfo.username %}
+{% set adminUrl = ctx.app.config.adminUrl %}
+{% set static = "/" + appId + "/public" %}
+{% set pageUrl = "/" + appId + "/page" %}
+{% set url = "/" +ctx.app.config.appId + "/page/" %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name=renderer content=webkit>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="max-age=7200" />
+  <!-- <meta name="referrer" content="no-referrer"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="{% block keyword %}{% endblock %}<$ site_keywords $>" />
+  <meta name="description" content="{% block description %}{% endblock %}" />
+  <!-- OGP分享协议开始 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{% block ogp_title %}{% endblock %}">
+  <meta property="og:description" content="{% block ogp_desc %}{% endblock %}">
+  <meta property="og:pageUrl" content="<$ request.scheme $>://<$ request.META.HTTP_HOST $><$ request.path_info $>">
+
+
+  <script type="text/javascript">
+    window.appInfo = {
+      appId: '<$ ctx.app.config.appId $>',
+      upload: '/<$ ctx.app.config.appId $>/upload',
+      public: '/<$ ctx.app.config.appId $>/public',
+      userAgent: navigator.userAgent || '',
+    }
+    if (window.appInfo.userAgent.length > 127) {
+      window.appInfo.userAgent = window.appInfo.userAgent.substring(0, 126);
+    }
+  </script>
+
+  <!-- OGP分享协议结束 -->
+  <title>{% block title %}{% endblock %} - <$ ctx.app.config.appTitle $></title>
+  <!-- MDB -->
+  <link href="<$ static $>/articleViewer/font-awesome.min.css?v=6.0.0" rel="stylesheet"/>
+  <link href="<$ static $>/articleViewer/roboto-font.css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+  <link href="<$ static $>/articleViewer/mdb.min.css" rel="stylesheet"/>
+  <!-- css -->
+  {% include 'component/articleViewer/jianghuUiCss.html' %}
+  {% include 'component/articleViewer/jianghuCommonCss.html' %}
+  {% include 'component/articleViewer/jianghuDocCss.html' %}
+  {% include 'component/articleViewer/jianghuDocDocsCss.html' %}
+  <!-- js -->
+  <script src="<$ static $>/lib/jquery/jquery.min.js"></script>
+  <script src="<$ static $>/lib/lodash/lodash.min.js"></script>
+  <script src="<$ static $>/lib/axios/axios.min.js"></script>
+  {% block css %}{% endblock %}
+</head>
+
+<body data-mdb-target="#scrollspy" data-mdb-offset="0" class="grey-bg">
+<div class="vt-backdrop backdrop"></div>
+
+{% include 'utility/jianghuJs/jianghuAxiosV4.html' %}
+{% block content %}{% endblock %}
+<!-- js -->
+<script type="text/javascript" src="<$ static $>/articleViewer/mdb.min.js"></script>
+{% include 'component/articleViewer/jianghuJs.html' %}
+<script type="text/javascript">
+  // 全局提示
+  window.vtoast = {
+    success: ({message}) => {
+      showSuccessAlert(message)
+    },
+    fail: ({message}) => {
+      showFailAlert(message)
+    },
+    loading: () => {
+      showLoading()
+    },
+    hideLoading: () => {
+      showLoading()
+    }
+  };
+</script>
+{% block javascript %}{% endblock %}
+</body>

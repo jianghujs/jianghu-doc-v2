@@ -1,0 +1,55 @@
+{
+  "name": "document",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "egg": {
+    "declarations": true,
+    "framework": "@jianghujs/jianghu"
+  },
+  "dependencies": {
+    "@jianghujs/jianghu": "5.1.11",
+    "dayjs": "1.11.0",
+    "dotenv": "^16.3.1",
+    "egg": "^2.15.1",
+    "egg-core": "4.23.0",
+    "egg-scripts": "^2.11.0",
+    "highlight.js": "^11.7.0",
+    "lodash": "4.17.21",
+    "marked": "^4.0.17",
+    "md5-node": "^1.0.1"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.11.0",
+    "egg-mock": "^3.21.0",
+    "eslint": "^7.32.0",
+    "eslint-config-egg": "^7.1.0",
+    "eslint-plugin-jsdoc": "^37.6.1"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --daemon  --workers=1 --port=8406 --title=openjianghu_admin_v2 --workers=2",
+    "stop": "egg-scripts stop --title=openjianghu_admin_v2",
+    "dev": "egg-bin dev --port=8406",
+    "restart": "npm run stop && npm run start",
+    "start:cn": "egg-scripts start --daemon  --port=9406 --title=openjianghu_admin_v2 --workers=2",
+    "stop:cn": "egg-scripts stop --title=openjianghu_admin_v2",
+    "dev:cn": "egg-bin dev --port=9406",
+    "restart:cn": "npm run stop:cn && npm run start:cn",
+    "debug": "egg-bin debug",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "MIT"
+}

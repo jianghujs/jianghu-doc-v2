@@ -1,0 +1,450 @@
+<!--  mdb css -->
+{% set static = "/" + appId + "/public" %}
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/font-awesome.6.1.1.min.css"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.min.css"/>
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.css"/>
+<style>INPUT:-webkit-autofill, SELECT:-webkit-autofill, TEXTAREA:-webkit-autofill {
+  animation-name: onautofillstart
+}
+
+INPUT:not(:-webkit-autofill), SELECT:not(:-webkit-autofill), TEXTAREA:not(:-webkit-autofill) {
+  animation-name: onautofillcancel
+}
+
+@keyframes onautofillstart {
+}
+
+@keyframes onautofillcancel {
+}</style>
+<style>
+.ThemePage {
+  padding-top: var(--vt-nav-height);
+}
+
+.ThemeHero {
+  padding: 48px 24px
+}
+
+@media (min-width: 768px) {
+  .ThemeHero {
+    padding: 64px 32px 48px
+  }
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 960px
+}
+
+.title, .lead {
+  transition: color .25s
+}
+
+.title {
+  line-height: 32px;
+  font-size: 32px;
+  font-weight: 500
+}
+
+@media (min-width: 768px) {
+  .title {
+    line-height: 40px;
+    font-size: 40px
+  }
+}
+
+.lead {
+  padding-top: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  max-width: 512px;
+  color: var(--vt-c-text-2)
+}
+
+.ThemeProduct {
+  display: block
+}
+
+.ThemeProduct:hover .figure {
+  transform: translateY(-4px)
+}
+
+.ThemeProduct:hover .name {
+  color: var(--vt-c-brand)
+}
+
+.figure {
+  border-radius: 8px;
+  /* border: 2px solid #eaeaea; */
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
+  /* background-color: #eee; */
+  overflow: hidden;
+  transition: transform .25s;
+  -webkit-transition: transform .25s;
+  -moz-transition: transform .25s;
+  -ms-transition: transform .25s;
+  -o-transition: transform .25s;
+}
+.figure img {
+  transform: scale(0.9);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.data {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  flex-grow: 1;
+  padding-right: 8px
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 500;
+  transition: color .25s;
+  margin-bottom: 0;
+}
+
+.description {
+  padding-top: 2px;
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vt-c-text-2);
+  transition: color .25s
+}
+
+.price {
+  text-align: right;
+  flex-shrink: 0;
+  width: 56px
+}
+
+.value {
+  font-size: 16px;
+  font-weight: 500
+}
+
+.free {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 0 8px;
+  line-height: 24px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--vt-c-white);
+  background-color: var(--vt-c-brand);
+  transform: translateY(-2px);
+  -webkit-transform: translateY(-2px);
+  -moz-transform: translateY(-2px);
+  -ms-transform: translateY(-2px);
+  -o-transform: translateY(-2px);
+}
+
+.ThemeListItem {
+  border-top: 1px solid var(--vt-c-divider-light);
+  padding-top: 16px
+}
+
+@media (min-width: 768px) {
+  .ThemeListItem {
+    padding-top: 24px
+  }
+}
+
+.ThemeListItem .title {
+  font-size: 20px;
+  font-weight: 500;
+  transition: color .25s
+}
+
+.ThemeListItem .description {
+  padding-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  max-width: 512px;
+  color: var(--vt-c-text-2);
+  transition: color .25s
+}
+
+.ThemeListItem .description .link {
+  color: var(--vt-c-brand);
+  transition: color .25s;
+  -webkit-transition: color .25s;
+  -moz-transition: color .25s;
+  -ms-transition: color .25s;
+  -o-transition: color .25s;
+}
+
+.ThemeListItem .description .link:hover {
+  color: var(--vt-c-brand-dark)
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 304px;
+  padding: 0;
+}
+
+.ThemeListItem > .container {
+  padding-top: 32px;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 632px
+  }
+}
+
+@media (min-width: 1250px) {
+  .container {
+    max-width: 960px
+  }
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -16px -12px
+}
+
+.product {
+  flex-shrink: 0;
+  padding: 16px 12px;
+  width: 100%
+}
+
+@media (min-width: 640px) {
+  .product {
+    width: 50%
+  }
+}
+
+@media (min-width: 1250px) {
+  .product {
+    width: calc(100% / 3)
+  }
+}
+
+.action {
+  padding-top: 40px;
+  text-align: center
+}
+
+.action-link {
+  display: inline-block;
+  border: 1px solid var(--vt-c-brand);
+  border-radius: 24px;
+  padding: 0 24px;
+  line-height: 48px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vt-c-brand);
+  transition: border-color .25s, color .25s
+}
+
+.action-link:hover {
+  border-color: var(--vt-c-brand-dark);
+  color: var(--vt-c-brand-dark)
+}
+
+.ThemeList {
+  padding: 0 24px 96px
+}
+
+@media (min-width: 768px) {
+  .ThemeList {
+    padding: 0 32px 96px
+  }
+
+  .container {
+    margin: 0 auto;
+    max-width: 960px
+  }
+
+  .item + .item {
+    padding-top: 48px
+  }
+}
+
+@media (min-width: 768px) {
+  .item + .item {
+    padding-top: 64px
+  }
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, p {
+  margin-bottom: 0;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: inherit;
+}
+
+.multi-carousel .multi-carousel-inner .multi-carousel-item {
+  padding: 0 !important;
+}
+
+.multi-carousel .multi-carousel-inner .multi-carousel-item img {
+  max-height: 100% !important;
+}
+
+.carousel-control-next, .carousel-control-prev {
+  opacity: 0.9;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+  margin-top: -25px;
+}
+.multi-carousel .multi-carousel-inner .multi-carousel-item img{
+  object-fit: contain;
+}
+.multi-carousel:hover .carousel-control-prev-icon, .multi-carousel:hover .carousel-control-next-icon{
+  background: rgba(0,0,0,0.25) !important;
+}
+</style>
+<main>
+<div class="ThemePage">
+  <div class="ThemeHero">
+    <div class="container">
+      <h1 class="title">
+        <$ xfPage.xfPageConfig.page.title $>
+      </h1>
+      <p class="lead">
+        <$ xfPage.xfPageConfig.page.description $>
+      </p>
+    </div>
+  </div>
+  <div class="ThemeList">
+    <div class="container">
+      {% for item in xfPage.xfPageConfig.page.list %}
+      <div class="item">
+        <section class="ThemeListItem">
+          <h2 class="title">
+            <$ item.title $>
+          </h2>
+          <p class="description">
+            <$ item.description $>
+          </p>
+          <div class="container">
+            <div class="products">
+              {% for it in item.case %}
+              <div class="product">
+                <a class="vt-link link ThemeProduct" rel="noopener noreferrer">
+                  <article class="container">
+                    <div class="lightbox">
+                      <div class="multi-carousel" data-mdb-items="1">
+                        <div class="multi-carousel-inner">
+                          {% for img in it.imgUrl %}
+                          <div class="multi-carousel-item">
+                            <figure class="figure d-flex" style="height: 228px;">
+                              <img
+                                  src="<$ img $>"
+                                  data-mdb-img="<$ img $>"
+                                  alt="<$ it.title $>"
+                                  class="image"
+                              />
+                            </figure>
+                          </div>
+                          {% endfor %}
+                        </div>
+                        <button
+                            class="carousel-control-prev"
+                            type="button"
+                            tabindex="0"
+                            data-mdb-slide="prev"
+                        >
+                              <span class="carousel-control-prev-icon" aria-hidden="true"
+                                    style="background: rgba(0,0,0,0.01); height: 2.75rem; margin-top: 0; border-radius: 3px"
+                              ></span>
+                        </button>
+                        <button
+                            class="carousel-control-next"
+                            type="button"
+                            tabindex="0"
+                            data-mdb-slide="next"
+                        >
+                          <span class="carousel-control-next-icon" aria-hidden="true"
+                                style="background: rgba(0,0,0,0.01); height: 2.75rem; margin-top: 0; border-radius: 3px"> </span>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="data">
+                      <div class="title">
+                        <h1 class="name">
+                          <$ it.title $>
+                        </h1>
+                        <p class="description">
+                          <$ it.description $>
+                        </p>
+                      </div>
+                      <div class="price">
+                        {% if it.isFree %}
+                        <p class="free">
+                          FREE
+                        </p>
+                        {% else %}
+                        <p class="value">
+                          $<$ it.price $>
+                        </p>
+                        {% endif%}
+                      </div>
+                    </div>
+                  </article>
+                </a>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </section>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</main>
+<!--  mdb js -->
+<script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.mdb.min.js"></script>
+<script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.js"></script>
+<style>
+.lightbox-gallery .lightbox-gallery-arrow-right,
+.lightbox-gallery .lightbox-gallery-arrow-left {
+ width: 80px;
+}
+.lightbox-gallery .lightbox-gallery-arrow-right button,
+.lightbox-gallery .lightbox-gallery-arrow-left button {
+  font-size: 60px;
+  width: 80px;
+  height: 80px;
+}
+@media screen and (max-width: 500px) {
+  .lightbox-gallery .lightbox-gallery-arrow-right,
+  .lightbox-gallery .lightbox-gallery-arrow-left {
+    width: 60px;
+  }
+  .lightbox-gallery .lightbox-gallery-arrow-right button,
+  .lightbox-gallery .lightbox-gallery-arrow-left button {
+    font-size: 40px;
+    width: 60px;
+    height: 60px;
+  }
+}
+@media only screen and (min-device-width: 768px) {
+  body.disabled-scroll.replace-scrollbar {
+    padding-right: 0;
+  }
+}
+
+</style>

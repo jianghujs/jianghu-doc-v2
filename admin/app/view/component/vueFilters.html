@@ -1,0 +1,56 @@
+<!-- vueFilters.html start -->
+<script>
+  const filterObj = {
+    // 日期格式化
+    dateFormat(value, format = 'YYYY-MM-DD HH:mm:ss') {
+      if (!value) return ''
+      return dayjs(value).format(format);
+    },
+    statusColor(status) {
+      switch (status) {
+        case '草稿':
+        case 'draft':
+          return '';
+        case '待采购':
+          return 'blue';
+        case '登录可见':
+        case 'login':
+          return 'warning';
+        case '公开':
+        case 'public':
+        case 'active':
+          return 'success';
+        case '回收站':
+        case 'deleted':
+        case 'disabled':
+          return 'error';
+        default:
+          return 'primary';
+      }
+    },
+    parseStatus(status) {
+      switch (status) {
+        case 'draft':
+          return '草稿';
+        case 'login':
+          return '登录可见';
+        case 'public':
+          return '公开';
+        case 'deleted':
+          return '回收站';
+        case 'active':
+          return '启用';
+        case 'disabled':
+          return '禁用';
+        default:
+          return 'primary';
+      }
+    },
+  }
+  for (let value in filterObj) {
+    // value是filter名称（字符串）
+    // filters[value] 对象里面的某个元素，就是filters中定义的方法
+    Vue.filter(value, filterObj[value])
+  }
+</script>
+<!-- vueFilters.html end -->

@@ -1,0 +1,1197 @@
+{% extends 'template/jhTemplateV4.html'%}
+
+{% block vueTemplate %}
+
+<script type="text/html" id="app-template">
+<div>
+<v-app mobile-breakpoint="sm">
+  <jh-menu />
+  <v-main class="mt-15">
+    <!-- 头部内容 >>>>>>>>>>>>> -->
+    <div class="jh-page-second-bar px-8">
+      <v-row>
+        <v-col cols="12" xs="12" sm="12" md="4" xl="3">
+          <div class="py-4 text-body-1 font-weight-bold">文章编辑
+            <!-- 帮助页按钮 -->
+            <v-icon @click="isHelpPageDrawerShown = true" color="success" small>mdi-help-circle-outline
+            </v-icon>
+          </div>
+        </v-col>
+        <!-- pc端的搜索条件表单 >>>>>>>> -->
+        <v-col cols="12" xs="12" sm="12" md="8" xl="9">
+          <v-row class="ma-0 align-center flex-none pa-0" :class="{'pa-2': !isMobile, 'pa-2': isMobile}" align="center"
+                 style="height: 100%;">
+            <v-col class="d-flex" :class="{'pt-2': isMobile, 'pl-0': isMobile, 'pr-0': !isMobile}" style="justify-content: end">
+              <v-btn color="primary" @click="openMaterialUploadDrawer" small class="mr-1">
+                <v-icon class="mr-1" small>mdi-folder-multiple-image</v-icon>
+              文章素材管理
+              </v-btn>
+              <v-btn v-if="editItem.articleId && editItem.articlePublishStatus !== 'deleted'" @click="deletedArticle"
+                     color="error mr-1" depressed small>
+                <v-icon class="mr-1" small>mdi-trash-can</v-icon>
+                移到回收站
+              </v-btn>
+              <v-btn v-if="editItem.articlePublishStatus === 'deleted'" @click="restoreArticle" color="error mr-1" depressed small>
+                <v-icon class="mr-1" small>mdi-backburger</v-icon>
+                恢复文章
+              </v-btn>
+              <v-btn @click="saveInfo" color="success" class="mr-1" depressed small>
+                <v-icon class="mr-1" small>mdi-content-save-all</v-icon>
+                保存
+              </v-btn>
+              <v-btn @click="saveInfoAndPreview" color="success" depressed small>
+                <v-icon class="mr-1" small>mdi-eye-refresh</v-icon>
+                保存并预览
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-col>
+        <!-- <<<<<<<< pc端的搜索条件表单 -->
+      </v-row>
+    </div>
+    <!-- 页面主要内容 -->
+    <div class="jh-page-body-container px-8" style="min-height: calc(100vh - 150px);">
+      <v-form v-model="isFormValid" ref="form">
+        <div class="d-flex flex-column">
+          <v-row dense no-gutters>
+            <v-col cols="12" xs="12" sm="4" md="3" xl="2" style="max-height: calc(100vh - 130px); overflow-y: auto;">
+              <v-card flat style="padding: 16px !important;">
+                <v-row class="mb-2" no-gutters>
+                  <p class="font-weight-medium mb-0 text-subtitle-2 text-subtitle-2">
+                    基本信息
+                  </p>
+                </v-row>
+                <v-row no-gutters>
+                  <v-col cols="12">
+                    <span class="jh-input-label"><$ constantUiMap.article.articleTitle $></span>
+                    <v-text-field class="jh-v-input" dense single-line filled hide-details label="<$ constantUiMap.article.articleTitle $>"
+                      v-model="editItem.articleTitle" :rules="validationRules.requireRules"></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <span class="jh-input-label">分类</span>
+                    <v-select class="jh-v-input" v-model="editItem.categoryId" color="success" prefix="分类："
+                      :items="categorySearchInput ? constantObj.categorySearch : constantObj.category"
+                      dense filled single-line>
+                      <template v-slot:prepend-item>
+                        <v-text-field prefix="搜索：" clearable v-model="categorySearchInput" class="mb-2" dense
+                          filled single-line hide-details>
+                        </v-text-field>
+                      </template>
+                    </v-select>
+                  </v-col>
+                  <v-col cols="12">
+                    <span class="jh-input-label">标签</span>
+                    <v-text-field class="jh-v-input" dense filled single-line hide-details label="标签"
+                      v-model="editItem.articleTagList"></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <span class="jh-input-label">文章分组</span>
+                    <v-text-field class="jh-v-input" dense filled single-line hide-details label="文章分组"
+                      v-model="editItem.articleGroupName"></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <span class="jh-input-label">发布状态</span>
+                    <v-select v-model="editItem.articlePublishStatus" color="success" prefix="发布状态：" class="jh-v-input" :items="constantObj.articlePublishStatus" dense filled single-line></v-select>
+                  </v-col>
+                  <v-col cols="12">
+                    <span class="jh-input-label">发布时间</span>
+                    <v-menu offset-y max-width="290">
+                      <template v-slot:activator="{ on, attrs }">
+                        <datetime-picker okText="确定" clearText="清除" v-model="editItem.articlePublishTime" :disabled="false"></datetime-picker>
+                      </template>
+                      <div>
+                      </div>
+                    </v-menu>
+                  </v-col>
+                </v-row>
+              </v-card>
+
+
+              <v-card class="pa-4 mt-4" flat>
+
+                <v-toolbar flat dense>
+                  <p class="font-weight-medium mb-0" style="font-size: 16px;">
+                    封面
+                  </p>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      style="width: 20px;height:20px"
+                      @click="imagePicker"
+                  >
+                    <v-icon small>mdi-upload-outline</v-icon>
+                  </v-btn>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      class="ml-2"
+                      color="error"
+                      style="width: 20px;height:20px"
+                      @click.stop="clearImage"
+                      v-if="editItem.articleCoverImage"
+                  >
+                    <v-icon small>mdi-trash-can-outline</v-icon>
+                  </v-btn>
+                </v-toolbar>
+                <v-card-text class="pa-0 text-center">
+                  <img v-if="editItem.articleCoverImage" :src="upload + editItem.articleCoverImage" alt=""
+                      style="width: 100%; height: 100%; object-fit: cover;">
+                  <span v-else class="text-center">暂无封面~</span>
+                </v-card-text>
+              </v-card>
+
+
+              <v-card class="pa-4 mt-2" flat>
+                <v-toolbar flat dense>
+                  <p class="font-weight-medium mb-0" style="font-size: 16px;">
+                    音频
+                  </p>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      style="width: 20px;height:20px"
+                      @click="audioPicker"
+                  >
+                    <v-icon small>mdi-upload-outline</v-icon>
+                  </v-btn>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      class="ml-2"
+                      color="error"
+                      style="width: 20px;height:20px"
+                      @click.stop="clearAudio"
+                      v-if="editItem.articleAudioUrl"
+                  >
+                    <v-icon small>mdi-trash-can-outline</v-icon>
+                  </v-btn>
+                </v-toolbar>
+                <v-card-text class="pa-0 text-center">
+                  <v-text-field class="mb-2" dense filled single-line color="success" label="音频链接" v-model="editItem.articleAudioUrl" hide-details>
+                  </v-text-field>  
+                  <audio style="max-width: 100%;" v-if="editItem.articleAudioUrl"
+                        :src="editItem.articleAudioUrl.indexOf('http') > -1? editItem.articleAudioUrl: (`/<$ ctx.app.config.appId $>/upload/${editItem.articleAudioUrl}?v=${new Date().getTime()}`)"
+                        controls>
+                    <source
+                        :src="editItem.articleAudioUrl.indexOf('http') > -1? editItem.articleAudioUrl: (`/<$ ctx.app.config.appId $>/upload/${editItem.articleAudioUrl}?v=${new Date().getTime()}`)"
+                        type="audio/mpeg">
+                  </audio>
+                  <span v-else class="text-center">暂无音频~</span>
+                </v-card-text>
+              </v-card>
+
+              <v-card class="pa-4 mt-2" flat>
+                <v-toolbar flat dense>
+                  <p class="font-weight-medium mb-0" style="font-size: 16px;">
+                    视频
+                  </p>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      style="width: 20px;height:20px"
+                      @click="videoPicker"
+                  >
+                    <v-icon small>mdi-upload-outline</v-icon>
+                  </v-btn>
+                  <v-btn
+                      outlined
+                      small
+                      fab
+                      class="ml-2"
+                      color="error"
+                      style="width: 20px;height:20px"
+                      @click.stop="clearVideo"
+                      v-if="editItem.articleVideoUrl"
+                  >
+                    <v-icon small>mdi-trash-can-outline</v-icon>
+                  </v-btn>
+                </v-toolbar>
+                <v-card-text class="pa-0 text-center">
+                  <v-text-field class="mb-2" dense filled single-line color="success" label="视频链接" v-model="editItem.articleVideoUrl" hide-details>
+                  </v-text-field>
+                  <video style="max-width: 100%;" v-if="editItem.articleVideoUrl"
+                        :src="editItem.articleVideoUrl.indexOf('http') > -1? editItem.articleVideoUrl: (`/<$ ctx.app.config.appId $>/upload/${editItem.articleVideoUrl}?v=${new Date().getTime()}`)"
+                        controls>
+                    <source
+                        :src="editItem.articleVideoUrl.indexOf('http') > -1? editItem.articleVideoUrl: (`/<$ ctx.app.config.appId $>/upload/${editItem.articleVideoUrl}?v=${new Date().getTime()}`)"
+                        type="video/mp4">
+                  </video>
+                  <span v-else class="text-center">暂无视频~</span>
+                </v-card-text>
+              </v-card>
+            </v-col>
+
+            <v-col cols="12" xs="12" sm="8" md="9" xl="10">
+              <v-card flat class="ml-4">
+                <v-card style="height: 80vh;">
+                  <div id="editorMdContainer" style="height: 80vh;">
+                    <textarea style="display:none;">{{ editItem.articleContent }}</textarea>
+                  </div>
+                </v-card>
+                <v-row class="ml-2">
+                  <v-col cols="12" class="mt-3">
+                    <v-btn color="success" class="mr-2" v-for="(item, index) in codeViewList" @click="doUiAction('startUpdateCodeItem', item)">
+                      <v-icon size="16" color="white">mdi-note-edit-outline</v-icon>
+                      {{ item.codeTitle || '代码块' }}
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
+        </div>
+      </v-form>
+
+
+      <!-- 编辑抽屉 -->
+      <v-navigation-drawer v-model="isUpdateCodeDrawerShown" :permanent="isUpdateCodeDrawerShown" fixed temporary right width="80%" class="elevation-24">
+        <v-form ref="updateForm" lazy-validation>
+          <!-- 抽屉标题 -->
+          <v-row>
+            <span class="text-subtitle-1 font-weight-medium pa-6 pl-7">修改信息</span>
+          </v-row>
+          <!-- 抽屉表单 -->
+          <v-row class="mt-0 px-4">
+            <!-- <v-text-field class="jh-v-input" dense single-line filled v-model="updateCodeItem.xxxId" :rules="validationRules.requireRules"></v-text-field> -->
+             
+            <v-col cols="12" sm="12" md="4">
+              <span class="jh-input-label">代码Id</span>
+              <v-text-field class="jh-v-input" dense single-line filled v-model="updateCodeItem.codeId" disabled></v-text-field>
+            </v-col>
+             
+            <v-col cols="12" sm="12" md="4">
+              <span class="jh-input-label">标题</span>
+              <v-text-field class="jh-v-input" dense single-line filled v-model="updateCodeItem.codeTitle"></v-text-field>
+            </v-col>
+             
+            <v-col cols="12" sm="12" md="4">
+              <span class="jh-input-label">类型：html/sql</span>
+              <v-select v-model="updateCodeItem.language" :items="constantObj.language" color="success" :rules="validationRules.requireRules" hide-details dense filled single-line hide-selected item-value="value" item-text="text"/>
+            </v-col>
+             
+            <v-col cols="12" sm="12">
+              <span class="jh-input-label">代码块</span>
+              <v-textarea class="jh-v-input" dense single-line filled v-model="updateCodeItem.codeContent"></v-textarea>
+            </v-col>
+                       
+          </v-row>
+          <v-overlay v-if="isCodeViewLoading" absolute :value="isCodeViewLoading" color="#fff">
+            <v-progress-circular
+              color="success"
+              indeterminate
+              size="32"
+            ></v-progress-circular>
+          </v-overlay>
+          <!-- 抽屉操作按钮 -->
+          <v-row class="justify-end mx-0 mt-8 px-6">
+            <v-btn color="success" @click="doUiAction('updateCodeItem')" small>保存</v-btn>
+            <v-btn class="elevation-0 ml-2" @click="isUpdateCodeDrawerShown = false" small>取消</v-btn>
+          </v-row>
+        </v-form>
+        <!-- 抽屉关闭按钮 -->
+        <v-btn elevation="0" color="success" fab absolute top left small tile class="drawer-close-float-btn" @click="isUpdateCodeDrawerShown = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </v-navigation-drawer>
+
+      <!-- 选择素材 -->
+      <v-dialog v-model="isEditDrawerShown" hide-overlay fullscreen transition="dialog-bottom-transition">
+        <v-card>
+          <v-toolbar
+              dark
+              width="100%"
+              style="background-color: #fff;"
+          >
+            <div class="black--text ml-2" style="font-size: 16px;">选择素材</div>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+              <v-btn
+                  text
+                  @click="isEditDrawerShown = false"
+              >
+                <v-icon class="black--text">mdi-close</v-icon>
+              </v-btn>
+            </v-toolbar-items>
+          </v-toolbar>
+          <v-divider style="border-color: #eff2f5;opacity:0.8;"></v-divider>
+          <file-browser
+            ref="fileBrowser"
+            v-if="isEditDrawerShown"
+            @use-material="useMaterial"
+            @close-material-picker="doUiAction('closeMaterialPicker')"
+            :material-type="materialType"
+            :material-dir="material.dir"
+            :path="material.path"
+            use-file-btn
+            page-id="articleEdit"
+            :operation-option="{delete: true, recycle: true, copy: true, renameFile: true}"
+          >
+            <template slot="importMaterial">
+              <import-material 
+                @close-material-picker="closeImportMaterialPicker" 
+                @use-material="useMaterial"
+                :material-type="materialType"
+                page-id="articleEdit"
+                :material-target="{dir: 'articleMaterial', path: articleId}"
+              >
+              </import-material>
+            </template>
+          </file-browser>
+        </v-card>
+      </v-dialog>
+    </div>
+    <v-dialog
+      v-model="isCodeViewDialogShow"
+      scrollable
+      max-width="300px"
+    >
+      <v-card>
+        <v-card-title>选择实例代码</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 300px;">
+          <v-radio-group
+            v-model="codeItemId"
+            column
+          >
+            <v-radio v-for="code in codeViewData"
+              :label="code.codeTitle"
+              :value="code.codeId"
+            ></v-radio>
+          </v-radio-group>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="isCodeViewDialogShow = false"
+          >
+            Close
+          </v-btn>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="onSelectCodeView()"
+          >
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- 帮助页抽屉 >>>>>>>>>>>>> -->
+    <v-navigation-drawer v-if="isHelpPageDrawerLoaded" v-model="isHelpPageDrawerShown" :permanent="isHelpPageDrawerShown" fixed temporary right width="80%" class="elevation-24">
+      <iframe style="border: 0" :src="`/${appInfo.appId}/pageDoc#articleEdit.md`" width="100%" height="100%"></iframe>
+      <v-btn elevation="0" color="success" fab absolute top left small tile class="drawer-close-float-btn" @click="isHelpPageDrawerShown = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-navigation-drawer>
+    <!-- <<<<<<<<<<<<< 帮助页抽屉 -->
+
+  </v-main>
+  </v-app>
+
+  <jh-toast />
+  <jh-mask />
+  <jh-confirm-dialog />
+</div>
+</script>
+
+<div id="app">
+</div>
+
+{% endblock %}
+
+{% block vueScript %}
+
+
+{% include 'component/fileBrowser/FileBrowser.html' %}
+{% include 'component/importMaterial/FileBrowser.html' %}
+{% include 'component/datetimePicker.html' %}
+{% include 'component/articleEditor/articleEditorCss.html' %}
+<link rel="stylesheet" href="/<$ ctx.app.config.appId $>/public/plugins/editor.md/css/editormd.min.css"/>
+<link href="/<$ ctx.app.config.appId $>/public/articleViewer/font-awesome.min.css?v=6.0.0"/>
+<script src="/<$ ctx.app.config.appId $>/public/lib/jquery/jquery.min.js"></script>
+<script src="/<$ ctx.app.config.appId $>/public/plugins/editor.md/editormd.js"></script>
+<script>
+(function(){
+    // var pluginName   = "codeViewPlugin"; // 插件名称
+
+    // // 定义插件
+    // var myCustomFormat = function() {
+    //     this.name = pluginName;
+    // };
+
+    // // 在Markdown文本中添加自定义格式
+    // myCustomFormat.prototype.addCustomFormat = function() {
+    //     var cm       = this.cm;
+    //     var text     = cm.getSelection(); // 获取选中的文本
+    //     var start    = cm.getCursor("start"); // 获取选中文本的起始位置
+    //     var end      = cm.getCursor("end"); // 获取选中文本的结束位置
+    //     var newValue = "<span class='my-custom-format'>" + text + "</span>"; // 添加自定义格式
+    //     cm.replaceSelection(newValue); // 将添加了自定义格式的文本替换选中的文本
+    //     cm.setCursor(start, end); // 将光标设置为选中文本的结束位置
+    //     cm.focus(); // 聚焦到编辑器
+    // };
+    // // 注册插件
+    // editormd.plugins[pluginName] = function() {
+    //     return new myCustomFormat();
+    // };
+    // editormd.addMarkdown({
+    //   name: "custom",
+    //   markdown: "```\nYour custom syntax here\n```",
+    //   // 定义预览时如何渲染该Markdown格式的方法
+    //   // 这个函数将返回一个字符串，表示该格式在预览区应该如何渲染
+    //   // 参数markdown是你定义的Markdown格式
+    //   // 参数options包含了一些预览区的配置项，例如theme、previewTheme、editorTheme、codeFold、htmlDecode等等
+    //   // 这里只是一个示例，你需要根据你的实际情况来自定义渲染方法
+    //   render: function(markdown, options) {
+    //       return '<pre><code>' + markdown + '</code></pre>';
+    // }
+// });
+    
+})();
+</script>
+<script type="module">
+new Vue({
+  el: '#app',
+  template: '#app-template',
+  vuetify: new Vuetify(),
+  data: () => ({
+    isHelpPageDrawerShown: false,
+    isHelpPageDrawerLoaded: false,
+    isMobile: window.innerWidth < 500,
+    // 表格相关数据
+    isTableZebraLineShown: true,
+    validationRules: {
+      requireRules: [
+        v => !!v || 'This is required',
+      ],
+    },
+    articleId: null,
+    // 表格相关数据
+    isFormValid: true,
+    constantObj: {
+      category: [],
+      articleTagList: [],
+      articlePublishStatus: [
+        {text: "公开", value: "public"},
+        {text: "登录可见", value: "login"},
+        {text: "草稿", value: "draft"},
+        {text: "回收站", value: "deleted"},
+      ],
+      categoryList: [
+        {text: "全部类目", value: "all"},
+      ],
+      language: [
+        {text: 'html', value: 'html'},
+        {text: 'sql', value: 'sql'},
+      ],
+    },
+    newArticleTagList: [],
+    upload: window.appInfo.upload,
+    localImage: null,
+    localAudio: null,
+    localVideo: null,
+    localImageBase64: null,
+    isEditDrawerShown: false,
+    tableFilterKeyword: null,
+    isTableLoading: true,
+    tableDataBackups: [],
+    currentClickButton: {
+      title: '新增文章',
+      action: 'add'
+    },
+    editItem: {
+      articlePublishStatus: 'public'
+    },
+    tableRowActionList: [{
+      text: '修改',
+      buttonType: 'edit',
+      color: 'success',
+    }, {
+      text: '删除',
+      buttonType: 'delete',
+      color: 'error',
+    },],
+    search: '',
+    materialType: '',
+    writeBackType: '',
+    editor: null,
+    mdChanged: false,
+    toolbarIcons: [
+      "undo", "redo", "|",
+      "watch",
+      "preview", "|",
+      "h1", "h2", "h3", "h4", "h5", "bold", "del", "italic", "quote", "mark",
+      "imageUpload",
+      "list-ul", "list-ol", "hr", "link", "|",
+      "toggle", "articleQuery", 'codeView'
+    ],
+    codeViewList: [],
+    codeViewData: [],
+    codeItemId: '',
+    isCodeViewDialogShow: false,
+    cm: null,
+    isUpdateCodeDrawerShown: false,
+    updateCodeItem: {},
+    isCodeViewLoading: false,
+    material: {
+      dir: "articleMaterial", // config dir 'materialRepo' | 'articleMaterial' | 'xfPageMaterial'
+      path: '/'
+    },
+    categorySearchInput: null,
+  }),
+  computed: {
+    isMobile() {
+      return window.innerWidth < 600;
+    },
+    tableData() {
+      return this.tableDataBackups;
+    },
+    getEditItem() {
+      return this.editItem;
+    }
+  },
+  watch: {
+    isHelpPageDrawerShown(val) {
+      if (val) {
+        this.isHelpPageDrawerLoaded = true;
+      }
+    },
+    'editItem.articleContent': {
+      handler: function (val) {
+        this.setCodeViewList(val);
+      },
+      deep: true
+    },
+    categorySearchInput() {
+      this.doUiAction('categorySearch')
+    },
+  },
+  async created() {
+    this.getLocationParams();
+    this.buildSelectCategoryOptionList();
+    this.getAllCodeList();
+  },
+  async mounted() {
+    if (this.articleId) {
+      this.material.dir = 'articleMaterial/' + this.articleId;
+      await this.getTableData();
+    }
+    this.initEditorMd();
+
+    // 未保存离开提示
+    const that = this;
+    window.onbeforeunload = function () {
+      if (that.mdChanged) {
+        return 1;
+      } else {
+        return null;
+      }
+    }
+  },
+  methods: {
+    async doUiAction(actionId, actionData) {
+      switch (actionId) {
+        case 'categorySearch':
+          await this.categorySearch();
+          break;
+        case 'startUpdateCodeItem':
+          await this.openUpdateCodeDrawer(actionData);
+          await this.prepareUpdateCodeItem(actionData);
+          break;
+        case 'updateCodeItem':
+          await this.doUpdateCodeItem(actionData);
+          break;
+        case 'closeMaterialPicker':
+          await this.closeMaterialPicker();
+          break;
+        default:
+          console.log('未知的actionId', actionId);
+          break;
+      }
+
+    },
+    async getAllCodeList() {
+      const {rows} = (await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'articleEdit',
+            actionId: 'selectCodeList',
+            actionData: {},
+          }
+        }
+      })).data.appData.resultData;
+      this.codeViewData = rows;
+    },
+    async buildSelectCategoryOptionList() {
+      const {rows} = (await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'articleEdit',
+            actionId: 'selectCategoryList',
+            actionData: {},
+            whereIn: {categoryPublishStatus: ['public', 'login']},
+            orderBy: [{column: 'categoryGroup', order: 'asc'}, {column: 'categoryGroupSort', order: 'asc'}]
+          }
+        }
+      })).data.appData.resultData;
+      rows.forEach(item => {
+        const text = `${item.categoryGroupConcat || ''}${item.categoryName} [共${item.count}篇]`;
+        this.constantObj.category.push({text, value: item.categoryId + ""});
+      })
+    },
+    getLocationParams() {
+      const searchParams = new URLSearchParams(location.search.substring(1));
+      this.articleId = searchParams.get('articleId');
+      if (searchParams.get('categoryId')) {
+        this.editItem.categoryId = searchParams.get('categoryId')
+      }
+      if (searchParams.get('articleGroupName')) {
+        this.editItem.articleGroupName = searchParams.get('articleGroupName')
+      }
+      if (searchParams.get('articlePublishStatus')) {
+        this.editItem.articlePublishStatus = searchParams.get('articlePublishStatus')
+      }
+    },
+    async setLocalImage(event) {
+      const file = event.target.files[0];
+      window.vtoast.loading(`${file.name} 上传进度: 0.00%`);
+      const {downloadPath} = (await window.jianghuAxios.httpUploadByStream({
+        file,
+        fileDirectory: `articleMaterial/${this.articleId}`,
+        onProgress: (total, loaded) => this.onProgress(total, loaded, file)
+      })).data.appData.resultData;
+      this.editItem.articleCoverImage = downloadPath;
+    },
+    async setLocalAudio(event) {
+      const file = event.target.files[0];
+      window.vtoast.loading(`${file.name} 上传进度: 0.00%`);
+      const {downloadPath} = (await window.jianghuAxios.httpUploadByStream({
+        file,
+        fileDirectory: `articleMaterial/${this.articleId}`,
+        onProgress: (total, loaded) => this.onProgress(total, loaded, file)
+      })).data.appData.resultData;
+      if (downloadPath) {
+        this.localAudio = `/${window.appInfo.appId}/upload${downloadPath}`;
+        this.editItem.articleAudioUrl = downloadPath;
+      }
+    },
+    async setLocalVideo(event) {
+      const file = event.target.files[0];
+      window.vtoast.loading(`${file.name} 上传进度: 0.00%`);
+      const {downloadPath} = (await window.jianghuAxios.httpUploadByStream({
+        file,
+        fileDirectory: `articleMaterial/${this.articleId}`,
+        onProgress: (total, loaded) => this.onProgress(total, loaded, file)
+      })).data.appData.resultData;
+      if (downloadPath) {
+        this.localVideo = `/${window.appInfo.appId}/upload${downloadPath}`;
+        this.editItem.articleVideoUrl = downloadPath;
+      }
+    },
+    onProgress(total, loaded, file) {
+      const progress = Number((loaded * 100 / total).toFixed(2));
+      window.vtoast.loading(`${file.name} 上传进度: ${progress}%`);
+      if (loaded === total) {
+        window.vtoast.success(`${file.name} 上传进度: 100%`);
+      }
+    },
+    clearImage() {
+      this.editItem.articleCoverImage = null;
+    },
+    clearAudio() {
+      this.editItem.articleAudioUrl = null;
+    },
+    clearVideo() {
+      this.editItem.articleVideoUrl = null;
+    },
+    closeMaterialPicker() {
+      this.isEditDrawerShown = false;
+    },
+    closeImportMaterialPicker() {
+      this.$refs.fileBrowser.closeImportMaterialPicker();
+    },
+    async imagePicker() {
+      if (!await this.articleIdCheck()) {
+        window.vtoast.fail("请填写文章信息后,再点击上传文件!");
+        return
+      }
+      // document.getElementById('imageInput').click();
+      this.materialType = 'image';
+      this.writeBackType = 'attachment';
+      this.isEditDrawerShown = true;
+    },
+    async audioPicker() {
+      if (!await this.articleIdCheck()) {
+        window.vtoast.fail("请填写文章信息后,再点击上传文件!");
+        return
+      }
+      // document.getElementById('audioInput').click();
+      this.materialType = 'audio';
+      this.writeBackType = 'attachment';
+      this.isEditDrawerShown = true;
+    },
+    async videoPicker() {
+      if (!await this.articleIdCheck()) {
+        window.vtoast.fail("请填写文章信息后,再点击上传文件!");
+        return
+      }
+      // document.getElementById('videoInput').click();
+      this.materialType = 'video';
+      this.writeBackType = 'attachment';
+      this.isEditDrawerShown = true;
+    },
+    initEditorMd() {
+      const that = this;
+      this.$nextTick(() => {
+        if (document.getElementById('editorMdContainer')) {
+          document.getElementById('editorMdContainer').innerHTML = `<textarea style=\"display:none;\">${this.editItem['articleContent'] || ""}</textarea>`;
+          that.editor = editormd('editorMdContainer', {
+            // 其他配置选项...
+            customHTMLRender: function (content) {
+              console.log('content', content);
+              // 使用正则表达式匹配自定义语法，将其替换为自定义HTML代码
+              content = content.replace(/\+\+\+(.*?)\+\+\+/g, '<div class="custom-style">$1</div>');
+              return content;
+            },
+            // width  : "100%",
+            // height : "100%",
+            watch: false,
+            saveHTMLToTextarea: true,    // 保存 HTML 到 Textarea
+            path: '/<$ ctx.app.config.appId $>/public/plugins/editor.md/lib/',
+            toolbarIcons: that.toolbarIcons,
+            toolbarIconsClass: {
+              imageUpload: 'fa-image',
+              audioUpload: 'fa-file-audio-o',
+              videoUpload: 'fa-youtube-play',
+              attachmentUpload: 'fa-upload',
+            },
+            toolbarIconTexts: {
+              toggle: "<i class='fa fa-expand' name='toggle' unselectable='on' style='display: inline-block;'></i><span class='ml-1'>收缩</span>",  // 如果没有图标，则可以这样直接插入内容，可以是字符串或HTML标签
+              articleQuery: "<i class='fa fa-table' name='toggle' unselectable='on' style='display: inline-block;'></i><span class='ml-1'>列表</span>",  // 如果没有图标，则可以这样直接插入内容，可以是字符串或HTML标签
+              codeView: "<i class='fa fa-table' name='toggle' unselectable='on' style='display: inline-block;'></i><span class='ml-1'>codeView</span>",  // 如果没有图标，则可以这样直接插入内容，可以是字符串或HTML标签
+            },
+            toolbarHandlers: {
+              imageUpload: function (cm, icon, cursor, selection) {
+                that.openImageUploadDrawer();
+              },
+              toggle: function (cm, icon, cursor, selection) {
+                cm.replaceSelection(`\n[jh-toggle title=\"title\" default-open=\"true\"]\n请输入内容\n[/jh-toggle]\n`);
+              },
+              articleQuery: function (cm, icon, cursor, selection) {
+                cm.replaceSelection("\n[jh-article-query]\n" +
+                    "{\n" +
+                    " \"tableName\": \"数据表名称\",\n" +
+                    " \"where\": \"where 字段名 = 字段值\",\n" +
+                    " \"queryType\": \"order\",\n" +
+                    " \"orderBy\": \"order by 字段名 asc\",\n" +
+                    " \"limit\": 20\n" +
+                    "}" +
+                    "\n[/jh-article-query]\n");
+              },
+              codeView: function (cm, icon, cursor, selection) {
+                that.cm = cm;
+                that.isCodeViewDialogShow = true;
+              },
+            },
+            lang: {
+              toolbar: {
+                toggle: "展开收起",
+                column: "横向排列",  // 自定义按钮的提示文本，即title属性
+                articleQuery: "数据列表",
+                codeView: "代码运行",
+              }
+            },
+            onchange: function () {
+              that.mdChanged = true;
+              that.editItem.articleContent = this.getMarkdown();
+              that.editItem.articleContentForSeo = this.getPreviewedHTML2();
+              // console.log('onchangeSeo', that.editItem.articleContentForSeo);
+            },
+          });
+        } else {
+          requestAnimationFrame(() => {
+            this.initEditorMd();
+          })
+        }
+      })
+    },
+    async openImageUploadDrawer() {
+      if (await this.articleIdCheck()) {
+        this.materialType = 'image';
+        this.writeBackType = 'editor';
+        this.isEditDrawerShown = true;
+      }
+    },
+    async openMaterialUploadDrawer() {
+      if (await this.articleIdCheck()) {
+        this.materialType = '';
+        this.writeBackType = '';
+        this.isEditDrawerShown = true;
+      }
+    },
+    /**
+     * 获取表格数据
+     */
+    async getTableData() {
+      this.isTableLoading = true;
+      const result = await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'articleEdit',
+            actionId: 'selectArticleWithCategory',
+            actionData: {
+              articleId: this.articleId
+            },
+          }
+        }
+      });
+      this.editItem = result.data.appData.resultData;
+
+      this.isTableLoading = false;
+    },
+    async articleIdCheck() {
+      if (!this.articleId) {
+        await this.insertItem();
+        window.location.reload();
+        return false
+      }
+      return true;
+    },
+    /**
+     * 移除到回收站
+     */
+    async deletedArticle() {
+      const dialogTapDone = await window.confirmDialog({
+        title: '<$ constantUiMap.common.recycle $>',
+        content: '<$ constantUiMap.article.recyclingConfirmation $>？'
+      });
+      if (dialogTapDone) {
+        await window.vtoast.loading("<$ constantUiMap.article.recyclingArticles $>");
+        await window.jianghuAxios({
+          data: {
+            appData: {
+              pageId: 'articleEdit',
+              actionId: 'deletedArticle',
+              actionData: {articleId: this.articleId}
+            }
+          }
+        });
+        await window.vtoast.success("<$ constantUiMap.article.recyclingArticlesSuccess $>");
+        this.getTableData();
+      }
+    },
+    async restoreArticle() {
+      const dialogTapDone = await window.confirmDialog({
+        title: '<$ constantUiMap.common.recover $>',
+        content: '<$ constantUiMap.article.restoreArticleConfirm $>？'
+      });
+      if (dialogTapDone) {
+        await window.vtoast.loading("<$ constantUiMap.article.recoverArticle $>");
+        await window.jianghuAxios({
+          data: {
+            appData: {
+              pageId: 'articleEdit',
+              actionId: 'restoreArticle',
+              actionData: {articleId: this.articleId}
+            }
+          }
+        });
+        await window.vtoast.success("<$ constantUiMap.article.recoverArticlesSuccessfully $>");
+        this.getTableData();
+      }
+    },
+    /**
+     * 保存数据
+     */
+    async saveInfo() {
+      // 处理 articleTagList
+      if (!this.editItem.articleTagList) {
+        this.editItem.articleTagList = '';
+      }
+      const parts = this.editItem.articleTagList.replace(/，/g, ',').split(',')
+      this.editItem.articleTagList = parts.map(item => item.trim()).join(',')
+      this.editItem.articlePublishTime = dayjs(this.editItem.articlePublishTime).format();
+      if (this.getEditItem.id) {
+        await this.updateItem();
+      } else {
+        await this.insertItem();
+        // Tip: 刷新页面触发创建 文章文件夹
+        window.location.reload();
+      }
+    },
+    // 保存并预览
+    async saveInfoAndPreview() {
+      await this.saveInfo();
+      window.location.href = `/${window.appInfo.appId}/page/article/${this.getEditItem.articleId}`;
+    },
+    /**
+     * 新增文章
+     */
+    async insertItem() {
+      if (!this.$refs.form.validate()) return false;
+      const {id, articleList, categoryName, ...saveInfo} = this.getEditItem;
+      await window.vtoast.loading("新增文章");
+      const result = await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'articleEdit',
+            actionId: 'jhInsertItem',
+            actionData: saveInfo
+          }
+        }
+      });
+      await window.vtoast.success("新增文章成功");
+      // 按id获取新文章并跳转新 url
+      await this.reopenEditByArticleId(result.data.appData.resultData.rows[0]);
+      return true;
+    },
+    // 按id获取新文章并跳转新 url
+    async reopenEditByArticleId(id) {
+      // 按id获取新文章并跳转新 url
+      const {rows} = (await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'articleEdit',
+            actionId: 'selectItemList',
+            actionData: {},
+            where: {id},
+          }
+        }
+      })).data.appData.resultData;
+      const newArticle = rows[0];
+      const {articleId, articleTitle} = newArticle
+      this.articleId = articleId;
+      this.mdChanged = false;
+      await this.getTableData();
+      const newUrl = `/${window.appInfo.appId}/page/articleEdit?articleId=${articleId}&title=${articleTitle}`;
+      history.pushState({}, null, newUrl);
+    },
+    /**
+     * 保存文章
+     */
+    async updateItem() {
+      if (!this.$refs.form.validate()) return false;
+      const {id, articleList, categoryName, articleContentForSeoByCodeView, ...saveInfo} = this.getEditItem;
+      await window.vtoast.loading("修改文章");
+      await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'articleEdit',
+            actionId: 'jhUpdateItem',
+            actionData: saveInfo,
+            where: {
+              articleId: this.getEditItem.articleId
+            }
+          }
+        }
+      })
+      await window.vtoast.success("修改文章成功");
+      this.mdChanged = false;
+      await this.getTableData();
+      const newUrl = `/${window.appInfo.appId}/page/articleEdit?articleId=${this.getEditItem.articleId}&title=${this.getEditItem.articleTitle}`;
+      history.pushState({}, null, newUrl);
+    },
+
+    async useMaterial({path, dir}) {
+      let filename, downloadPath = null;
+      const resultData = (await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'articleEdit',
+            actionId: 'useMaterial',
+            actionData: {
+              path,
+              fromDir: dir,
+              toDir: this.material.dir
+            },
+          }
+        }
+      })).data.appData.resultData;
+      filename = resultData.filename;
+      downloadPath = resultData.downloadPath;
+
+      this.isEditDrawerShown = false;
+      if (this.writeBackType === 'editor') {
+        this.editHandlerWhenUseMaterial(filename, downloadPath);
+      } else {
+        this.saveHandlerWhenUseMaterial(downloadPath);
+      }
+    },
+    
+    saveHandlerWhenUseMaterial(downloadPath) {
+      downloadPath = downloadPath.replace(/ /g, '%20');
+      if(this.materialType === 'image') {
+        this.editItem.articleCoverImage = downloadPath;
+        return;
+      }
+      if(this.materialType === 'audio') {
+        this.editItem.articleAudioUrl = downloadPath
+        return;
+      }
+      if(this.materialType === 'video') {
+        this.editItem.articleVideoUrl = downloadPath
+      }
+    },
+    editHandlerWhenUseMaterial(filename, downloadPath) {
+      // downloadPath中的空格替换为%20
+      downloadPath = downloadPath.replace(/ /g, '%20');
+      if (this.materialType === 'pdf') {
+        // pdf 操作使用通道
+        this.editor.insertValue(`\n[jh-pdf-viewer src="${downloadPath}"/]\n`);
+        return;
+      }
+      const fileSubbfix = filename.lastIndexOf(".") > -1 ? filename.substring(filename.lastIndexOf('.') + 1).toLowerCase() : '';
+      if (['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', '.psd', 'svg', 'tiff'].indexOf(fileSubbfix) !== -1) {
+        this.editor.insertValue(`\n![${filename}](/__appId__/upload${downloadPath})`);
+        return;
+      }
+      if (['mp3','wav','wmv'].indexOf(fileSubbfix) !== -1) {
+        this.editor.insertValue(`\n<audio controls="" preload="none"><source src="/__appId__/upload${downloadPath}"></audio>`)
+        return;
+      }
+      if (['avi','mpg','mpeg','mov','rm','ram','swf','flv','mp4','wma','rmvb','mkv'].indexOf(fileSubbfix) !== -1) {
+        this.editor.insertValue(`\n<video controls="" preload="none"><source src="/__appId__/upload${downloadPath}"></video>`)
+        return;
+      }
+
+      // 下载链接
+      this.editor.insertValue(`\n[${filename}](/__appId__/upload${downloadPath})`);
+    },
+    closePage() {
+      window.history.back();
+    },
+    getFileName(path) {
+      if (path) {
+        return path.substring(path.lastIndexOf('/') + 1);
+      }
+      return "点击上传";
+    },
+    onSelectCodeView() {
+      const code = this.codeViewData.find(e => e.codeId === this.codeItemId);
+      this.cm.replaceSelection(`\n[jh-code-view title=\"${code.codeTitle}\" id=\"${code.codeId}\"/]\n`);
+      this.isCodeViewDialogShow = false;
+    },
+    setCodeViewList(content) {
+      const codeTagList = (content || '').match(/\[jh-code-view(\s+\w+="[^"]*")*\s*\/\]/g) || [];
+      const list = []
+      for (const item of codeTagList) {
+        const params = this.extractedParams(item);
+        list.push({
+          codeId: params.id,
+          codeTitle: params.title,
+        })
+        // console.log('content', content);
+      }
+      this.codeViewList = list;
+    },
+    extractedParams(item) {
+      const attrRegex = /(\w+)=["']([^"]*)["']/g;
+      const attrs = {};
+      let attrMatch;
+      while (attrMatch = attrRegex.exec(item)) {
+        const [, attr, value] = attrMatch;
+        attrs[attr] = value;
+      }
+      return attrs;
+    },
+    async openUpdateCodeDrawer() {
+      this.isUpdateCodeDrawerShown = true;
+    },
+    async prepareUpdateCodeItem({codeId}) {
+      this.isCodeViewLoading = true;
+      this.updateCodeItem = this.codeViewData.find(e => e.codeId === codeId);
+      this.isCodeViewLoading = false;
+    },
+    async doUpdateCodeItem() {
+      this.isCodeViewLoading = true;
+      const {id, ...data} = this.updateCodeItem;
+      await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'articleEdit',
+            actionId: 'updateCodeItem',
+            actionData: data,
+            where: {id}
+          }
+        }
+      })
+      const codeIndex = this.codeViewData.findIndex(e => e.id === id);
+      this.codeViewData[codeIndex] = this.updateCodeItem;
+      this.isCodeViewLoading = false;
+      this.isUpdateCodeDrawerShown = false;
+    },
+
+    // ---------- 分类搜索 uiAction >>>>>>>>>>>> --------
+    async categorySearch() {
+      const searchVal = this.categorySearchInput ? this.categorySearchInput.toLowerCase() : null;
+      const categoryList = _.cloneDeep(this.constantObj.category);
+      if (searchVal) {
+        this.constantObj.categorySearch = categoryList.filter(category => category.text.toLowerCase().includes(searchVal) || category.text.includes(searchVal))
+      }else{
+        this.constantObj.categorySearch = categoryList;
+      }
+    },
+    // ---------- <<<<<<<<<<< 分类搜索 uiAction  --------
+  }
+})
+</script>
+
+<style scoped>
+body {
+  overflow: auto;
+}
+
+.v-card {
+  height: unset;
+}
+
+:root {
+  --border-color: #eff2f5;
+}
+
+.v-dialog--fullscreen .v-sheet {
+  height: auto;
+  position: relative;
+  background: #fff;
+  display: block;
+}
+
+.editormd, .CodeMirror-gutters, .editormd-toolbar, .editormd .CodeMirror, .editormd-menu > li.divider, .editormd-menu > li > a:hover, .editormd-menu > li > a.active {
+  border-color: var(--border-color) !important;
+}
+
+.CodeMirror-gutter {
+  background-color: #fff;
+}
+
+.CodeMirror-scroll {
+  overflow-x: hidden !important;
+}
+
+.editormd-dialog-close {
+  color: #3F4254 !important;
+}
+
+.editormd-preview-container ol.linenums li, .editormd-html-preview ol.linenums li {
+  list-style-type: none;
+}
+
+.editormd-preview-container ol.linenums, .editormd-html-preview ol.linenums {
+  color: #999;
+  padding-left: 0;
+}
+.jh-page-body-container .v-toolbar__content {
+  height: unset !important;
+}
+</style>
+{% endblock %}

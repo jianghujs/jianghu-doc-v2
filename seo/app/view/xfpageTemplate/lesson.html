@@ -1,0 +1,210 @@
+<!-- 加载定制样式 >>>>>>>>>>>>> -->
+<link rel="stylesheet" href="<$ static $>/mdb/css/font-awesome.min.css?v=6.0.0" />
+<link rel="stylesheet" href="<$ static $>/mdb/css/roboto-font.css?family=Roboto:300,400,500,700&display=swap" />
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.min.css"/>
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.css"/>
+{% include 'util/jianghu/jianghuDocCss.html' %}
+<style>
+  /* common >>>>>>>>>>>>> */
+  .jianghu-doc-contentDoc{
+    padding: 0;
+  }
+  .jianghu-content{
+    max-width: 1376px;
+    margin: 0 auto;
+  }
+  /* <<<<<<<<<<<<< common */
+
+  /* 目录 >>>>>>>>>>>>> */
+  .jianghu-menu{
+    background: #FFFFFF;
+    padding: 20px 32px;
+  }
+  .jianghu-menu .jianghu-title{
+    font-weight: 600;
+    color: #333333;
+    font-size: 22px;
+  }
+  .jianghu-menu .jianghu-card{
+    box-shadow: 0px 10px 12px 0px rgba(0,0,0,0.05);
+    border-radius: 8px 8px 8px 8px;
+  }
+  .jianghu-menu .jianghu-text{
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+    border-bottom: 1px dashed #D2D2D2;
+  }
+  .jianghu-menu .jianghu-row:last-child .jianghu-text{
+    border-bottom: none;
+  }
+  .jianghu-menu .jianghu-image{
+    width: 20px;
+    height: 20px;
+  }
+  /* <<<<<<<<<<<<< 目录 */
+
+  /* 生态 >>>>>>>>>>>>> */
+  .jianghu-ecosystem{
+    background: #FFFFFF;
+    padding: 40px 0;
+    margin: 0 32px;
+  }
+  .jianghu-ecosystem .jianghu-row{
+    margin: 30px 0;
+  }
+  .jianghu-ecosystem .jianghu-row:nth-child(1){
+    margin-top: 0;
+  }
+  .jianghu-ecosystem .jianghu-title{
+    font-size: 24px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 8px;
+  }
+  .jianghu-ecosystem .jianghu-image{
+    width: 36px;
+  }
+  .jianghu-ecosystem .jianghu-text{
+    padding: 20px;
+    width: 100%;
+    background: #FFFFFF;
+    box-shadow: 0px 5px 6px 0px rgba(0,0,0,0.05);
+    border-radius: 8px 8px 8px 8px;
+    height: 100%;
+    transition: all .5s;
+  }
+  .jianghu-ecosystem .jianghu-text:hover{
+    box-shadow: 0px 10px 12px 0px rgba(0,0,0,0.05);
+  }
+  .jianghu-ecosystem .jianghu-text:nth-child(4n){
+    margin-right: 0;
+  }
+  .jianghu-ecosystem .jianghu-text-1{
+    font-size: 20px;
+    font-weight: 600;
+    color: #42B883;
+  }
+  .jianghu-ecosystem .jianghu-text-2{
+    font-size: 14px;
+    font-weight: 400;
+    color: #666666;
+  }
+  .jianghu-ecosystem .jianghu-text-3{
+    font-size: 14px;
+    font-weight: 500;
+    color: #333333;
+    width: 50px;
+    min-width: 50px;
+    /* 两边对齐 */
+    text-align-last: justify;
+  }
+  .jianghu-ecosystem .jianghu-text-4{
+    font-size: 14px;
+    font-weight: 400;
+    color: #666666;
+  }
+  /* <<<<<<<<<<<<< 生态 */
+
+  /* 移动端适配 >>>>>>>>>>>>> */
+  @media (max-width: 768px){
+    .jianghu-ecosystem{
+      padding: 20px 0 40px;
+    }
+    .jianghu-ecosystem .jianghu-title{
+      font-size: 22px;
+    }
+    .jianghu-ecosystem .jianghu-text-1{
+      font-size: 18px;
+    }
+  }
+  /* <<<<<<<<<<<<< 移动端适配 */
+</style>
+<!-- <<<<<<<<<<<<< 加载定制样式 -->
+
+<!-- 内容区 >>>>>>>>>>>>> -->
+<main>
+  <div class="jianghu-doc-content">
+    <div class="jianghu-doc-contentDoc">
+      <!-- 目录 -->
+      <div class="jianghu-menu d-block d-md-none">
+        <div class="jianghu-content">
+          <div class="jianghu-title">目录</div>
+          <div class="jianghu-card mt-2">
+            {% for lesson in xfPage.xfPageConfig %}
+            {% set lessonIndex = loop.index %}
+            <div class="jianghu-row px-2">
+              <a href="/<$ appId $>/page/xfArticle/5719#lesson-<$  lessonIndex $>">
+                <div class="jianghu-text py-2 d-flex justify-content-between"> 
+                  <span><$ lesson.label $></span>
+                  <img src="<$ seoResource $>/image/icon/right-arrow.png" class="jianghu-image img-fluid"/>
+                </div>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      
+      <!-- 生态 -->
+      <div class="jianghu-ecosystem">
+        <div class="jianghu-content">
+          {% for lesson in xfPage.xfPageConfig %}
+          {% set lessonIndex = loop.index %}
+          <div class="jianghu-row" id="lesson-<$  lessonIndex $>">
+            <div class="jianghu-title"><$ lesson.label $></div>
+            <div class="row g-4">
+              {% for column in lesson.columnList %}
+              {% set columnIndex = loop.index %}
+              {% for block in column %}
+              {% set blockIndex = loop.index %}
+              <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                <div class="jianghu-text"> 
+                  <a href="/<$ appId $>/page/article/<$ block.articleList[0].articleId $>">
+                    <p class="jianghu-text-1 mb-0"><$ block.categoryName $></p>
+                    <p class="jianghu-text-2 mb-0 mt-2 d-flex align-items-center">
+                      <img src="<$ seoResource $>/image/icon/<$ block.categoryName $>.png" class="jianghu-image jianghu-image me-2 img-fluid" onerror="this.src='<$ seoResource $>/image/icon/default.png'"/>
+                      <$ block.categoryInfo.categoryIntro $>
+                    </p>
+                  </a>
+
+                  {% if block.articleList.length > 0 %}
+                  <div class="mt-3">
+                    {% for article in block.articleList %}
+                     <!-- if loop.index <= 7  -->
+                    <a href="/<$ appId $>/page/article/<$ article.articleId $>">
+                      <div class="mb-0 d-flex justify-start">
+                        <div class="jianghu-text-3"><$ article.articleTitleMap.prefix $>：</div>
+                        <div class="jianghu-text-4"><$ article.articleTitleMap.text $></div>
+                      </div>
+                    </a>
+                     <!-- endif -->
+                    {% endfor %}
+                    <!-- if block.articleList.length > 7
+                    <a href="/<$ appId $>/page/article/<$ block.articleList[0].articleId $>">
+                      <div class="mb-0 d-flex justify-content-center align-items-center mt-1 ">
+                        <div class="jianghu-text-4 text-success">查看更多</div>
+                        <svg t="1694502017236" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4414" width="11" height="11"><path d="M610.88 512L192 93.12 285.12 0l512 512-512 512L192 930.88z" fill="#42B883" p-id="4415" data-spm-anchor-id="a313x.search_index.0.i9.53863a81vEcopW" class="selected"></path></svg>
+                      </div>
+                    </a>
+                    endif -->
+                  </div>
+                  {% endif%}
+                </div>  
+              </div>
+              {% endfor %}
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- <<<<<<<<<<<<< 内容区 -->
+
+<!-- 加载定制js >>>>>>>>>>>>> -->
+<script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.mdb.min.js"></script>
+<script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.js"></script>
+<!-- <<<<<<<<<<<<< 加载定制js -->

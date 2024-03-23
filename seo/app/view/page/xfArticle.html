@@ -1,0 +1,56 @@
+{% extends 'template/template.html' %}
+
+{% block title %}<$ xfPage.xfPageTitle $>{% endblock %}
+{% block keyword %}<$ xfPage.xfPageTagList $>{% endblock %}
+{% block description %}<$ xfPage.xfPageDescription $>{% endblock %}
+{% block content %}
+
+
+{% include 'xfpageTemplate/' + xfPage.template + '.html' %}
+
+<!-- Footer -->
+<!-- <footer class="text-center text-lg-start bg-light text-muted jianghu-footer">
+  <section class="jianghu-footer-links">
+    <div class="container text-center text-md-start jianghu-footer-links-container">
+      <div class="row">
+        {% for item in constantUiMap.links %}
+        <div class="col-md-3 col-lg-2 col-xl-3 mx-auto">
+          <h6 class="text-uppercase mb-4 jianghu-footer-links-title">
+            <$ item.label $>
+          </h6>
+          {% for it in item.list %}
+          <p class="mb-3 jianghu-footer-links-item">
+            {% if it.path.includes('http') %}
+            <a href="<$ it.path $>" target="_blank" class="text-reset"><$ it.title $></a>
+            {% elif it.path === '' %}
+            <a href="javascript:void(0);" class="text-reset"><$ it.title $></a>
+            {% else %}
+            <a href="/<$ ctx.app.config.appId $><$ it.path $>" class="text-reset"><$ it.title $></a>
+            {% endif%}
+          </p>
+          {% endfor %}
+          {% if item.img %}
+            <img class="jianghu-footer-img"/>
+          {% endif%}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <div class="text-center p-4 jianghu-footer-copyright">
+    <$ constantUiMap.footer.copyright $>
+  </div>
+</footer> -->
+{% endblock %}
+{% block javascript %}
+<script>
+  // 错误提示
+  const searchParams = new URLSearchParams(location.search.substring(1));
+  const errorInfo = JSON.parse('<$ constantUiMap.errorInfo | dump | safe $>');
+  const errorCode = searchParams.get('errorCode');
+  const errorReason = searchParams.get('errorReason');
+  if (errorCode) {
+    showFailAlert(errorInfo.contentEnum[errorCode] || errorReason)
+  }
+</script>
+{% endblock %}
