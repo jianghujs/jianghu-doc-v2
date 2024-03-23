@@ -33,14 +33,16 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon  --port=8407 --title=openjianghu_seo_v2 --workers=6",
-    "stop": "egg-scripts stop --title=openjianghu_seo_v2",
-    "dev": "egg-bin dev --port=8407",
+    "start": "egg-scripts start --daemon  --port=7367 --title=jianghu_doc_seo_v2 --workers=6",
+    "stop": "egg-scripts stop --title=jianghu_doc_seo_v2",
+    "dev": "egg-bin dev --port=7367",
     "restart": "npm run stop && npm run start",
-    "start:cn": "egg-scripts start --daemon  --port=9407 --title=cn_openjianghu_seo_v2 --workers=6",
-    "stop:cn": "egg-scripts stop --title=cn_openjianghu_seo_v2",
-    "dev:cn": "egg-bin dev --port=9407",
-    "restart:cn": "npm run stop:cn && npm run start:cn",
+
+    "start:en": "egg-scripts start --daemon  --port=7377 --title=en_jianghu_doc_seo_v2 --workers=6",
+    "stop:en": "egg-scripts stop --title=en_jianghu_doc_seo_v2",
+    "dev:en": "egg-bin dev --port=7377",
+    "restart:en": "npm run stop:en && npm run start:en",
+
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
