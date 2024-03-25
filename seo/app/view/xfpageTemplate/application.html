@@ -1,54 +1,54 @@
 {% set static = "/" + appId + "/public" %}
 <link rel="stylesheet" href="<$ static $>/mdbootstrap/font-awesome.6.1.1.min.css"/>
-<link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.min.css"/>
-<link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.css"/>
+<script src="<$ static $>/tailwindcss/tailwindcss.js"></script>
+
 <style>
-    .card-text {
-        font-size: 14px;
-        color: #7d899a;
-        height: 45px;
+    .item-labels {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 0 16px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 100;
     }
-    .tag {
-        color: #5e6d82;
-        border-radius: 5px;
-        padding: 1px 5px;
+    .item-labels .label {
+        color: #fff;
         font-size: 12px;
-        height: fit-content;
-        background: #f0f1f4;
+        height: 40px;
+        margin: 0 2px;
+        padding: 4px 2px;
+        writing-mode: vertical-lr;
     }
-
-    .cover {
-        height: 180px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+    .label.blue {
+        background: linear-gradient(-20deg, transparent 20%, #5285cc 0), linear-gradient(20deg, transparent 20%, #5285cc 0);
     }
-    .app-link a {
-        color: #42b883;
-    }
-    .app-list {
-        font-size: 14px;
-    }
-
-    main {
-        background: transparent;
+    .label.red {
+        background: linear-gradient(-20deg, transparent 20%, #e65555 0), linear-gradient(20deg, transparent 20%, #e65555 0);
     }
 </style>
-<!--<div class="content-header mt-5 pt-5">-->
-<!--    <main class="jianghu-header-mobile-container">123</main>-->
-<!--</div>-->
 <main>
     <div class="ThemePage container-lg mt-5 pt-5">
-        <div class="row app-list">
+        <div class="grid grid-cols-4 gap-4">
             {% for item in xfPage.xfPageConfig.appList %}
-            <div class="col-3 mb-4">
-                <a href="<$ item.url $>" class="card pb-2">
-                    <img class="cover" src="<$ item.cover $>"
-                         alt="<$ item.title $>"/>
+            <div class="card rounded relative">
+                <a href="<$ item.url $>" class="card pb-2 hover:-translate-y-2 transition-all hover:shadow">
+                <div class="item-labels">
+                    {% if item.isHot %}
+                    <div class="label red">热门</div>
+                    {% endif %}
+                </div>
+                    <div class="rounded-t img-box relative w-full h-0 overflow-hidden" style="padding-top: 50%">
+                        <img class="absolute top-0 left-0 w-full h-auto" src="<$ item.cover $>"
+                             alt="<$ item.title $>"/>
+                    </div>
                     <div class="p-4">
-                        <p class="card-text"><$ item.desc $></p>
+                        <p class="text-gray-600 text-sm h-14"><$ item.desc $></p>
                         <div class="d-flex flex-wrap tag-list">
                             {% for tag in item.tags %}
-                            <div class="tag me-1">
+                            <div class="bg-gray-100 text-gray-500 mr-2 px-2 py-1 rounded text-xs">
                                 <$ tag $>
                             </div>
                             {% endfor %}
@@ -61,7 +61,6 @@
 
     </div>
 </main>
-<script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.mdb.min.js"></script>
-<script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.js"></script>
+
 <style>
 </style>
