@@ -1,0 +1,75 @@
+{% set static = "/" + appId + "/public" %}
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/font-awesome.6.1.1.min.css"/>
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.min.css"/>
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.css"/>
+<style>
+    .card-text {
+        font-size: 12px;
+        color: #666666;
+    }
+    .tag {
+        color: #42b883;
+        border: 1px solid #ededed;
+        border-radius: 5px;
+        padding: 2px 5px;
+        font-size: 14px;
+        height: fit-content;
+    }
+    .cover {
+        height: 200px;
+        border-radius: 5px;
+    }
+    .app-icon {
+        margin: auto;
+        width: 80px;
+        height: 80px;
+        background: #edfbf4;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .app-link a {
+        color: #42b883;
+    }
+    .app-list {
+        font-size: 14px;
+    }
+    .tag-list {
+        height: 60px;
+    }
+</style>
+<main class="mt-5 pt-5">
+    <div class="ThemePage container-lg">
+        <div class="row app-list">
+            {% for item in xfPage.xfPageConfig.appList %}
+            <div class="col-4">
+                <div class="card p-4 pb-2">
+                    <div class="text-center mb-3">
+                        <div class="app-icon"></div>
+                        <h5 class="card-title"><$ item.title $></h5>
+                        <p class="card-text"><$ item.desc $></p>
+                        <div class="d-flex flex-wrap tag-list">
+                            {% for tag in item.tags %}
+                            <div class="tag mb-2 me-2">
+                                <$ tag $>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="cover"
+                         alt="Fissure in Sandstone"/>
+
+                    <div class="d-flex justify-content-end py-2 app-link">
+                        <a href="#"><span class="me-2 d-inline-block">查看产品详情</span><i class="fa-solid fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</main>
+<script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.mdb.min.js"></script>
+<script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.js"></script>
+<style>
+</style>
