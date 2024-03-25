@@ -1,0 +1,74 @@
+{% set static = "/" + appId + "/public" %}
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/font-awesome.6.1.1.min.css"/>
+<script src="<$ static $>/tailwindcss/tailwindcss.js"></script>
+
+<style>
+    .item-labels {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 0 16px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 100;
+    }
+
+    .item-labels .label {
+        color: #fff;
+        font-size: 12px;
+        height: 40px;
+        margin: 0 2px;
+        padding: 4px 2px;
+        writing-mode: vertical-lr;
+    }
+
+    .label.blue {
+        background: linear-gradient(-20deg, transparent 20%, #5285cc 0), linear-gradient(20deg, transparent 20%, #5285cc 0);
+    }
+
+    .label.red {
+        background: linear-gradient(-20deg, transparent 20%, #e65555 0), linear-gradient(20deg, transparent 20%, #e65555 0);
+    }
+</style>
+<main>
+    <div class="ThemePage container-lg mt-5 pt-5">
+        <div class="grid grid-cols-4 gap-4">
+            {% for item in xfPage.xfPageConfig.appList %}
+            <div class="card rounded relative overflow-hidden">
+                <div class="item-labels">
+                    {% if item.isHot %}
+                    <div class="label red">热门</div>
+                    {% endif %}
+                </div>
+
+                <div class="bg-blue-100">
+                    <a href="<$ item.url $>" class="hover:-translate-y-2 transition-all hover:shadow">
+                        <p class="px-4 py-3 font-bold text-base"><$ item.title $></p>
+                        <div class="rounded-t ml-4 img-box relative w-full h-0 overflow-hidden"
+                             style="padding-top: 50%">
+                            <img class="absolute top-0 left-0 w-full h-auto" src="<$ item.cover $>"
+                                 alt="<$ item.title $>"/>
+                        </div>
+                </div>
+                <div class="p-4">
+                    <p class="text-gray-600 text-sm h-14"><$ item.desc $></p>
+                    <div class="d-flex flex-wrap tag-list">
+                        {% for tag in item.tags %}
+                        <div class="bg-gray-100 text-gray-500 mr-2 px-2 py-1 rounded text-xs">
+                            <$ tag $>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</main>
+
+<style>
+</style>
