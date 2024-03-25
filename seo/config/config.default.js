@@ -78,10 +78,19 @@ module.exports = (appInfo) => {
 
     xfPageRoute: 'enable',
     xfPageRouteMap: {
-      'directory': 5735, // 目录
-      'jh-training': 5719,  // 培训
-      'jh-template': 5722,  // 脚手架
-      'jh-app': 5723,       // 应用
+      'index':        5736, // 首页
+      'jianghujs':    5737, // 江湖JS框架
+      'app':          5738, // 应用
+      'panel':        5739, // 运维
+      '001':          5739, // 软件开发理念
+      '002':            5739, // 数字化方法论
+      'rd':           5739, // 研发
+      '003':        5739, // 实践和经验
+      'about':        5739, // 关于我们
+
+      // 'jh-training': 5719,  // 培训
+      // 'jh-template': 5722,  // 脚手架
+      // 'jh-app': 5723,       // 应用
     },
 
     middleware: [ ...middleware, 'webPackage', 'webUserInfo', 'webAuthorization' ],

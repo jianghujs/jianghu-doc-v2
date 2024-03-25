@@ -57,12 +57,12 @@
           :headers="headers" 
           :items="tableData" 
           :search="tableFilterKeyword"
-          :items-per-page="15" 
+          :footer-props="{ itemsPerPageOptions: [20, 50, -1], itemsPerPageText: '每页行数', itemsPerPageAllText: '所有'}"
           mobile-breakpoint="0"
-          :loading="isTableLoading" 
-          checkbox-color="success" 
+          :loading="isTableLoading " checkbox-color="success" class="jh-fixed-table-height elevation-0 mt-0 mb-xs-4"
           :class="{'zebraLine': isTableZebraLineShown }"
-          class="jh-fixed-table-height elevation-0 mt-0 mb-xs-4 flex-fill d-flex flex-column">
+          fixed-header
+          :items-per-page="-1">
           <template v-slot:item.xfPagePublishStatus="{ item }">
             <v-chip small :color="item.xfPagePublishStatus | statusColor">
               {{ item.xfPagePublishStatus | parseStatus }}
@@ -291,7 +291,7 @@
               whereLike: {
                 xfPageTitle: this.serverSearchForm.xfPageTitle,
               },
-              orderBy: [{ column: 'operationAt', order: 'desc' }]
+              orderBy: [{ column: 'xfPageTitle', order: 'desc' }]
             }
           }
         })).data.appData.resultData;
