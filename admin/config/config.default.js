@@ -29,6 +29,7 @@ module.exports = (appInfo) => {
     adminIndex: `/${appId}/page/categoryManagement`,
     loginPage: `/${appId}/page/login`,
     helpPage: `/${appId}/page/help`,
+    seoUrl: `http://127.0.0.1:7367/jianghu-doc-v2-seo`,
     primaryColor: "#4caf50",
     primaryColorA80: "#EEF7EE",
     uploadDir,

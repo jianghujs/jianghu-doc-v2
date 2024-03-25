@@ -10,6 +10,7 @@ module.exports = appInfo => {
     // appDirectoryLink: '/directory',
     // authTokenKey: 'directory',
     // loginPage: '/directory/page/login',
+    seoUrl: `http://127.0.0.1:7367/jianghu-doc-v2-seo`,
     static: {
       maxAge: 0,
       buffer: false,

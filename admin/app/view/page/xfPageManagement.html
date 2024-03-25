@@ -74,6 +74,9 @@
           <template v-slot:item.action="{ item }">
             <!-- pc端 -->
             <template v-if="!isMobile">
+              <span role="button" class="success--text font-weight-medium font-size-2 mr-2" @click="doUiAction('openSeoxfPage', item)">
+                <v-icon size="16" class="success--text">mdi-link</v-icon>查看
+              </span>
               <span role="button" class="success--text font-weight-medium font-size-2 mr-2" @click="doUiAction('updateItem', item)">
                 <v-icon size="16" class="success--text">mdi-note-edit-outline</v-icon>修改
               </span>
@@ -202,7 +205,7 @@
         { text: "更新者用户名", value: "xfPageUpdateUsername", width: 120 },
         { text: "更新时间", value: "xfPageUpdateTime", width: 150 },
         { text: "配置", value: "xfPageConfig", width: 220 },
-        { text: '操作', value: 'action', align: 'center', sortable: false, width: window.innerWidth < 600 ? 80 : 220, class: 'fixed', cellClass: 'fixed' },
+        { text: '操作', value: 'action', align: 'center', sortable: false, width: window.innerWidth < 600 ? 80 : 280, class: 'fixed', cellClass: 'fixed' },
       ],
 
       currentClickButton: { title: '新增', action: 'add' },
@@ -249,6 +252,9 @@
             break;
           case 'historyItem':
             await this.openHistoryPage(uiActionData);
+            break;
+          case 'openSeoxfPage':
+            await this.openSeoxfPage(uiActionData);
             break;
           case 'deleteItem':
             await this.globalHandler.confirmEditItemDialog('删除');
@@ -351,6 +357,10 @@
       openHistoryPage(item) {
         const { xfPageId, xfPageTitle } = item;
         window.open(`/${window.appInfo.appId}/page/xfPageHistoryManagement?xfPageId=${xfPageId}&title=${xfPageTitle}`);
+      },
+      openSeoxfPage(item) {
+        const { xfPageId, xfPageTitle } = item;
+        window.open(`<$ ctx.app.config.seoUrl $>/page/xfArticle/${xfPageId}`);
       },
     }
   })

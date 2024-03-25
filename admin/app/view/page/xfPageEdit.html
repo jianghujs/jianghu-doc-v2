@@ -29,6 +29,10 @@
                 <v-icon class="mr-1" small>mdi-content-save-all</v-icon>
                 保存
               </v-btn>
+              <v-btn class="elevation-0 float-right mt-2 mt-md-0 mr-2" color="success" small @click="saveInfoAndPreview">
+                <v-icon class="mr-1" small>mdi-link</v-icon>
+                保存并查看
+              </v-btn>
             </div>
           </v-row>
         </v-col>
@@ -548,7 +552,7 @@ new Vue({
     // 保存并预览
     async saveInfoAndPreview() {
       await this.saveInfo();
-      window.location.href = `/${window.appInfo.appId}/page/xfPage/${this.getEditItem.xfPageId}`;
+      window.open(`<$ ctx.app.config.seoUrl $>/page/xfArticle/${this.getEditItem.xfPageId}`);
     },
     /**
      * 新增文章

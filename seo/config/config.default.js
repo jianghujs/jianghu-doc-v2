@@ -32,7 +32,7 @@ module.exports = (appInfo) => {
     indexPage: `/${appId}/page/xfArticle/5719`,
     loginPage: `/${appId}/login`,
     helpPage: `/${appId}/help`,
-    adminUrl: `http://127.0.0.1:8406/admin`,
+    adminUrl: `http://127.0.0.1:7368/jianghu-doc-v2-admin`,
     junshiHost: "https://junshi.openjianghu.org",
     junshiWebsiteUuid: "XYXOVr_eFenMR6Xi1n9Gt",
     language: 'zh',
