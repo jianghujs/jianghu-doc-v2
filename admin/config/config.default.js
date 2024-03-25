@@ -21,7 +21,7 @@ module.exports = (appInfo) => {
   return {
     appId,
     language: 'zh',
-    appTitle: "openjianghu后台管理",
+    appTitle: "文档V2-后台管理",
     appLogo: `${appId}/public/img/logo.png`,
     appType: "single",
     appDirectoryLink: "/",
