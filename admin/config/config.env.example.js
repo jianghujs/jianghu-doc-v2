@@ -1,21 +1,30 @@
 'use strict';
 
 const path = require('path');
+require('dotenv').config({path: path.resolve(__dirname, '../../.env')});
 
 module.exports = appInfo => {
 
   return {
     static: {
-      maxAge: 30 * 24 * 60 * 60,
-      buffer: true,
+      maxAge: 0,
+      buffer: false,
       preload: false,
-      maxFiles: 0
+      maxFiles: 0,
+    },
+    jianghuConfig: {
+      jianghuConfigDataIgnoreIdList: {
+        _constant: [],
+        _page: [],
+        _resource: [],
+        _test_case: [],
+        _ui: [],
+      }
     },
     logger: {
       outputJSON: true,
-      level: "INFO",
-      // level: 'DEBUG',
-      // allowDebugAtProd: true,
+      consoleLevel: "DEBUG",
+      level: "DEBUG",
       dir: path.join(appInfo.baseDir, "logs"),
       contextFormatter(meta) {
         return `[${meta.date}] [${meta.level}] [${meta.ctx.method} ${meta.ctx.url}] ${meta.message}`;
@@ -60,11 +69,11 @@ module.exports = appInfo => {
       client: {
         dialect: "mysql",
         connection: {
-          host: "127.0.0.1",
-          port: "3306",
-          user: "root",
-          password: "123456",
-          database: 'jianghu_doc_v2',
+          host: process.env.DB_HOST,
+          port: process.env.DB_PORT,
+          user: process.env.DB_USER,
+          password: process.env.DB_PASSWORD,
+          database: "jianghu_doc_v2",
         },
         pool: { min: 0, max: 30 },
         acquireConnectionTimeout: 30000,
@@ -72,4 +81,5 @@ module.exports = appInfo => {
       app: true,
     },
   };
+
 };

@@ -1,24 +1,23 @@
 'use strict';
 
 const path = require('path');
+require('dotenv').config({path: path.resolve(__dirname, '../../.env')});
 
 module.exports = appInfo => {
 
   return {
+    language: 'zh',
+    meilisearch: {
+      host: 'https://meilisearch.openjianghu.org',
+      apiKey: '只读权限的apiKey',
+      allIndexUid: 'cn_openjianghu_org_doc_all',
+      publicIndexUid: 'cn_openjianghu_org_doc_public',
+    },
     static: {
       maxAge: 0,
       buffer: false,
       preload: false,
       maxFiles: 0,
-    },
-    jianghuConfig: {
-      jianghuConfigDataIgnoreIdList: {
-        _constant: [],
-        _page: [],
-        _resource: [],
-        _test_case: [],
-        _ui: [],
-      }
     },
     logger: {
       outputJSON: true,
@@ -41,7 +40,7 @@ module.exports = appInfo => {
         // 是否开启
         enable: true,
         // 当前应用使用的 jhId，在使用配置表时，自动用该 jhId 做过滤
-        jhId: 'admin',
+        jhId: 'seo',
         // 使用到 jhId 的配置表，一般保持默认即可
         careTableViewList: [
           '_cache',
@@ -68,11 +67,11 @@ module.exports = appInfo => {
       client: {
         dialect: "mysql",
         connection: {
-          host: "127.0.0.1",
-          port: 3306,
-          user: "root",
-          password: "123456",
-          database: "jianghu_doc_v2",
+          host: process.env.DB_HOST,
+          port: process.env.DB_PORT,
+          user: process.env.DB_USER,
+          password: process.env.DB_PASSWORD,
+          database: 'jianghu_doc_v2',
         },
         pool: { min: 0, max: 30 },
         acquireConnectionTimeout: 30000,
