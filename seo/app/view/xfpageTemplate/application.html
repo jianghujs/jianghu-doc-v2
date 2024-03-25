@@ -4,28 +4,23 @@
 <link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.css"/>
 <style>
     .card-text {
-        font-size: 12px;
-        color: #666666;
+        font-size: 14px;
+        color: #7d899a;
+        height: 45px;
     }
     .tag {
-        color: #42b883;
-        border: 1px solid #ededed;
+        color: #5e6d82;
         border-radius: 5px;
-        padding: 2px 5px;
-        font-size: 14px;
+        padding: 1px 5px;
+        font-size: 12px;
         height: fit-content;
+        background: #f0f1f4;
     }
+
     .cover {
         height: 180px;
-        border-radius: 5px;
-    }
-    .app-icon {
-        margin: auto;
-        width: 80px;
-        height: 80px;
-        background: #edfbf4;
-        border-radius: 5px;
-        margin-bottom: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
     .app-link a {
         color: #42b883;
@@ -33,15 +28,9 @@
     .app-list {
         font-size: 14px;
     }
-    .tag-list {
-        height: 60px;
-    }
+
     main {
         background: transparent;
-    }
-    .content-header {
-        height: 500px;
-        background: white;
     }
 </style>
 <!--<div class="content-header mt-5 pt-5">-->
@@ -51,29 +40,21 @@
     <div class="ThemePage container-lg mt-5 pt-5">
         <div class="row app-list">
             {% for item in xfPage.xfPageConfig.appList %}
-            <div class="col-4 mb-4">
-                <div class="card p-4 pb-2">
-                    <div class="mb-3">
-                        <img class="app-icon" src="<$ item.icon $>"
-                             alt="<$ item.title $>"/>
-                        <h5 class="card-title text-center mb-4"><$ item.title $></h5>
+            <div class="col-3 mb-4">
+                <a href="<$ item.url $>" class="card pb-2">
+                    <img class="cover" src="<$ item.cover $>"
+                         alt="<$ item.title $>"/>
+                    <div class="p-4">
                         <p class="card-text"><$ item.desc $></p>
                         <div class="d-flex flex-wrap tag-list">
                             {% for tag in item.tags %}
-                            <div class="tag mb-2 me-2">
+                            <div class="tag me-1">
                                 <$ tag $>
                             </div>
                             {% endfor %}
                         </div>
                     </div>
-
-                    <img src="<$ item.cover $>" class="cover"
-                         alt="<$ item.title $>"/>
-
-                    <div class="d-flex justify-content-end py-2 app-link">
-                        <a href="<$ item.url $>"><span class="me-2 d-inline-block">查看产品详情</span><i class="fa-solid fa-chevron-right"></i></a>
-                    </div>
-                </div>
+                </a>
             </div>
             {% endfor %}
         </div>
