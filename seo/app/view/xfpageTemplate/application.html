@@ -36,15 +36,19 @@
     .tag-list {
         height: 60px;
     }
+    main {
+        background: transparent;
+    }
 </style>
 <main class="mt-5 pt-5">
     <div class="ThemePage container-lg">
         <div class="row app-list">
             {% for item in xfPage.xfPageConfig.appList %}
-            <div class="col-4">
+            <div class="col-4 mb-4">
                 <div class="card p-4 pb-2">
                     <div class="text-center mb-3">
-                        <div class="app-icon"></div>
+                        <img class="app-icon" src="<$ item.icon $>"
+                             alt="<$ item.title $>"/>
                         <h5 class="card-title"><$ item.title $></h5>
                         <p class="card-text"><$ item.desc $></p>
                         <div class="d-flex flex-wrap tag-list">
@@ -56,8 +60,8 @@
                         </div>
                     </div>
 
-                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="cover"
-                         alt="Fissure in Sandstone"/>
+                    <img src="<$ item.cover $>" class="cover"
+                         alt="<$ item.title $>"/>
 
                     <div class="d-flex justify-content-end py-2 app-link">
                         <a href="#"><span class="me-2 d-inline-block">查看产品详情</span><i class="fa-solid fa-chevron-right"></i></a>
