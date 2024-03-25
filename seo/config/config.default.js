@@ -29,7 +29,7 @@ module.exports = (appInfo) => {
     },
     appLogo: `/${appId}/upload/seoResource/image/logo.svg`,
     appType: "single",
-    indexPage: `/${appId}/page/xfArticle/5719`,
+    indexPage: `/${appId}/page/xfArticle/5721`,
     loginPage: `/${appId}/login`,
     helpPage: `/${appId}/help`,
     adminUrl: `http://127.0.0.1:7368/jianghu-doc-v2-admin`,
