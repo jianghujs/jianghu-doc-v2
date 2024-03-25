@@ -16,7 +16,7 @@
         height: fit-content;
     }
     .cover {
-        height: 200px;
+        height: 180px;
         border-radius: 5px;
     }
     .app-icon {
@@ -46,10 +46,10 @@
             {% for item in xfPage.xfPageConfig.appList %}
             <div class="col-4 mb-4">
                 <div class="card p-4 pb-2">
-                    <div class="text-center mb-3">
+                    <div class="mb-3">
                         <img class="app-icon" src="<$ item.icon $>"
                              alt="<$ item.title $>"/>
-                        <h5 class="card-title"><$ item.title $></h5>
+                        <h5 class="card-title text-center mb-4"><$ item.title $></h5>
                         <p class="card-text"><$ item.desc $></p>
                         <div class="d-flex flex-wrap tag-list">
                             {% for tag in item.tags %}
