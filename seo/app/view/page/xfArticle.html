@@ -5,6 +5,26 @@
 {% block description %}<$ xfPage.xfPageDescription $>{% endblock %}
 {% block content %}
 
+<!-- 二级菜单 -->
+{% if constantUiMap.submenu[xfPage.xfPageId] %}
+<ul class="nav nav-tabs mb-3 jh-nav-sub" id="nav-sub" role="tablist">
+  {% for menu in constantUiMap.submenu[xfPage.xfPageId] %}
+    {% if menu.isLogin == false or menu.isLogin == true and userId %}
+    <li class="nav-item" role="presentation">
+      <a
+        data-mdb-tab-init
+        class="nav-link active"
+        id="nav-sub-tab-<$ loop.index $>"
+        onclick="toMenuPath('<$ menu.path $>')"
+        href="<$ menu.path $>"
+        role="tab"
+        ><$ menu.categoryName $></a
+      >
+    </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+{% endif %}
 
 {% include 'xfpageTemplate/' + xfPage.template + '.html' %}
 

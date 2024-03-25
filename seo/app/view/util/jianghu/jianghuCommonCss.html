@@ -1159,6 +1159,31 @@ main{
     color: #444 !important;
 }
 
+/* 顶部二级菜单 */
+.jh-nav-sub{
+    position: fixed;
+    top: var(--vt-nav-height);
+    width: 100%;
+    justify-content: center;
+    background-color: #FBFBFB;
+}
+.jh-nav-sub.nav-tabs .nav-link{
+    font-size: 16px;
+    font-weight: 600;
+    padding: 17px 0 5px;
+    margin: 9px 30px 16px;
+    color: #333;
+}
+.jh-nav-sub.nav-tabs .nav-item.show .nav-link, .jh-nav-sub.nav-tabs .nav-link.active{
+    color: var(--vt-c-green);
+    border-color: var(--vt-c-green);
+    background-color: #FBFBFB;
+    border-bottom-width: 3px;
+}
+.jh-nav-sub.nav-tabs .nav-link:hover{
+    background-color: #FBFBFB;
+}
+
 /* 移动端适配 */
 @media (max-width: 576px) {
     /* logo */
