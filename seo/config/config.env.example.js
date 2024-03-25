@@ -6,6 +6,7 @@ require('dotenv').config({path: path.resolve(__dirname, '../../../.env')});
 module.exports = appInfo => {
 
   return {
+    adminUrl: `http://127.0.0.1:7368/jianghu-doc-v2-admin`,
     language: 'zh',
     meilisearch: {
       host: 'https://meilisearch.openjianghu.org',
