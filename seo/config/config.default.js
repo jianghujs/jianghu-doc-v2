@@ -29,7 +29,7 @@ module.exports = (appInfo) => {
     },
     appLogo: `/${appId}/upload/seoResource/image/logo.svg`,
     appType: "single",
-    indexPage: `/${appId}/page/xfArticle/5721`,
+    indexPage: `/${appId}/index`,
     loginPage: `/${appId}/login`,
     helpPage: `/${appId}/help`,
     adminUrl: `http://127.0.0.1:7368/jianghu-doc-v2-admin`,
@@ -82,10 +82,10 @@ module.exports = (appInfo) => {
       'jianghujs':    5737, // 江湖JS框架
       'app':          5738, // 应用
       'panel':        5739, // 运维
-      '001':          5739, // 软件开发理念
-      '002':            5739, // 数字化方法论
-      'rd':           5739, // 研发
-      '003':        5739, // 实践和经验
+      'concept':      5739, // 软件开发理念
+      'digital':      5739, // 数字化方法论
+      'r&d':          5739, // 研发
+      'p&e':          5739, // 实践和经验
       'about':        5739, // 关于我们
 
       // 'jh-training': 5719,  // 培训
