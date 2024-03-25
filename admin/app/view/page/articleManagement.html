@@ -25,6 +25,25 @@
               <v-text-field v-model="serverSearchForm.articleTitle" prefix="文章标题：" color="success" class="jh-v-input bg-white " dense filled single-line hide-details></v-text-field>
             </v-col>
             <v-col cols="12" sm="12" md="4" xl="3" class="pa-0 pr-0 pr-md-2 pt-2 pt-sm-0">
+              <v-select class="jh-v-input bg-white" v-model="serverSearchForm.categoryGroup" hide-details
+                        :items="categoryGroupSearchText ? categoryGroupFilter : constantObj.categoryGroup"
+                        prefix="分类分组：" item-text="text" item-value="value" dense filled single-line>
+                <template v-slot:prepend-item>
+                  <v-text-field
+                      label="搜索"
+                      clearable
+                      v-model="categoryGroupSearchText"
+                      class="mb-2"
+                      prepend-inner-icon="mdi-magnify"
+                      dense
+                      filled
+                      single-line
+                      hide-details
+                  ></v-text-field>
+                </template>
+              </v-select>
+            </v-col>
+            <!-- <v-col cols="12" sm="12" md="4" xl="3" class="pa-0 pr-0 pr-md-2 pt-2 pt-sm-0">
               <v-select class="jh-v-input bg-white" v-model="serverSearchForm.categoryId" hide-details
                         :items="searchText ? categoryFilter : constantObj.category"
                         prefix="分类：" item-text="text" item-value="value" dense filled single-line>
@@ -42,7 +61,7 @@
                   ></v-text-field>
                 </template>
               </v-select>
-            </v-col>
+            </v-col> -->
             <v-col cols="12" xs="12" sm="12" md="4" xl="3" class="pa-0 pr-0 pr-md-2 pt-2 pt-sm-0">
               <v-select class="jh-v-input bg-white mr-xs-2" v-model="serverSearchForm.articlePublishStatus" hide-details
                         :items="constantObj.allArticlePublishStatus" prefix="发布状态：" item-text="text"
@@ -210,6 +229,8 @@ new Vue({
     globalHandler: new GlobalHandler(),
     categoryFilter: [],
     searchText: null,
+    categoryGroupFilter: [],
+    categoryGroupSearchText: null,
     // 表格相关数据
     constantObj: {
       articlePublishStatus: [
@@ -227,12 +248,16 @@ new Vue({
       category: [
         {text: "全部类目", value: "all"},
       ],
+      categoryGroup: [
+        {text: "全部", value: "all"},
+      ],
     },
 
     categoryIdToName: {},
     serverSearchForm: {
       articleTitle: null,
       categoryId: "all",
+      categoryGroup: "all",
       categoryName: "全部类目",
       articlePublishStatus: ['public', 'login'],
       isFirstSearch: true,
@@ -246,8 +271,8 @@ new Vue({
       // {text: "ID", value: "id", width: 120, class: 'fixed', cellClass: 'fixed'},
       {text: "文章ID", value: "articleId", width: 120},
       {text: "文章标题", value: "articleTitle", width: 300},
-      {text: "归属分类", value: "categoryGroupConcat", width: 200},
-      {text: "文章分组", value: "articleGroupName", width: 200},
+      {text: "分类分组", value: "categoryGroup", width: 180},
+      {text: "分类", value: "categoryName", width: 150},
       {text: "发布状态", value: "articlePublishStatus", width: 120, type: 'select', required: true},
       {text: "发布时间", value: "articlePublishTime", width: 150},
       {text: "文章标签", value: "articleTagList", width: 220},
@@ -295,8 +320,9 @@ new Vue({
   },
   async created() {
     this.doUiAction('getLocationParams');
-    await this.doUiAction('getCategoryData');
-    await this.doUiAction('getTableData');
+    // this.doUiAction('getCategoryData');
+    this.doUiAction('getCategoryGroupData');
+    this.doUiAction('getTableData');
   },
   methods: {
     async doUiAction(uiActionId, uiActionData) {
@@ -307,8 +333,11 @@ new Vue({
         case 'handleTableButton':
           await this.globalHandler.handleTableButton(uiActionData, this)
           break;
-        case 'getCategoryData':
-          await this.getCategoryData()
+        // case 'getCategoryData':
+        //   await this.getCategoryData()
+        //   break;
+        case 'getCategoryGroupData':
+          await this.getCategoryGroupData()
           break;
         case 'getTableData':
           await this.getTableData()
@@ -349,6 +378,9 @@ new Vue({
       if (this.serverSearchForm.categoryId !== 'all') {
         where.categoryId = this.serverSearchForm.categoryId;
       }
+      if (this.serverSearchForm.categoryGroup !== 'all') {
+        where.categoryGroup = this.serverSearchForm.categoryGroup;
+      }
       const {rows, count} = (await window.jianghuAxios({
         data: {
           appData: {
@@ -387,9 +419,9 @@ new Vue({
      * 补充 categoryName
      */
     setServerSearchForm(rows, count) {
-      rows.forEach(item => {
-        item.categoryGroupConcat = item.categoryId && this.categoryIdToName[item.categoryId] || '未分类'
-      })
+      // rows.forEach(item => {
+      //   item.categoryGroupConcat = item.categoryId && this.categoryIdToName[item.categoryId] || '未分类'
+      // })
 
       this.serverSearchForm.articlePublishStatusText = this.constantObj.allArticlePublishStatus
           .filter(item => this.serverSearchForm.articlePublishStatus.indexOf(item.value) > -1)
@@ -414,30 +446,46 @@ new Vue({
     /**
      * 获取分类数据
      */
-    async getCategoryData() {
+    // async getCategoryData() {
+    //   const {rows} = (await window.jianghuAxios({
+    //     data: {
+    //       appData: {
+    //         pageId: 'articleManagement',
+    //         actionId: 'selectCategoryList',
+    //         actionData: {},
+    //         whereIn: {categoryPublishStatus: ['public', 'login']},
+    //         orderBy: [{column: 'categoryGroup', order: 'asc'}, {column: 'categoryGroupSort', order: 'asc'}]
+    //       }
+    //     }
+    //   })).data.appData.resultData;
+    //   this.setCategorySelectOptionList(rows)
+    // },
+    /**
+     * 设置分类下拉框的选项列表
+     */
+    // setCategorySelectOptionList(rows) {
+    //   rows.forEach(item => {
+    //     const text = `${item.categoryGroupConcat || ''}${item.categoryName} [共${item.count}篇]`;
+    //     this.constantObj.category.push({text, value: `${item.categoryId}`});
+    //     this.categoryIdToName[item.categoryId] = `${item.categoryGroupConcat || ''}${item.categoryName}`;
+    //   })
+    //   this.serverSearchForm.categoryName = this.categoryIdToName[this.serverSearchForm.categoryId];
+    // },
+    async getCategoryGroupData() {
       const {rows} = (await window.jianghuAxios({
         data: {
           appData: {
             pageId: 'articleManagement',
-            actionId: 'selectCategoryList',
+            actionId: 'selectCategoryGroupList',
             actionData: {},
-            whereIn: {categoryPublishStatus: ['public', 'login']},
-            orderBy: [{column: 'categoryGroup', order: 'asc'}, {column: 'categoryGroupSort', order: 'asc'}]
+            orderBy: [{column: 'categoryGroup', order: 'asc'}]
           }
         }
       })).data.appData.resultData;
-      this.setCategorySelectOptionList(rows)
-    },
-    /**
-     * 设置分类下拉框的选项列表
-     */
-    setCategorySelectOptionList(rows) {
       rows.forEach(item => {
-        const text = `${item.categoryGroupConcat || ''}${item.categoryName} [共${item.count}篇]`;
-        this.constantObj.category.push({text, value: `${item.categoryId}`});
-        this.categoryIdToName[item.categoryId] = `${item.categoryGroupConcat || ''}${item.categoryName}`;
+        const text = `${item.categoryGroup} [共${item.count}篇]`;
+        this.constantObj.categoryGroup.push({text, value: item.categoryGroup });
       })
-      this.serverSearchForm.categoryName = this.categoryIdToName[this.serverSearchForm.categoryId];
     },
     /**
      * 删除数据
