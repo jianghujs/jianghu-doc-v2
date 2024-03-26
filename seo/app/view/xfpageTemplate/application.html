@@ -84,7 +84,7 @@
 
                 <div class="bg-blue-100">
                     <div>
-                        <p class="px-4 py-3 font-bold text-base"><$ item.title $></p>
+                        <p class="px-4 py-3 mb-0 font-bold text-base text-black"><$ item.title $></p>
                         <div class="rounded-t ml-4 img-box relative w-full h-0 overflow-hidden"
                              style="padding-top: 50%">
                             <img class="absolute top-0 left-0 w-full h-auto" src="<$ item.cover $>"
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="p-4">
-                    <p class="text-gray-600 text-sm h-14"><$ item.desc $></p>
+                    <p class="text-gray-600 text-sm h-12"><$ item.desc $></p>
                     <div class="d-flex flex-wrap tag-list">
                         {% for tag in item.tags %}
                         <div class="bg-gray-100 text-gray-500 mr-2 px-2 py-1 rounded text-xs">
