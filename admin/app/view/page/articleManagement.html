@@ -21,10 +21,10 @@
         <!-- pc端的搜索条件表单 >>>>>>>> -->
         <v-col cols="12" xs="12" sm="12" md="9" xl="9">
           <v-row class="jh-backend-form-container justify-end ma-0 py-3">
-            <v-col cols="12" sm="12" md="3" xl="3" class="pa-0 pr-0 pr-md-2">
+            <v-col cols="12" sm="6" md="2" xl="2" class="pa-0 pr-0 pr-md-2">
               <v-text-field v-model="serverSearchForm.articleTitle" prefix="文章标题：" color="success" class="jh-v-input bg-white " dense filled single-line hide-details></v-text-field>
             </v-col>
-            <v-col cols="12" sm="12" md="4" xl="3" class="pa-0 pr-0 pr-md-2 pt-2 pt-sm-0">
+            <v-col cols="12" sm="6" md="3" xl="3" class="pa-0 pr-0 pr-md-2 pt-2 pt-sm-0">
               <v-select class="jh-v-input bg-white" v-model="serverSearchForm.categoryGroup" hide-details
                         :items="categoryGroupSearchText ? categoryGroupFilter : constantObj.categoryGroup"
                         prefix="分类分组：" item-text="text" item-value="value" dense filled single-line>
@@ -43,7 +43,7 @@
                 </template>
               </v-select>
             </v-col>
-            <!-- <v-col cols="12" sm="12" md="4" xl="3" class="pa-0 pr-0 pr-md-2 pt-2 pt-sm-0">
+            <v-col cols="12" sm="6" md="3" xl="3" class="pa-0 pr-0 pr-md-2 pt-2 pt-sm-0">
               <v-select class="jh-v-input bg-white" v-model="serverSearchForm.categoryId" hide-details
                         :items="searchText ? categoryFilter : constantObj.category"
                         prefix="分类：" item-text="text" item-value="value" dense filled single-line>
@@ -61,8 +61,8 @@
                   ></v-text-field>
                 </template>
               </v-select>
-            </v-col> -->
-            <v-col cols="12" xs="12" sm="12" md="4" xl="3" class="pa-0 pr-0 pr-md-2 pt-2 pt-sm-0">
+            </v-col>
+            <v-col cols="12" xs="12" sm="6" md="3" xl="3" class="pa-0 pr-0 pr-md-2 pt-2 pt-sm-0">
               <v-select class="jh-v-input bg-white mr-xs-2" v-model="serverSearchForm.articlePublishStatus" hide-details
                         :items="constantObj.allArticlePublishStatus" prefix="发布状态：" item-text="text"
                         item-value="value" dense filled single-line multiple></v-select>
@@ -320,7 +320,7 @@ new Vue({
   },
   async created() {
     this.doUiAction('getLocationParams');
-    // this.doUiAction('getCategoryData');
+    this.doUiAction('getCategoryData');
     this.doUiAction('getCategoryGroupData');
     this.doUiAction('getTableData');
   },
@@ -333,9 +333,9 @@ new Vue({
         case 'handleTableButton':
           await this.globalHandler.handleTableButton(uiActionData, this)
           break;
-        // case 'getCategoryData':
-        //   await this.getCategoryData()
-        //   break;
+        case 'getCategoryData':
+          await this.getCategoryData()
+          break;
         case 'getCategoryGroupData':
           await this.getCategoryGroupData()
           break;
@@ -446,31 +446,31 @@ new Vue({
     /**
      * 获取分类数据
      */
-    // async getCategoryData() {
-    //   const {rows} = (await window.jianghuAxios({
-    //     data: {
-    //       appData: {
-    //         pageId: 'articleManagement',
-    //         actionId: 'selectCategoryList',
-    //         actionData: {},
-    //         whereIn: {categoryPublishStatus: ['public', 'login']},
-    //         orderBy: [{column: 'categoryGroup', order: 'asc'}, {column: 'categoryGroupSort', order: 'asc'}]
-    //       }
-    //     }
-    //   })).data.appData.resultData;
-    //   this.setCategorySelectOptionList(rows)
-    // },
+    async getCategoryData() {
+      const {rows} = (await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'articleManagement',
+            actionId: 'selectCategoryList',
+            actionData: {},
+            whereIn: {categoryPublishStatus: ['public', 'login']},
+            orderBy: [{column: 'categoryGroup', order: 'asc'}, {column: 'categoryGroupSort', order: 'asc'}]
+          }
+        }
+      })).data.appData.resultData;
+      this.setCategorySelectOptionList(rows)
+    },
     /**
      * 设置分类下拉框的选项列表
      */
-    // setCategorySelectOptionList(rows) {
-    //   rows.forEach(item => {
-    //     const text = `${item.categoryGroupConcat || ''}${item.categoryName} [共${item.count}篇]`;
-    //     this.constantObj.category.push({text, value: `${item.categoryId}`});
-    //     this.categoryIdToName[item.categoryId] = `${item.categoryGroupConcat || ''}${item.categoryName}`;
-    //   })
-    //   this.serverSearchForm.categoryName = this.categoryIdToName[this.serverSearchForm.categoryId];
-    // },
+    setCategorySelectOptionList(rows) {
+      rows.forEach(item => {
+        const text = `${item.categoryGroupConcat || ''}${item.categoryName} [共${item.count}篇]`;
+        this.constantObj.category.push({text, value: `${item.categoryId}`});
+        this.categoryIdToName[item.categoryId] = `${item.categoryGroupConcat || ''}${item.categoryName}`;
+      })
+      this.serverSearchForm.categoryName = this.categoryIdToName[this.serverSearchForm.categoryId];
+    },
     async getCategoryGroupData() {
       const {rows} = (await window.jianghuAxios({
         data: {
