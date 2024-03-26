@@ -94,7 +94,7 @@
 
 {% block content %}
 <!-- 手机端顶部菜单 >>>>>>>>>>>>> -->
-<div class="VPLocalNav">
+<div class="VPLocalNav {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
 <button id="jianghu-mobile-toggle-docMenu" class="jianghu-nav-mobile-menu" aria-expanded="false"
         aria-controls="VPSidebarNav">
   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24"
@@ -111,10 +111,30 @@
 </div>
 <!-- <<<<<<<<<<<<< 手机端顶部菜单 -->
 
+<!-- pc端二级菜单 >>>>>>>>>>>>> -->
+{% if constantUiMap.submenu[article.categoryGroup] %}
+<ul class="nav nav-tabs jh-nav-sub" id="nav-sub" role="tablist">
+  {% for menu in constantUiMap.submenu[article.categoryGroup] %}
+    <li class="nav-item" role="presentation">
+      <a
+        data-mdb-tab-init
+        class="nav-link {% if menu.categoryName == article.categoryName %}active{% endif %}"
+        id="nav-sub-tab-<$ loop.index $>"
+        onclick="toMenuPath('<$ menu.path $>')"
+        href="<$ menu.path $>"
+        role="tab"
+        ><$ menu.categoryName $></a
+      >
+    </li>
+  {% endfor %}
+</ul>
+{% endif %}
+<!-- <<<<<<<<<<<<< pc端二级菜单 -->
+
 <!-- 主内容 >>>>>>>>>>>>> -->
 <main>
   <!-- 左侧目录 >>>>>>>>>>>>> -->
-  <div class="jianghu-doc-sidebar">
+  <div class="jianghu-doc-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
     <div class="jianghu-doc-sidebar-nav">
       <nav > 
         {% for key, data in article.categoryGroupArticleList %}
@@ -144,7 +164,7 @@
   <!-- <<<<<<<<<<<<< 左侧目录 -->
 
   <!-- 文章 >>>>>>>>>>>>> -->
-  <div class="jianghu-doc-content jianghu-doc-content-has-sidebar">
+  <div class="jianghu-doc-content jianghu-doc-content-has-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
     <div class="jianghu-doc-contentDoc">
       <div class="jianghu-doc-contentDoc-container">
         <!-- 文档大纲 -->
@@ -254,7 +274,7 @@ function init() {
   });
   // 目录滚动到指定位置
   if ($('.jianghu-active')) {
-    $('.jianghu-doc-sidebar').scrollTop($('.jianghu-active').offset().top - 300);
+    $('.jianghu-doc-sidebar').scrollTop($('.jianghu-active').offset().top - 366);
   }
 }
 

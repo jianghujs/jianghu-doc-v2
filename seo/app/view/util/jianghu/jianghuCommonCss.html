@@ -1163,6 +1163,7 @@ main{
 .jh-nav-sub{
     position: fixed;
     top: var(--vt-nav-height);
+    z-index: calc(var(--vp-z-index-nav) - 1px);
     width: 100%;
     justify-content: center;
     background-color: #FBFBFB;
@@ -1197,6 +1198,13 @@ main{
     }
     .jh-header-search-mobile{
         display: block;
+    }
+
+    /* 顶部二级菜单 */
+    .jh-nav-sub{
+        position: relative;
+        padding-top: 0;
+        top: 0;
     }
 }
 </style>
