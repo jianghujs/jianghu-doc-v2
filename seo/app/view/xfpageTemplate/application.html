@@ -38,9 +38,11 @@
     .label.red {
         background: linear-gradient(-20deg, transparent 20%, #e65555 0), linear-gradient(20deg, transparent 20%, #e65555 0);
     }
+
     a {
         color: black;
     }
+
     a:hover {
         color: green;
     }
@@ -121,45 +123,37 @@
 </main>
 <script>
     $(document).ready(function () {
-        //默认给app-tab 下app-tab-item第一个加上active class类
-        $('.app-tab-item').eq(0).find('a').addClass('border-b-2 text-green-600')
+        // 默认给app-tab下app-tab-item第一个加上active class类
+        $('.app-tab-item').eq(0).find('a').addClass('border-b-2 text-green-600');
 
-        // 根据search id，搜索框去过滤card的内容，使用jquery
-        $("#search").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $(".card").filter(function () {
-                $(this).toggle($(this).find('p').text().toLowerCase().indexOf(value) > -1)
+        // 过滤card的内容
+        function filterCards(value) {
+            $(".card").each(function () {
+                const cardText = $(this).find('p').text().toLowerCase();
+                const appType = $(this).find('.app-type').text().toLowerCase();
+                const isVisible = cardText.includes(value) || appType.includes(value);
+                $(this).toggle(isVisible);
+                if (value.includes('全部')) {
+                    $(".card").show();
+                }
             });
 
-            if ($(".card:visible").length === 0) {
-                $(".card-empty").show()
-            } else {
-                $(".card-empty").hide()
-            }
+            $(".card-empty").toggle($(".card:visible").length === 0);
+        }
+
+        // 根据search id，搜索框去过滤card的内容
+        $("#search").on("keyup", function () {
+            filterCards($(this).val().toLowerCase());
         });
 
-        // 根据app-tab里的内容过滤card的内容，使用jquery
+        // 根据app-tab里的内容过滤card的内容
         $(".app-tab-item").on("click", function () {
-            // 去掉下面a标签的border-b-2 text-green-600
-            $(".app-tab-item").find('a').removeClass('border-b-2 text-green-600')
-            $(this).find('a').addClass('border-b-2 text-green-600')
-            var value = $(this).text().toLowerCase();
-            // 如果是第一个全部，则不过滤
-            if (value.includes('全部')){
-                $(".card").show()
-            } else {
-                $(".card").filter(function () {
-                    const appType = $(this).find('.app-type').text().toLowerCase()
-                    $(this).toggle(value.includes(appType))
-                });
-            }
-            if ($(".card:visible").length === 0) {
-                $(".card-empty").show()
-            } else {
-                $(".card-empty").hide()
-            }
+            $(".app-tab-item a").removeClass('border-b-2 text-green-600');
+            $(this).find('a').addClass('border-b-2 text-green-600');
+            filterCards($(this).text().toLowerCase());
         });
     });
+
 
 </script>
 <script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.mdb.min.js"></script>
