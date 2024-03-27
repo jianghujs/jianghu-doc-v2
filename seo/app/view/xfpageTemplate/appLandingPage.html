@@ -37,20 +37,22 @@
     {% set itemIndex = loop.index %}
     <!--  根据不同index，不同的背景色  -->
     {% if itemIndex % 2 == 0 %}
-    <div class="bg-white py-32">
+    <div class="bg-white py-32 relative">
+        <div style="background-size: 100% 100%;background-image: url('https://demo.jianghujs.org/jianghu-doc-v2-admin/upload/materialRepo/image/Rectangle 161@2x.png')"
+             class="z-0 -rotate-180 w-3/6 h-96 absolute right-0 top-40"></div>
         {% else %}
         <div class="bg-gray-100 py-32 relative">
+            <div style="background-size: 100% 100%;background-image: url('https://demo.jianghujs.org/jianghu-doc-v2-admin/upload/materialRepo/image/Rectangle 161@2x.png')"
+                 class="z-0 w-3/6 h-96 absolute left-0 top-40"></div>
             {% endif %}
             <div class="container-lg relative">
                 {% if itemIndex % 2 == 0 %}
-                <div style="background-size: 100% 100%;background-image: url('https://demo.jianghujs.org/jianghu-doc-v2-admin/upload/materialRepo/image/Rectangle 161@2x.png')"
-                     class="z-0 -rotate-180 w-3/5 h-80 absolute right-0 top-20"></div>
+
                 <div class="relative pb-10 d-flex align-center justify-content-between h-full items-center flex-row-reverse">
                     <div class="flex-1 d-flex justify-content-end">
                         {% else %}
 
-                        <div style="background-size: 100% 100%;background-image: url('https://demo.jianghujs.org/jianghu-doc-v2-admin/upload/materialRepo/image/Rectangle 161@2x.png')"
-                             class="z-0 w-3/5 h-80 absolute left-0 top-20"></div>
+
                         <div class="relative pb-10 d-flex align-center justify-content-between h-full items-center">
                             <div class="flex-1">
                                 {% endif %}
