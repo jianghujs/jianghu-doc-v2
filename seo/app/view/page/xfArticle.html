@@ -5,15 +5,14 @@
 {% block description %}<$ xfPage.xfPageDescription $>{% endblock %}
 {% block content %}
 
-<!-- 二级菜单 -->
-{% if constantUiMap.submenu[xfPage.xfPageId] %}
-<ul class="nav nav-tabs mb-3 jh-nav-sub" id="nav-sub" role="tablist">
-  {% for menu in constantUiMap.submenu[xfPage.xfPageId] %}
-    {% if menu.isLogin == false or menu.isLogin == true and userId %}
+<!-- pc端二级菜单 >>>>>>>>>>>>> -->
+{% if constantUiMap.submenu[xfPage.xfPageTitle] %}
+<ul class="nav nav-tabs jh-nav-sub" id="nav-sub" role="tablist">
+  {% for menu in constantUiMap.submenu[xfPage.xfPageTitle] %}
     <li class="nav-item" role="presentation">
       <a
         data-mdb-tab-init
-        class="nav-link active"
+        class="nav-link {% if menu.categoryName == '介绍' %}active{% endif %}"
         id="nav-sub-tab-<$ loop.index $>"
         onclick="toMenuPath('<$ menu.path $>')"
         href="<$ menu.path $>"
@@ -21,10 +20,10 @@
         ><$ menu.categoryName $></a
       >
     </li>
-    {% endif %}
   {% endfor %}
 </ul>
 {% endif %}
+<!-- <<<<<<<<<<<<< pc端二级菜单 -->
 
 {% include 'xfpageTemplate/' + xfPage.template + '.html' %}
 
