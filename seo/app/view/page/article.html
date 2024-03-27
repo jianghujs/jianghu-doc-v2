@@ -111,14 +111,32 @@
 </div>
 <!-- <<<<<<<<<<<<< 手机端顶部菜单 -->
 
-<!-- pc端二级菜单 >>>>>>>>>>>>> -->
+<!-- 二级菜单数据 >>>>>>>>>>>>> -->
 {% if constantUiMap.submenu[article.categoryGroup] %}
+  {% if constantUiMap.submenu[article.categoryGroup][article.categoryName] %}
+  <!-- 第二层级 -->
+  {% set submenu = constantUiMap.submenu[article.categoryGroup][article.categoryName] %}
+  {% set level = 2 %}
+  {% else %}
+  <!-- 第一层级 -->
+  {% set submenu = constantUiMap.submenu[article.categoryGroup] %}
+  {% set level = 1 %}
+  {% endif %}
+{% else %}
+<!-- 无数据 -->
+{% set submenu = [] %}
+{% set level = 1 %}
+{% endif %}
+<!-- <<<<<<<<<<<<< 二级菜单数据 -->
+
+<!-- pc端二级菜单 >>>>>>>>>>>>> -->
+{% if submenu %}
 <ul class="nav nav-tabs jh-nav-sub" id="nav-sub" role="tablist">
-  {% for menu in constantUiMap.submenu[article.categoryGroup] %}
+  {% for menu in submenu %}
     <li class="nav-item" role="presentation">
       <a
         data-mdb-tab-init
-        class="nav-link {% if menu.categoryName == article.categoryName %}active{% endif %}"
+        class="nav-link {% if menu.categoryName == ( article.categoryName if (level == 1) else article.articleGroupName ) %}active{% endif %}"
         id="nav-sub-tab-<$ loop.index $>"
         onclick="toMenuPath('<$ menu.path $>')"
         href="<$ menu.path $>"
