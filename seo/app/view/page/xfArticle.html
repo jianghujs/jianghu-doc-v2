@@ -5,30 +5,11 @@
 {% block description %}<$ xfPage.xfPageDescription $>{% endblock %}
 {% block content %}
 
-<!-- pc端二级菜单 >>>>>>>>>>>>> -->
-{% if constantUiMap.submenu[xfPage.xfPageTitle] %}
-<ul class="nav nav-tabs jh-nav-sub" id="nav-sub" role="tablist">
-  {% for menu in constantUiMap.submenu[xfPage.xfPageTitle] %}
-    <li class="nav-item" role="presentation">
-      <a
-        data-mdb-tab-init
-        class="nav-link {% if menu.categoryName == '介绍' %}active{% endif %}"
-        id="nav-sub-tab-<$ loop.index $>"
-        onclick="toMenuPath('<$ menu.path $>')"
-        href="<$ menu.path $>"
-        role="tab"
-        ><$ menu.categoryName $></a
-      >
-    </li>
-  {% endfor %}
-</ul>
-{% endif %}
-<!-- <<<<<<<<<<<<< pc端二级菜单 -->
-
 {% if username %}
-<div class="jianghu-doc-contentDoc-main-edit-links" style="position: fixed; right: 50px; top: 130px;">
+<div class="pt-14"></div>
+<div class="jianghu-doc-contentDoc-main-edit-links" style="position: absolute;top: 120px;z-index: 10;right: 50px;">
     <span>
-      <a href="<$ adminUrl $>/page/xfPageEdit?xfPageId=<$ xfPage.xfPageId $>&title=<$ article.xfPageTitle $>"
+      <a  style="color: #42b883;" href="<$ adminUrl $>/page/xfPageEdit?xfPageId=<$ xfPage.xfPageId $>&title=<$ article.xfPageTitle $>"
         target="_blank" class="jianghu-doc-contentDoc-main-edit-link"><i
           class="far fa-edit jianghu-doc-contentDoc-main-edit-icon"></i><$ constantUiMap.button.modify $></a>
     </span>

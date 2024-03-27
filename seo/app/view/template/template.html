@@ -6,6 +6,17 @@
 {% set pageUrl = "/" + appId + "/page" %}
 {% set seoResource = "/" + appId + "/upload/seoResource" %}
 {% import "component/macro.html" as macro %}
+
+<!-- 页面数据 >>>>>>>>>>>>> -->
+{% if xfPage.xfPageId %}
+{% set pageData = xfPage %}
+{% elif article.articleId %}
+{% set pageData = article %}
+{% else %}
+{% set pageData = "" %}
+{% endif %}
+<!-- <<<<<<<<<<<<< 页面数据 -->
+
 <!DOCTYPE html>
 <html lang="zh-cn">
 
@@ -116,10 +127,10 @@
             <nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu menu-list pe-2">
               {% for menu in constantUiMap.header.menuList %}
                 {% if menu.isLogin == false %}
-                  <$ macro.webMueuItem(menu, ctx.app.config.appId) $>
+                  <$ macro.webMueuItem(menu, ctx.app.config.appId, pageData, constantUiMap) $>
                 {% endif %}
                 {% if menu.isLogin == true and userId %}
-                  <$ macro.webMueuItem(menu, ctx.app.config.appId) $>
+                  <$ macro.webMueuItem(menu, ctx.app.config.appId, pageData, constantUiMap) $>
                 {% endif %}
               {% endfor %}
             </nav>
@@ -202,11 +213,11 @@
         <nav class="VPNavScreenMenu menu" id="jianghu-mobile-navBarMenus">
           {% for menu in constantUiMap.header.menuList %}
             {% if menu.isLogin == false %}
-            <$ macro.mobileMueuItem(menu, ctx.app.config.appId, loop.index) $>
+            <$ macro.mobileMueuItem(menu, ctx.app.config.appId, loop.index, pageData, constantUiMap) $>
             {% endif %}
 
             {% if menu.isLogin == true and userId %}
-            <$ macro.mobileMueuItem(menu, ctx.app.config.appId, loop.index) $>
+            <$ macro.mobileMueuItem(menu, ctx.app.config.appId, loop.index, pageData, constantUiMap) $>
             {% endif %}
           {% endfor %}
         </nav>
@@ -285,6 +296,25 @@
      </div>
   </div>
 
+  <!-- 二级菜单 -->
+  {% if constantUiMap.submenu[pageData.categoryGroup] %}
+  <ul class="nav nav-tabs jh-nav-sub" id="nav-sub" role="tablist">
+    {% for menu in constantUiMap.submenu[pageData.categoryGroup] %}
+      <li class="nav-item" role="presentation">
+        <a
+          data-mdb-tab-init
+          class="nav-link {% if menu.categoryName == pageData.categoryName %}active{% endif %}"
+          id="nav-sub-tab-<$ loop.index $>"
+          onclick="toMenuPath('<$ menu.path $>')"
+          href="<$ menu.path $>"
+          role="tab"
+          ><$ menu.categoryName $></a
+        >
+      </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
   {% include 'utility/jianghuJs/jianghuAxiosV4.html' %}
   {% block content %}{% endblock %}
   <!-- js -->
@@ -329,7 +359,7 @@
         }
         mobileLinkObj.addClass('active')
       }
-      setActiveMenu()
+      // setActiveMenu()
       function toMenuPath(path) {
         location.href = path;
         // console.log('toMenuPath', path)
@@ -337,7 +367,7 @@
         // $('.vt-hamburger VPNavBarHamburger').removeClass('is-active')
         // html overflow: auto
         $('html').css('overflow', 'auto')
-        setActiveMenu()
+        // setActiveMenu()
       }
   </script>
   <script type="text/javascript">

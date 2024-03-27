@@ -145,7 +145,7 @@ class xfPageService extends Service {
     if (!xfPageId) {
       xfPageId = 5719;
     }
-    const xfPage = await jianghuKnex(tableEnum.xf_page)
+    const xfPage = await jianghuKnex(tableEnum.view01_xf_page)
       .where({ xfPageId })
       .first();
     if (!xfPage) {
@@ -211,25 +211,9 @@ class xfPageService extends Service {
       }
     }
 
-    let xfPageList = await jianghuKnex(tableEnum.xf_page)
+    let xfPageList = await jianghuKnex(tableEnum.view01_xf_page)
       .select();
-    xfPageList = xfPageList.map(
-      ({
-        xfPageId,
-        xfPageTitle,
-        xfPageCoverImage,
-        xfPagePublishStatus,
-        xfPageGroupName,
-      }) => {
-        return {
-          xfPageId,
-          xfPageTitle,
-          xfPageCoverImage,
-          xfPagePublishStatus,
-          xfPageGroupName,
-        };
-      }
-    );
+    xfPageList = _.map(xfPageList, obj => _.pick(obj, ['xfPageId', 'xfPageTitle', 'xfPageCoverImage', 'xfPagePublishStatus', 'xfPageGroupName'])); 
     xfPage.xfPageList = xfPageList;
     return xfPage;
   }
