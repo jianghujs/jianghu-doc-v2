@@ -26,9 +26,10 @@
 <!-- <<<<<<<<<<<<< pc端二级菜单 -->
 
 {% if username %}
-<div class="jianghu-doc-contentDoc-main-edit-links" style="position: fixed; right: 50px; top: 130px;">
+<div class="pt-14"></div>
+<div class="jianghu-doc-contentDoc-main-edit-links" style="position: absolute;top: 120px;z-index: 10;right: 50px;">
     <span>
-      <a href="<$ adminUrl $>/page/xfPageEdit?xfPageId=<$ xfPage.xfPageId $>&title=<$ article.xfPageTitle $>"
+      <a  style="color: #42b883;" href="<$ adminUrl $>/page/xfPageEdit?xfPageId=<$ xfPage.xfPageId $>&title=<$ article.xfPageTitle $>"
         target="_blank" class="jianghu-doc-contentDoc-main-edit-link"><i
           class="far fa-edit jianghu-doc-contentDoc-main-edit-icon"></i><$ constantUiMap.button.modify $></a>
     </span>
