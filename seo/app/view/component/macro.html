@@ -1,9 +1,9 @@
-{% macro webMueuItem(menu, appId) %}
+{% macro webMueuItem(menu, appId, pageData, constantUiMap) %}
   {% if menu.menuList and menu.menuList.length > 0 %}
   <div class="vt-flyout VPNavBarMenuGroup">
     <button type="button" class="vt-flyout-button" aria-haspopup="true" aria-expanded="false">
       <!--[-->
-      <span class="vt-flyout-button-text"><$ menu.categoryName $> 
+      <span class="vt-flyout-button-text"><$ menu.categoryName $>
         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="vt-flyout-button-text-icon">
           <path d="M12,16c-0.3,0-0.5-0.1-0.7-0.3l-6-6c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l5.3,5.3l5.3-5.3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-6,6C12.5,15.9,12.3,16,12,16z"></path>
         </svg>
@@ -21,10 +21,10 @@
     </div>
   </div>
   {% else %}
-  <a class="vt-link link VPNavBarMenuLink" data-path="<$ menu.path $>" href="<$ menu.path $>" onclick="toMenuPath('<$ menu.path $>')"><$ menu.categoryName $></a>
+  <a class="vt-link link VPNavBarMenuLink {% if constantUiMap.submenu[pageData.categoryGroup] and (menu.categoryName == pageData.categoryGroup) %}active{% endif %}" data-path="<$ menu.path $>" href="<$ menu.path $>" onclick="toMenuPath('<$ menu.path $>')"><$ menu.categoryName $></a>
   {% endif %}
 {% endmacro %}
-{% macro mobileMueuItem(menu, appId, index) %}
+{% macro mobileMueuItem(menu, appId, index, pageData, constantUiMap) %}
 
   {% if menu.menuList and menu.menuList.length > 0 %}
   <div class="VPNavScreenMenuGroup">
@@ -51,6 +51,6 @@
     </div>
   </div>
   {% else %}
-  <a class="vt-link link VPNavScreenMenuLink" data-path="<$ menu.path $>" href="<$ menu.path $>" onclick="toMenuPath('<$ menu.path $>')"><$ menu.categoryName $></a>
+  <a class="vt-link link VPNavScreenMenuLink {% if constantUiMap.submenu[pageData.categoryGroup] and (menu.categoryName == pageData.categoryGroup) %}active{% endif %}" data-path="<$ menu.path $>" href="<$ menu.path $>" onclick="toMenuPath('<$ menu.path $>')"><$ menu.categoryName $></a>
   {% endif %}
 {% endmacro %}
