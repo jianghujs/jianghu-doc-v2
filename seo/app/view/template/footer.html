@@ -1,0 +1,37 @@
+<div class="jianghu-footer text-sm bg-white border-t border-solid border-gray-100">
+    <div class="jianghu-content container-lg py-10">
+        <div class="md:flex">
+            <div class="w-96 font-bold text-green-500 flex justify-start items-start">
+                <img src="<$ ctx.app.config.appLogo $>" class="jianghu-image w-10"/>
+                <span class="leading-10 d-block text-base"><$ constantUiMap.header.title | safe $></span>
+            </div>
+
+            <div class="flex-1">
+                <div class="flex justify-content-end">
+                    {% for item in constantUiMap.links %}
+                    <div class="flex-1 text-left">
+                        <div class="jianghu-title mt-4 mt-md-0 font-bold text-base"><$ item.label $></div>
+                        <div class="jianghu-text text-gray-500">
+                            {% for it in item.list %}
+                            {% if it.path.includes('http') %}
+                            <a href="<$ it.path $>" target="_blank" class="text-reset"><p class="mt-3"><$ it.title
+                                $></p></a>
+                            {% elif it.path === '' %}
+                            <a href="javascript:void(0);" class="text-reset"><p class="mt-3"><$ it.title $></p></a>
+                            {% else %}
+                            <a href="<$ it.path $>" class="text-reset"><p class="mt-3"><$ it.title $></p></a>
+                            {% endif%}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-4 text-center" style="background: #fbfbfb">
+        <p class="m-0 text-black font-medium mb-2">版权声明</p>
+        <p class="m-0 text-gray-600">本中文文档内容版权为JiangHuJS官方团队及翻译贡献者所有，保留所有权利。</p>
+    </div>
+</div>
