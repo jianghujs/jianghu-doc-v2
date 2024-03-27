@@ -10,17 +10,27 @@
         <div class="container-lg d-md-flex align-center justify-content-between h-full items-center">
             <div class="flex-1">
                 <h1 class="text-5xl font-bold"><$ xfPage.xfPageConfig.body.title | safe $></h1>
-                <p class="my-4 text-gray-500"><$ xfPage.xfPageConfig.body.desc $></p>
+                <div class="my-4 text-gray-500">
+                    <p><$ xfPage.xfPageConfig.body.desc | safe $></p>
+                </div>
                 <div>
+                    {% if xfPage.xfPageConfig.body.startBtnUrl %}
+                    <a href="<$ xfPage.xfPageConfig.body.startBtnUrl $>" target="_blank">
                     <button type="button"
                             class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 mb-2 mr-5">
-                        立即使用
+                        <$ xfPage.xfPageConfig.body.startBtnText $>
                     </button>
-                    <button type="button"
-                            class="bg-gray-100 hover:bg-gray-200 focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 mb-2">
-                        <i class="fab fa-github me-1"></i>
-                        GitHub
-                    </button>
+                    </a>
+                    {% endif %}
+                    {% if xfPage.xfPageConfig.body.githubProjectUrl %}
+                    <a href="<$ xfPage.xfPageConfig.body.githubProjectUrl $>" target="_blank">
+                        <button type="button"
+                                class="bg-gray-100 hover:bg-gray-200 focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 mb-2">
+                            <i class="fab fa-github me-1"></i>
+                            GitHub
+                        </button>
+                    </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="flex-1 mt-10 mt-md-0">
@@ -58,10 +68,9 @@
                                 {% endif %}
                                 <img class="w-5/6" src="<$ item.cover $>"/>
                             </div>
-                            <div class="flex-1 mt-10 mt-md-0">
-                                <h2 class="text-xl font-bold"><$ item.category $></h2>
-                                <p class="mb-4 mt-3 text-gray-500">
-                                    凭证录入功能是财务管理中的重要环节之一，它用于记录和跟踪企业的财务交易。凭证录入功能是财务管理中的重要环节之一，它用于记录和跟踪企业的财务交易。</p>
+                            <div class="flex-1 mt-10 mt-md-0 text-base text-gray-500">
+                                <h2 class="text-xl font-bold text-black"><$ item.category | safe $></h2>
+                                <p class="mb-4 mt-3"><$ item.desc | safe $></p>
                             </div>
                         </div>
                         <div class="grid md:grid-cols-3 gap-4">
@@ -80,14 +89,18 @@
                 </div>
                 {% endfor %}
             </div>
-
+            {% if xfPage.xfPageConfig.body.adTitle %}
             <div class="py-20 bg-green-600 text-white text-center">
-                <h4 class="mb-4 text-2xl font-bold">使用江湖Finace，让您的财务管理更便捷、更高效、更智能</h4>
-                <button type="button"
-                        class="text-green-600 bg-white hover:bg-green-200 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-                    立即使用
-                </button>
+                <h4 class="mb-4 text-2xl font-bold"><$ xfPage.xfPageConfig.body.adTitle $></h4>
+                <a href="<$ xfPage.xfPageConfig.body.adUrl $>" target="_blank">
+                    <button type="button"
+                            class="text-green-600 bg-white hover:bg-green-200 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                        立即使用
+                    </button>
+                </a>
             </div>
+            {% endif %}
+
 </main>
 
 <div class="jianghu-footer py-10 text-sm">
@@ -125,6 +138,4 @@
 
 <script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.mdb.min.js"></script>
 <style>
-
-
 </style>
