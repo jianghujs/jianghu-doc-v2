@@ -360,7 +360,9 @@
         }
         mobileLinkObj.addClass('active')
       }
-      // setActiveMenu()
+      {% if not constantUiMap.submenu[pageData.categoryGroup] %}
+      setActiveMenu()
+      {% endif %}
       function toMenuPath(path) {
         location.href = path;
         // console.log('toMenuPath', path)
@@ -368,7 +370,9 @@
         // $('.vt-hamburger VPNavBarHamburger').removeClass('is-active')
         // html overflow: auto
         $('html').css('overflow', 'auto')
-        // setActiveMenu()
+        {% if not constantUiMap.submenu[pageData.categoryGroup] %}
+        setActiveMenu()
+        {% endif %}
       }
   </script>
   <script type="text/javascript">
