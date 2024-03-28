@@ -264,7 +264,11 @@
 
 .jianghu-doc-contentDoc-content {
   margin: 0 auto;
+  {% if article.hasOutline %}
   max-width: 688px;
+  {% else %}
+  max-width: 900px;
+  {% endif %}
   position: relative;
 }
 
