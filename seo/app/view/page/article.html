@@ -119,25 +119,49 @@
   <div class="jianghu-doc-sidebar">
     <div class="jianghu-doc-sidebar-nav">
       <nav > 
-        {% for key, data in article.categoryGroupArticleList %}
+        {% for key, data in article.sideMenu %}
         <ul class="sidenav-menu">
+          <!-- 没有二级菜单的情况，显示分类名称 -->
+          {% if not constantUiMap.submenu[article.categoryGroup] %}
           <li class="sidenav-item">
-            {% if data.categoryName != '概要' %}
-            <a class="sidenav-link p-0" ><span><$ data.categoryName $></span></a>
-            {% endif %}
-            <ul class="sidenav-collapse show">
-              {% for node in data.articleList %}
-              <li class="sidenav-item">
-                <a class="sidenav-link p-0 {% if article and node.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node.articleId $>"">
-                  <span class="font-monospace"><$ node.articleTitleMap.prefix $></span><$ node.articleTitleMap.text $>
-                  {% if node.articlePublishStatus == 'login' and not userId %}
-                  <i class="far fa-solid fa-lock" aria-hidden="true"></i>
-                  {% endif %}
-                </a>
-              </li>
-              {% endfor %}
-            </ul>
+            <a class="sidenav-link p-0 fs-6" ><span><$ data.categoryName $></span></a>
           </li>
+          {% endif %}
+
+          {% for node in data.articleList %}
+            {% if node.articleId %}
+            <!-- 没有设置articleGroupName的文章 -->
+            <li class="sidenav-item">
+              <ul class="sidenav-collapse show">
+                <li class="sidenav-item">
+                  <a class="sidenav-link p-0 {% if article and node.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node.articleId $>"">
+                    <span class="font-monospace"><$ node.articleTitleMap.prefix $></span><$ node.articleTitleMap.text $>
+                    {% if node.articlePublishStatus == 'login' and not userId %}
+                    <i class="far fa-solid fa-lock" aria-hidden="true"></i>
+                    {% endif %}
+                  </a>
+                </li>
+              </ul>
+            </li>
+            {% else %}
+            <!-- 设置了articleGroupName的文章，按articleGroupName分组 -->
+            <li class="sidenav-item">
+              <a class="sidenav-link p-0" ><span><$ node.articleTitle $></span></a>
+              <ul class="sidenav-collapse show">
+                {% for node_child in node.childrenList %}
+                <li class="sidenav-item">
+                  <a class="sidenav-link p-0 {% if article and node_child.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node_child.articleId $>"">
+                    <span class="font-monospace"><$ node_child.articleTitleMap.prefix $></span><$ node_child.articleTitleMap.text $>
+                    {% if node_child.articlePublishStatus == 'login' and not userId %}
+                    <i class="far fa-solid fa-lock" aria-hidden="true"></i>
+                    {% endif %}
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% endif %}
+          {% endfor %}
         </ul>
         {% endfor %}
       </nav>
