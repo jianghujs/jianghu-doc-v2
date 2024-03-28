@@ -10,11 +10,11 @@
         <div><$ xfPage.xfPageConfig.body.slogan | safe $></div>
     </div>
 
-    <div class="flex container-lg mt-20">
-        <div class="flex-1 mr-20">
+    <div class="md:flex container-lg my-14">
+        <div class="flex-1 md:mr-20">
             <div><$ xfPage.xfPageConfig.body.introduce.content | safe $></div>
         </div>
-        <div class="flex-1">
+        <div class="flex-1 mt-4 mt-md-0">
             <div class="rounded-t ml-md-4 img-box relative w-full h-0 overflow-hidden"
                  style="padding-top: 65%">
                 <img class="absolute top-0 left-0 w-full h-auto" src="<$ xfPage.xfPageConfig.body.introduce.cover $>"/>
@@ -31,13 +31,15 @@
             <div>
                 <$ xfPage.xfPageConfig.body.teamMember.desc | safe $>
             </div>
-            <div class="grid grid-cols-3 gap-3 mt-10">
+            <div class="grid md:grid-cols-3 gap-3 mt-10">
                 {% for item in xfPage.xfPageConfig.body.teamMember.list %}
-                <div class="intro-item flex mb-4 items-center">
-                    <div class="avatar w-24 h-24 border-2 p-2 border-solid rounded-circle border-green-500 ">
-                        <img class="img-fluid" src="<$ item.avatar $>" />
+                <div class="intro-item flex items-center">
+                    <div class="avatar w-40 h-40 d-flex items-center">
+                       <div class="border-2 p-1 border-solid rounded-circle border-green-500">
+                           <img class="img-fluid" src="<$ item.avatar $>" />
+                       </div>
                     </div>
-                    <div class="ml-4 w-50">
+                    <div class="ml-4 md:mr-20">
                         <div class="text-black flex justify-content-between border-b-2 border-solid border-green-500 pb-2 mb-2 font-bold">
                             <p><$ item.position $></p>
                             <p><$ item.name $></p>
@@ -51,7 +53,7 @@
     </div>
 
 
-    <div class="container-lg py-14">
+    <div class="container-lg my-14">
         <h2 class="text-green-500 font-bold mb-4 text-2xl text-center">
             <$ xfPage.xfPageConfig.body.productIdea.title $>
         </h2>
