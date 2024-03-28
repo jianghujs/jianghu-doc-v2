@@ -7,13 +7,12 @@
 
 {% if username %}
 <div class="md:pt-14"></div>
-<div class="jianghu-doc-contentDoc-main-edit-links" style="position: fixed;bottom: 50px;z-index: 10;right: 80px;">
-    <a style="color: #42b883;"
-       href="<$ adminUrl $>/page/xfPageEdit?xfPageId=<$ xfPage.xfPageId $>&title=<$ article.xfPageTitle $>"
+<div class="jianghu-doc-contentDoc-main-edit-links fixed bottom-20 right-10 z-10">
+    <a href="<$ adminUrl $>/page/xfPageEdit?xfPageId=<$ xfPage.xfPageId $>&title=<$ article.xfPageTitle $>"
        target="_blank" class="jianghu-doc-contentDoc-main-edit-link">
         <button title="修改这个页面" type="button"
-                class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-3 text-center inline-flex items-center">
-            <i class="far fa-edit jianghu-doc-contentDoc-main-edit-icon text-xl"></i>
+                class="w-10 h-10 d-flex justify-center text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center">
+            <i class="far fa-edit jianghu-doc-contentDoc-main-edit-icon text-lg"></i>
         </button>
     </a>
 </div>
