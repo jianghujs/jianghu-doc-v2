@@ -59,6 +59,17 @@
                   </v-textarea>
                 </v-row>
 
+                <span class="jh-input-label">分类</span>
+                  <v-select class="jh-v-input" v-model="editItem.categoryId" color="success" prefix="分类："
+                    :items="categorySearchInput ? constantObj.categorySearch : constantObj.category"
+                    dense filled single-line>
+                    <template v-slot:prepend-item>
+                      <v-text-field prefix="搜索：" clearable v-model="categorySearchInput" class="mb-2" dense
+                        filled single-line hide-details>
+                      </v-text-field>
+                    </template>
+                  </v-select>
+
                 <span class="jh-input-label">描述</span>
                 <v-textarea class="jh-v-input mb-4" rows="2" :counter="120" dense filled single-line
                             v-model="editItem.xfPageDescription"
@@ -298,6 +309,8 @@ new Vue({
     // 表格相关数据
     isFormValid: true,
     constantObj: {
+      category: [],
+      categorySearch: [],
       xfPageTagList: [],
       xfPagePublishStatus: [
         {text: "公开", value: "public"},
@@ -335,6 +348,7 @@ new Vue({
     writeBackType: '',
     editor: null,
     jsonError: false,
+    categorySearchInput: null,
   }),
   computed: {
     tableData() {
@@ -350,11 +364,16 @@ new Vue({
       if (val) {
         this.isHelpPageDrawerLoaded = true;
       }
-    }
+    },
+    categorySearchInput() {
+      this.doUiAction('categorySearch')
+    },
   },
   async created() {
     const searchParams = new URLSearchParams(location.search.substring(1));
     this.xfPageId = searchParams.get('xfPageId');
+
+    this.buildSelectCategoryOptionList();
   },
   async mounted() {
     if (this.xfPageId) {
@@ -362,6 +381,34 @@ new Vue({
     }
   },
   methods: {
+    async doUiAction(actionId, actionData) {
+      switch (actionId) {
+        case 'categorySearch':
+          await this.categorySearch();
+          break;
+        default:
+          console.log('未知的actionId', actionId);
+          break;
+      }
+
+    },
+    async buildSelectCategoryOptionList() {
+      const {rows} = (await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'xfPageEdit',
+            actionId: 'selectCategoryList',
+            actionData: {},
+            whereIn: {categoryPublishStatus: ['public', 'login']},
+            orderBy: [{column: 'categoryGroup', order: 'asc'}, {column: 'categoryGroupSort', order: 'asc'}]
+          }
+        }
+      })).data.appData.resultData;
+      rows.forEach(item => {
+        const text = `${item.categoryGroupConcat || ''}${item.categoryName}`;
+        this.constantObj.category.push({text, value: item.categoryId + ""});
+      })
+    },
     // 选择模板
     changeTemplate(val) {
       const temp = this.xfPageTemplateOptions.find(template => template.value === val);
@@ -709,6 +756,17 @@ new Vue({
     onError(res) {
       this.jsonError = res;
     },
+    // ---------- 分类搜索 uiAction >>>>>>>>>>>> --------
+    async categorySearch() {
+      const searchVal = this.categorySearchInput ? this.categorySearchInput.toLowerCase() : null;
+      const categoryList = _.cloneDeep(this.constantObj.category);
+      if (searchVal) {
+        this.constantObj.categorySearch = categoryList.filter(category => category.text.toLowerCase().includes(searchVal) || category.text.includes(searchVal))
+      }else{
+        this.constantObj.categorySearch = categoryList;
+      }
+    },
+    // ---------- <<<<<<<<<<< 分类搜索 uiAction  --------
   }
 })
 </script>
