@@ -8,9 +8,14 @@
 {% if username %}
 <div class="md:pt-14"></div>
 <div class="jianghu-doc-contentDoc-main-edit-links" style="position: fixed;bottom: 50px;z-index: 10;right: 80px;">
-<button title="修改这个页面" type="button" class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-3 text-center inline-flex items-center">
-    <i class="far fa-edit jianghu-doc-contentDoc-main-edit-icon text-xl"></i>
-</button>
+    <a style="color: #42b883;"
+       href="<$ adminUrl $>/page/xfPageEdit?xfPageId=<$ xfPage.xfPageId $>&title=<$ article.xfPageTitle $>"
+       target="_blank" class="jianghu-doc-contentDoc-main-edit-link">
+        <button title="修改这个页面" type="button"
+                class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-3 text-center inline-flex items-center">
+            <i class="far fa-edit jianghu-doc-contentDoc-main-edit-icon text-xl"></i>
+        </button>
+    </a>
 </div>
 {% endif %}
 
@@ -51,13 +56,13 @@
 {% endblock %}
 {% block javascript %}
 <script>
-  // 错误提示
-  const searchParams = new URLSearchParams(location.search.substring(1));
-  const errorInfo = JSON.parse('<$ constantUiMap.errorInfo | dump | safe $>');
-  const errorCode = searchParams.get('errorCode');
-  const errorReason = searchParams.get('errorReason');
-  if (errorCode) {
-    showFailAlert(errorInfo.contentEnum[errorCode] || errorReason)
-  }
+    // 错误提示
+    const searchParams = new URLSearchParams(location.search.substring(1));
+    const errorInfo = JSON.parse('<$ constantUiMap.errorInfo | dump | safe $>');
+    const errorCode = searchParams.get('errorCode');
+    const errorReason = searchParams.get('errorReason');
+    if (errorCode) {
+        showFailAlert(errorInfo.contentEnum[errorCode] || errorReason)
+    }
 </script>
 {% endblock %}
