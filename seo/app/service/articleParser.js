@@ -111,8 +111,19 @@ class ArticleParserService extends Service {
           try {
             const articleList = await this.getArticleList(JSON.parse(queryJson));
             const liList = articleList.map(article => {
-              const titlePrefix = article.articleTitle.includes('_') ? article.articleTitle.split('_')[0] : '';
-              const titleText = article.articleTitle.includes('_') ? '课-' + article.articleTitle.split('_')[1] : article.articleTitle;
+              const { articleTitle } = article;
+              let articleTitleShow = articleTitle;
+              if (articleTitleShow.startsWith('_')) {
+                articleTitleShow = articleTitleShow.replace(/^_[0-9]*_/, "");
+              }
+              let articleText = articleTitleShow;
+              if (articleTitle.startsWith('_')) {
+                articleText = articleTitle.replace(/^_[0-9]*_/, "");
+              } else if (articleTitle.includes('_')) {
+                articleText = '课-' + articleTitle.split('_').pop();
+              }
+              const titlePrefix = articleTitle.includes('_') ? articleTitle.split('_')[0] : '';
+              const titleText = articleText;
               return `<li><a href="${path}${article.articleId}"><span class="font-monospace">${titlePrefix}</span>${titleText}</a></li>`;
             });
             content = content.replace(jhQuery, `<ul class="lcp_catlist">${liList.join('')}</ul>`);

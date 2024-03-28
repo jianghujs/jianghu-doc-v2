@@ -64,12 +64,22 @@ class ArticleService extends Service {
     let categoryArticleData = await jianghuKnex(tableEnum.view01_article).where(whereObj).whereIn('articlePublishStatus', articlePublishStatus).orderBy('articleTitle', 'asc').select();
     categoryArticleData = _.map(categoryArticleData, item => {
       const { articleTitle } = item;
+      let articleTitleShow = articleTitle;
+      if (articleTitleShow.startsWith('_')) {
+        articleTitleShow = articleTitleShow.replace(/^_[0-9]*_/, "");
+      }
+      let articleText = articleTitleShow;
+      if (articleTitle.startsWith('_')) {
+        articleText = articleTitle.replace(/^_[0-9]*_/, "");
+      } else if (articleTitle.includes('_')) {
+        articleText = '课-' + articleTitle.split('_').pop();
+      }
       return {
         ...item,
-        articleTitle: articleTitle.includes('_') ? articleTitle.replace('_', '课-') : articleTitle,
+        articleTitle,
         articleTitleMap: {
           prefix: articleTitle.includes('_') ? articleTitle.split('_')[0] : '',
-          text: articleTitle.includes('_') ? '课-' + articleTitle.split('_')[1] : articleTitle,
+          text: articleText,
         },
       }
     }) 
@@ -108,7 +118,7 @@ class ArticleService extends Service {
     });
 
     // 处理文章数据
-    article.articleTitle = article.articleTitle.replace(articleTitleIgnoreReg, "");
+    article.articleTitle = article.articleTitle.replace(/^_?[0-9]*_/, "");
     article.articleList = categoryGroupArticleList;
     article.categoryGroupArticleList = categoryGroupArticleList;
     article.commentList = commentList;
@@ -116,6 +126,8 @@ class ArticleService extends Service {
     // 把articleContentForSeo里的<a>标签都以新页面的方式打开，添加上target="_blank"
     article.articleContentForSeo = article.articleContentForSeo.replace(/<a/g, '<a target="_blank"');
     article.articleContentForSeoByCodeView = await this.parseSeo(article.articleContentForSeo);
+    // 一二级标题判断
+    article.hasOutline = /^#{1,2} .*/.test(article.articleContent);
 
     return article;
   }

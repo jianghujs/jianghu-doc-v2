@@ -96,7 +96,7 @@
 
 {% block content %}
 <!-- 手机端顶部菜单 >>>>>>>>>>>>> -->
-<div class="VPLocalNav {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
+<div class="VPLocalNav">
 <button id="jianghu-mobile-toggle-docMenu" class="jianghu-nav-mobile-menu" aria-expanded="false"
         aria-controls="VPSidebarNav">
   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24"
@@ -116,7 +116,7 @@
 <!-- 主内容 >>>>>>>>>>>>> -->
 <main>
   <!-- 左侧目录 >>>>>>>>>>>>> -->
-  <div class="jianghu-doc-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
+  <div class="jianghu-doc-sidebar">
     <div class="jianghu-doc-sidebar-nav">
       <nav > 
         {% for key, data in article.categoryGroupArticleList %}
@@ -146,10 +146,11 @@
   <!-- <<<<<<<<<<<<< 左侧目录 -->
 
   <!-- 文章 >>>>>>>>>>>>> -->
-  <div class="jianghu-doc-content jianghu-doc-content-has-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
+  <div class="jianghu-doc-content jianghu-doc-content-has-sidebar">
     <div class="jianghu-doc-contentDoc">
       <div class="jianghu-doc-contentDoc-container">
         <!-- 文档大纲 -->
+        {% if article.hasOutline %}
         <div class="jianghu-doc-contentDoc-aside">
           <div class="jianghu-doc-contentDoc-aside-container">
             <div class="jianghu-doc-contentDoc-aside-outline">
@@ -161,6 +162,7 @@
             </div>
           </div>
         </div>
+        {% endif %}
         <!-- 文档正文 -->
         <div class="jianghu-doc-contentDoc-content">
           <div class="jianghu-doc-contentDoc-main">
@@ -273,7 +275,7 @@ function init() {
   });
   // 目录滚动到指定位置
   if ($('.jianghu-active')) {
-    $('.jianghu-doc-sidebar').scrollTop($('.jianghu-active').offset().top - 366);
+    $('.jianghu-doc-sidebar').scrollTop($('.jianghu-active').offset().top - 300);
   }
 }
 
