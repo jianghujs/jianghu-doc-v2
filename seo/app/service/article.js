@@ -85,6 +85,7 @@ class ArticleService extends Service {
     }) 
     // 分类列表 - 名称排序
     const keys = _.uniqBy(_.sortBy(categoryArticleData, ['categoryGroupSort']), 'categoryName').map(item => item.categoryName);
+
     // 处理文章列表数据
     const categoryGroupArticleList = {};
     _.forEach(keys, (key) => {
@@ -128,6 +129,10 @@ class ArticleService extends Service {
     article.articleContentForSeoByCodeView = await this.parseSeo(article.articleContentForSeo);
     // 一二级标题判断
     article.hasOutline = /^#{1,2} .*/.test(article.articleContent);
+
+    // 处理目录数据
+    const constantUiMap = await this.service.constantUi.getConstantUiMap();
+    article.sideMenu = constantUiMap.submenu[article.categoryGroup] ? _.pick(article.categoryGroupArticleList, [article.categoryName]) : article.categoryGroupArticleList;
 
     return article;
   }

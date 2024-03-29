@@ -1188,6 +1188,14 @@ main{
     z-index: 100;
 }
 
+/* xfpage 兼容一级菜单、二级菜单 */
+.ThemePage {
+  padding-top: var(--vt-nav-height);
+}
+.ThemePage.jh-has-submenu{
+  padding-top: calc(var(--vt-nav-height) + 66px);
+}
+
 /* 移动端适配 */
 @media (max-width: 576px) {
     /* logo */
