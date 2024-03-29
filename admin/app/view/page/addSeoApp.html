@@ -18,7 +18,7 @@
         <v-col cols="12" xs="12" sm="12" md="8" xl="9">
           <v-row class="jh-backend-form-container justify-end ma-0 py-3">
             <div class="jh-backend-search-btn">
-              <v-btn class="elevation-0 float-right mt-2 mt-md-0" color="success" small @click="saveInfo">
+              <v-btn class="elevation-0 float-right mt-2 mt-md-0" color="success" small @click="insertItem">
                 <v-icon class="mr-1" small>mdi-content-save-all</v-icon>
                 保存
               </v-btn>
@@ -31,11 +31,6 @@
     <!-- 页面主要内容 -->
     <div class="jh-page-body-container px-8" style="min-height: calc(100vh - 200px); max-height: calc(100vh - 200px); ">
       <v-form ref="createForm" lazy-validation>
-        <!-- 抽屉标题 -->
-        <v-row no-gutters>
-          <span class="text-h7 font-weight-bold pa-4">添加信息</span>
-        </v-row>
-        <v-divider class="jh-divider"></v-divider>
         <!-- 抽屉的主体 >>>>>>>>>>>>> -->
         <v-row class="mt-0 px-4">
           <v-col cols="12" sm="12" md="4">
@@ -44,11 +39,11 @@
           </v-col>
           <v-col cols="12" sm="12" md="4">
             <span class="jh-input-label">应用类型<span class="red--text text--accent-2 ml-1">*必填</span></span>
-            <v-select class="jh-v-input" dense filled single-line v-model="editItem.copyAppId" :rules="validationRules.requireRules" :items="constantObj.pageTypeList"></v-select>
+            <v-select class="jh-v-input" dense filled single-line v-model="editItem.appType" :rules="validationRules.requireRules" :items="constantObj.pageTypeList"></v-select>
           </v-col>
           <v-col cols="12" sm="12" md="4">
-            <span class="jh-input-label">用户名<span class="red--text text--accent-2 ml-1">*必填</span></span>
-            <v-select class="jh-v-input" dense filled single-line v-model="editItem.copyAppId" :rules="validationRules.requireRules"></v-select>
+            <span class="jh-input-label">复制应用文档<span class="red--text text--accent-2 ml-1">*必填</span></span>
+            <v-select class="jh-v-input" dense filled single-line v-model="editItem.copyAppId" :rules="validationRules.requireRules" :items="constantObj.appList"></v-select>
           </v-col>
         </v-row>
 
@@ -318,97 +313,24 @@ new Vue({
       editItem.xfPageConfig = !editItem.xfPageConfig ? {} : JSON.parse(editItem.xfPageConfig);
       this.constantObj.pageTypeList = editItem.xfPageConfig.appCategoryList.map(e => e.title);
       this.constantObj.appList = editItem.xfPageConfig.appList.map(e => e.title);
-      this.editItem = editItem;
       this.isTableLoading = false;
-    },
-    async xfPageIdCheck() {
-      if (!this.xfPageId) {
-        return await this.insertItem();
-      }
-      return true;
-    },
-    /**
-     * 移除到回收站
-     */
-    async deletedxfPage() {
-      const dialogTapDone = await window.confirmDialog({
-        title: '回收站',
-        content: '确定将文章移到回收站吗？'
-      });
-      if (dialogTapDone) {
-        await window.vtoast.loading("回收文章");
-        await window.jianghuAxios({
-          data: {
-            appData: {
-              pageId: 'xfPageEdit',
-              actionId: 'deletedxfPage',
-              actionData: {xfPageId: this.xfPageId}
-            }
-          }
-        });
-        await window.vtoast.success("回收文章成功");
-        this.getTableData();
-      }
-    },
-    async restorexfPage() {
-      const dialogTapDone = await window.confirmDialog({
-        title: '恢复',
-        content: '确定将文章恢复吗？'
-      });
-      if (dialogTapDone) {
-        await window.vtoast.loading("恢复文章");
-        await window.jianghuAxios({
-          data: {
-            appData: {
-              pageId: 'xfPageEdit',
-              actionId: 'restorexfPage',
-              actionData: {xfPageId: this.xfPageId}
-            }
-          }
-        });
-        await window.vtoast.success("恢复文章成功");
-        this.getTableData();
-      }
-    },
-    /**
-     * 保存数据
-     */
-    async saveInfo() {
-      // 处理 xfPageTagList
-      if (!this.editItem.xfPageTagList) {
-        this.editItem.xfPageTagList = '';
-      }
-
-      const parts = this.editItem.xfPageTagList.replace(/，/g, ',').split(',')
-      this.editItem.xfPageTagList = parts.map(item => item.trim()).join(',')
-      this.editItem.xfPagePublishTime = dayjs(this.editItem.xfPagePublishTime).format();
-      if (this.getEditItem.id) {
-        await this.updateItem();
-      } else {
-        await this.insertItem();
-      }
-    },
-    // 保存并预览
-    async saveInfoAndPreview() {
-      await this.saveInfo();
-      window.open(`<$ ctx.app.config.seoUrl $>/page/xfArticle/${this.getEditItem.xfPageId}`);
     },
     /**
      * 新增文章
      */
     async insertItem() {
-      if (!this.$refs.form.validate()) {
-        window.vtoast.fail({message: "请完善文章信息"})
+      if (!this.$refs.createForm.validate()) {
+        window.vtoast.fail({message: "请完善信息"})
         return false;
       }
-      const {id, xfPageList, categoryName, ...saveInfo} = this.getEditItem;
+      const { appTitle, appType, copyAppId } = this.editItem;
       await window.vtoast.loading("新增文章");
       const result = await window.jianghuAxios({
         data: {
           appData: {
-            pageId: 'xfPageEdit',
-            actionId: 'jhInsertItem',
-            actionData: saveInfo
+            pageId: 'appSeoApp',
+            actionId: 'createItem',
+            actionData: { appTitle, appType, copyAppId }
           }
         }
       });
@@ -417,148 +339,6 @@ new Vue({
       await this.reopenEditByArticleId(result.data.appData.resultData.rows[0]);
       return true;
     },
-    async reopenEditByArticleId(id) {
-      const rows = (await window.jianghuAxios({
-        data: {
-          appData: {
-            pageId: 'xfPageEdit',
-            actionId: 'selectItemList',
-            actionData: {},
-            where: {id},
-          }
-        }
-      })).data.appData.resultData.rows;
-      const newXfPage = rows[0];
-      const {xfPageId, xfPageTitle} = newXfPage
-      this.xfPageId = xfPageId;
-      await this.getTableData();
-      const newUrl = `/${window.appInfo.appId}/page/xfPageEdit?xfPageId=${xfPageId}&title=${xfPageTitle}`;
-      history.pushState({}, null, newUrl);
-    },
-    /**
-     * 保存文章
-     */
-    async updateItem() {
-      if (!this.$refs.form.validate()) return false;
-      const {id, xfPageList, categoryName, ...saveInfo} = this.getEditItem;
-      await window.vtoast.loading("修改文章");
-      await window.jianghuAxios({
-        data: {
-          appData: {
-            pageId: 'xfPageEdit',
-            actionId: 'jhUpdateItem',
-            actionData: saveInfo,
-            where: {
-              xfPageId: this.getEditItem.xfPageId
-            }
-          }
-        }
-      })
-      await window.vtoast.success("修改文章成功");
-      await this.getTableData();
-      const newUrl = `/${window.appInfo.appId}/page/xfPageEdit?xfPageId=${this.getEditItem.xfPageId}&title=${this.getEditItem.xfPageTitle}`;
-      history.pushState({}, null, newUrl);
-    },
-    async useMaterial({path}) {
-      let filename, downloadPath = null;
-      if (this.materialType === 'image') {
-        const resultData = (await window.jianghuAxios({
-          data: {
-            appData: {
-              pageId: 'xfPageEdit',
-              actionId: 'useMaterial',
-              actionData: {
-                xfPageId: this.xfPageId,
-                path,
-              },
-            }
-          }
-        })).data.appData.resultData;
-        filename = resultData.filename;
-        downloadPath = resultData.downloadPath;
-      } else {
-        downloadPath = `/materialRepo${path}`;
-        filename = path.substring(path.lastIndexOf('/') + 1);
-      }
-
-      this.isEditDrawerShown = false;
-      if (this.writeBackType === 'editor') {
-        this.editHandlerWhenUseMaterial(filename, downloadPath)
-      } else {
-        this.saveHandlerWhenUseMaterial(downloadPath)
-      }
-    },
-    saveHandlerWhenUseMaterial(downloadPath) {
-      switch (this.materialType) {
-        case 'image':
-          if (downloadPath) {
-            this.editItem.xfPageCoverImage = downloadPath
-          }
-          break;
-        case 'audio':
-          if (downloadPath) {
-            this.editItem.xfPageAudioUrl = downloadPath
-          }
-          break;
-        case 'video':
-          if (downloadPath) {
-            this.editItem.xfPageVideoUrl = downloadPath
-          }
-          break;
-        case 'attachment':
-          // attachment如何渲染
-          break;
-      }
-    },
-    editHandlerWhenUseMaterial(filename, downloadPath) {
-      switch (this.materialType) {
-        case 'image':
-          if (downloadPath) {
-            this.editor.insertValue(`\n![${filename}](/upload${downloadPath})`);
-          }
-          break;
-        case 'audio':
-          if (downloadPath) {
-            this.editor.insertValue(`\n![=audio](/upload${downloadPath})`);
-          }
-          break;
-        case 'video':
-          if (downloadPath) {
-            this.editor.insertValue(`\n![=video](/upload${downloadPath})`);
-          }
-          break;
-        case 'attachment':
-          if (downloadPath) {
-            // attachment如何渲染
-            this.editor.insertValue(`\n[${filename}](/upload${downloadPath})`);
-          }
-          break;
-      }
-    },
-    closePage() {
-      window.history.back();
-    },
-    getFileName(path) {
-      if (path) {
-        return path.substring(path.lastIndexOf('/') + 1);
-      }
-      return "点击上传";
-    },
-    // json 错误
-    onError(res) {
-      this.jsonError = res;
-    },
-    // ---------- 分类搜索 uiAction >>>>>>>>>>>> --------
-    async categorySearch() {
-      const searchVal = this.categorySearchInput ? this.categorySearchInput.toLowerCase() : null;
-      const categoryList = _.cloneDeep(this.constantObj.category);
-      if (searchVal) {
-        this.constantObj.categorySearch = categoryList.filter(category => category.text.toLowerCase().includes(searchVal) || category.text.includes(searchVal))
-      }else{
-        this.constantObj.categorySearch = categoryList;
-      }
-    },
-    // ---------- <<<<<<<<<<< 分类搜索 uiAction  --------
   }
 })
 </script>

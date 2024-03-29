@@ -171,6 +171,129 @@ class xfPageService extends Service {
     return xfPage;
   }
 
+  async autoCreateItem({appTitle, appType, appDesc, copyAppId}) {
+    const { jianghuKnex } = this.app;
+    const constantUi = await jianghuKnex('seo_ui')
+      .where({ constantKey: 'submenu' })
+      .first();
+    const language = this.app.config.language;
+    constantUi[language] = JSON.parse(constantUi[language]);
+
+    const xfPage = await jianghuKnex('xf_page')
+      .where({ xfPageId: 5738 })
+      .first();
+
+    const copyPage = await jianghuKnex('xf_page')
+      .where({ xfPageTitle: '应用_' + copyAppId })
+      .first();
+
+    if (!copyPage) {
+      throw new BizError(errorInfoEnum.xf_page_not_found);
+    }
+    xfPage.xfPageConfig = JSON.parse(xfPage.xfPageConfig);
+
+    await jianghuKnex.transaction(async (trx) => {
+      // 1. 创建xfpage
+      delete copyPage.id;
+      copyPage.xfPageConfig = JSON.parse(copyPage.xfPageConfig);
+      copyPage.xfPageConfig.body.title = appTitle;
+
+      copyPage.xfPageConfig = JSON.stringify(copyPage.xfPageConfig);
+      this.ctx.request.body.appData.actionData = { ...copyPage, xfPageTitle: '应用_' + appTitle };
+      await this.fillInsertItemParamsBeforeHook();
+      const xfPageInsertData  = this.ctx.request.body.appData.actionData;
+
+      // 2. 更新xfpage
+      const { xfPageId } = this.ctx.request.body.appData.actionData;
+      xfPage.xfPageConfig.appList.push({
+        title: appTitle,
+        desc: appDesc,
+        type: appType,
+        tags: [],
+        cover: "https://demo.jianghujs.org/jianghu-doc-v2-admin/upload/materialRepo/image/app演示图.PNG",
+        "url": "/jianghu-doc-v2-seo/page/xfArticle/" + xfPageId,
+      });
+      await trx('xf_page')
+        .where({ xfPageId: 5738 })
+        .update({ xfPageConfig: JSON.stringify(xfPage.xfPageConfig) });
+
+      // 3. 二级菜单增加应用
+      const copyConstantUi = constantUi[language]['应用_' + copyAppId];
+      constantUi[language]['应用_' + appTitle] = _.cloneDeep(copyConstantUi);
+
+      const maxArticleId = await jianghuKnex('article').max('articleId as max').first();
+      const maxCategoryId = await jianghuKnex('category').max('categoryId as max').first();
+      let articleMaxId = maxArticleId.max + 1;
+      let categoryMaxId = maxCategoryId.max + 1;
+      for (const item of constantUi[language]['应用_' + appTitle]) {
+        if (item.categoryName == '介绍') {
+          // 添加 category
+          await this.createCategory(trx, { categoryId: categoryMaxId, categoryName: '介绍', categoryGroup: '应用_' + appTitle });
+          await trx('xf_page').insert({ ...xfPageInsertData, categoryId: categoryMaxId });
+          item.path = "/jianghu-doc-v2-seo/page/xfArticle/" + xfPageId;
+          categoryMaxId++;
+        }
+        if (item.categoryName === '培训') {
+          // 添加目录文章
+          const articleId = item.path.split('/').pop();
+          const articleList = await this.articleIdToCategoryArticleList(articleId);
+          // 创建 category
+          await this.createCategory(trx, { categoryId: categoryMaxId, categoryName: '培训', categoryGroup: '应用_' + appTitle });
+
+          item.path = "/jianghu-doc-v2-seo/page/article/" + articleMaxId;
+          for (const art of articleList) {
+            // 创建 article
+            await this.createArticle(trx, { ...art, categoryId: categoryMaxId, articleId: articleMaxId });
+            articleMaxId++;
+          }
+          categoryMaxId++;
+        }
+        if (item.categoryName == '文档') {
+          // 添加目录文章
+          const articleId = item.path.split('/').pop();
+          const articleList = await this.articleIdToCategoryArticleList(articleId);
+          // 创建 category
+          await this.createCategory(trx, { categoryId: categoryMaxId, categoryName: '文档', categoryGroup: '应用_' + appTitle });
+
+          item.path = "/jianghu-doc-v2-seo/page/article/" + articleMaxId;
+          for (const art of articleList) {
+            // 创建 article
+            await this.createArticle(trx, { ...art, categoryId: categoryMaxId, articleId: articleMaxId });
+            articleMaxId++;
+          }
+          categoryMaxId++;
+        }
+      }
+      // 保存 constantUi[language]
+      await trx('seo_ui')
+        .where({ constantKey: 'submenu' })
+        .update({ [language]: JSON.stringify(constantUi[language]) });
+
+    });
+    
+  }
+
+  async articleIdToCategoryArticleList(articleId) {
+    const { jianghuKnex } = this.app;
+    const article = await jianghuKnex('article').where({ articleId }).first();
+    if (!article) {
+      return [];
+    }
+    const articleList = await jianghuKnex('article').where({ categoryId: article.categoryId }).orderBy('articleTitle', 'asc').select();
+    return articleList;
+  }
+
+  async createCategory(trx, { categoryId, categoryName, categoryGroup }) {
+    await trx('category').insert({ categoryId, categoryName, categoryGroup, categoryPublishStatus: 'public' });
+  }
+
+  async createArticle(trx, { articleId, articleTitle, articleContent, categoryId, articleContentForSeo }) {
+    const articlePublishStatus = 'public';
+    const articlePublishTime = dayjs().format();
+    await trx('article').insert({ articleId, articleTitle, articleContent, articleContentForSeo, categoryId, articlePublishStatus, articlePublishTime });
+    articleId++;
+  }
+
 }
 
 module.exports = xfPageService;
