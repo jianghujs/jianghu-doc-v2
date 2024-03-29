@@ -64,7 +64,7 @@
               <span role="button" class="red--text text--accent-2 font-weight-medium font-size-2 mr-2" v-if="item.categoryPublishStatus !== 'deleted'" @click.stop="doUiAction('handleTableButton', { text: '删除', buttonType: 'delete', item })">
                 <v-icon size="16" class="red--text text--accent-2">mdi-trash-can-outline</v-icon>回收站
               </span>
-              <v-badge color="success" :content="item.count" overlap>
+              <v-badge color="success" :content="item.count === 0 ? '0' : item.count" overlap>
                 <span role="button" class="success--text font-weight-medium font-size-2 mr-2" @click.stop="doUiAction('openArticleManagementPage', item)">
                   <v-icon size="16" class="success--text">mdi-file-document-outline</v-icon>文章列表
                 </span>
