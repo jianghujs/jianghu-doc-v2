@@ -1163,7 +1163,7 @@ main{
 .jh-nav-sub{
     position: fixed;
     top: var(--vt-nav-height);
-    z-index: calc(var(--vp-z-index-nav) - 1px);
+    z-index: calc(var(--vp-z-index-nav) - 1);
     width: 100%;
     justify-content: center;
     background-color: #FBFBFB;
@@ -1221,7 +1221,7 @@ main{
     /* xfpage 兼容一级菜单、二级菜单 */
     .ThemePage,
     .ThemePage.jh-has-submen {
-        padding-top: 0;
+        padding-top: 0 !important;
     }
 }
 </style>
