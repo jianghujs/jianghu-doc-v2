@@ -1,8 +1,35 @@
 {% set static = "/" + appId + "/public" %}
 <link rel="stylesheet" href="<$ static $>/mdbootstrap/font-awesome.6.1.1.min.css"/>
-
 <script src="<$ static $>/tailwindcss/tailwindcss.js"></script>
+<style>
+    .laptop {
+        position: relative;
+        width: 80%;
+        padding-top: 52%;
+        overflow: hidden;
+        background: url('https://demo.jianghujs.org/jianghu-doc-v2-admin/upload/materialRepo/image/macbook-frame.png') no-repeat center center;
+        background-size: 100% 90%;
+    }
 
+
+    .laptop-screen {
+        position: absolute;
+        top: 10%;
+        left: 11.5%;
+        width: 76.6%;
+        height: 76%;
+        background-color: #fff;
+        overflow: hidden;
+    }
+
+    .laptop-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+</style>
 
 <!-- 内容区 >>>>>>>>>>>>> -->
 <main>
@@ -67,10 +94,19 @@
                         <div class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center">
                             <div class="flex-1">
                                 {% endif %}
-                                <div class="rounded-t ml-md-4 img-box relative w-full h-0 overflow-hidden"
-                                     style="padding-top: 50%">
-                                    <img class="absolute top-0 left-0 w-5/6 h-auto" src="<$ item.cover $>"/>
+<!--                                <div class="rounded-t ml-md-4 img-box relative w-full h-0 overflow-hidden"-->
+<!--                                     style="padding-top: 50%;">-->
+
+<!--                                    <img class="absolute top-0 left-0 w-5/6 h-auto" src="<$ item.cover $>"/>-->
+<!--                                </div>-->
+                                <div class="laptop mx-auto md:mx-0">
+                                    <div class="laptop-screen">
+                                        <a href="https://example.com" target="_blank">
+                                            <img src="<$ item.cover $>" alt="Custom Image" class="laptop-image">
+                                        </a>
+                                    </div>
                                 </div>
+
                             </div>
                             <div class="flex-1 mt-10 mt-md-0 text-base text-gray-500">
                                 <h2 class="text-xl font-bold text-black">
