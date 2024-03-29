@@ -19,13 +19,6 @@ INPUT:not(:-webkit-autofill), SELECT:not(:-webkit-autofill), TEXTAREA:not(:-webk
 @keyframes onautofillcancel {
 }</style>
 <style>
-.ThemePage {
-  padding-top: var(--vt-nav-height);
-}
-.ThemePage.jh-has-submenu{
-  padding-top: calc(var(--vt-nav-height) + 66px);
-}
-
 .ThemeHero {
   padding: 48px 24px
 }
@@ -320,7 +313,7 @@ a:hover {
 }
 </style>
 <main>
-<div class="ThemePage {% if constantUiMap.submenu[xfPage.xfPageTitle] %}jh-has-submenu{% endif %}">
+<div class="ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
   <div class="ThemeHero">
     <div class="container">
       <h1 class="title">
