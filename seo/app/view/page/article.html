@@ -123,7 +123,7 @@
         <ul class="sidenav-menu">
           <!-- 没有二级菜单的情况，显示分类名称 -->
           {% if not constantUiMap.submenu[article.categoryGroup] %}
-          <li class="sidenav-item">
+          <li class="sidenav-item mb-4">
             <a class="sidenav-link p-0 fs-6" ><span><$ data.categoryName $></span></a>
           </li>
           {% endif %}
@@ -131,7 +131,7 @@
           {% for node in data.articleList %}
             {% if node.articleId %}
             <!-- 没有设置articleGroupName的文章 -->
-            <li class="sidenav-item">
+            <li class="sidenav-item mt-0">
               <ul class="sidenav-collapse show">
                 <li class="sidenav-item">
                   <a class="sidenav-link p-0 {% if article and node.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node.articleId $>"">
