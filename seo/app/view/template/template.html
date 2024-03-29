@@ -73,7 +73,6 @@
   <!-- <script async defer type='module' data-host-url='<$ ctx.app.config.junshiHost $>'
     data-website-id='<$ ctx.app.config.junshiWebsiteUuid $>'
     src='<$ ctx.app.config.junshiHost $>/junshi/public/client/junshi.js'></script> -->
-
   {% block css %}{% endblock %}
 </head>
 
@@ -299,7 +298,6 @@
 
   <!-- 二级菜单 -->
   {% if constantUiMap.submenu[pageData.categoryGroup] %}
-  <div style="height: 66px;"></div>
   <ul class="nav nav-tabs jh-nav-sub" id="nav-sub" role="tablist">
     {% for menu in constantUiMap.submenu[pageData.categoryGroup] %}
       <li class="nav-item" role="presentation">
