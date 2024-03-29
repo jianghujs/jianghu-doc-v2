@@ -1,11 +1,11 @@
 {% set static = "/" + appId + "/public" %}
 <script src="<$ static $>/tailwindcss/tailwindcss.js"></script>
 <style>
-    :root {
-        --vt-c-bg: #f9f9f9;
+    main {
+        background:  #f9f9f9;
     }
 </style>
-<main id="main" class="text-gray-800 ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
+<main id="main" class="text-gray-800 {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
     <div class="py-20 text-center bg-white">
         <div><$ xfPage.xfPageConfig.body.slogan | safe $></div>
     </div>
