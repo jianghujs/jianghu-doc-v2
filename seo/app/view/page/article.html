@@ -355,9 +355,16 @@ docsSearchBar({
   debug: true, // Set debug to true if you want to inspect the dropdown
   enableDarkMode: false,
   enhancedSearchInput: true,
-  algoliaOptions: {
-    'facetFilters': ['category:<$ article.categoryId $>']
-  }
+  transformData: function(hits) {
+    console.log(hits)
+    return hits.map(function (hit) {
+      return {
+        title: hit.h1,
+        text: hit.h2,
+        url: hit.url,
+      };
+    });
+  },
 })
 </script>
 
