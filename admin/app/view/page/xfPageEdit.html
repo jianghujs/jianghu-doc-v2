@@ -101,8 +101,13 @@
                 <span class="jh-input-label">选择模板</span>
                 <v-row class="pt-0 ma-0 mb-2">
                   <v-select dense filled single-line persistent-hint v-model="editItem.template"
-                            :items="xfPageTemplateOptions" label="选择模板" item-text="text"
-                            item-value="value" @change="changeTemplate"></v-select>
+                            :items="xfPageTemplateOptions" label="选择模板" 
+                            :hint="editItem.template ? `/view/template/${editItem.template}.html` : ''"
+                            item-text="text"
+                            item-value="value" @change="changeTemplate"
+                            >
+                            <!-- 展示文件名 return-object  -->
+                  </v-select>
                 </v-row>
               </v-card>
 
