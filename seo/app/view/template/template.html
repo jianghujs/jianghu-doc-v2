@@ -332,6 +332,7 @@
   <!-- 二级菜单 -->
   {% if constantUiMap.submenu[pageData.categoryGroup] %}
   <ul class="nav nav-tabs jh-nav-sub" id="nav-sub" role="tablist">
+    <$ pageData.categoryGroup $>
     {% for menu in constantUiMap.submenu[pageData.categoryGroup] %}
       <li class="nav-item" role="presentation">
         <a
