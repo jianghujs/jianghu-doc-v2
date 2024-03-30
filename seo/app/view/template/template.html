@@ -421,7 +421,11 @@
       inputSelector: '#search-bar-input',
       debug: true, // Set debug to true if you want to inspect the dropdown
       enableDarkMode: false,
-      enhancedSearchInput: true
+      enhancedSearchInput: true,
+      transformData: function(hits) {
+        console.log('hits', hits)
+        return hits;
+      },
     })
     // 全局提示
     window.vtoast = {
