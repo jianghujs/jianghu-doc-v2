@@ -226,9 +226,10 @@ class xfPageService extends Service {
       let articleMaxId = maxArticleId.max + 1;
       let categoryMaxId = maxCategoryId.max + 1;
       for (const item of constantUi[language]['应用_' + appTitle]) {
-        if (item.categoryName == '介绍') {
+        if ((item.categoryName || '').includes('介绍')) {
+          item.categoryName = appTitle + '介绍';
           // 添加 category
-          await this.createCategory(trx, { categoryId: categoryMaxId, categoryName: '介绍', categoryGroup: '应用_' + appTitle });
+          await this.createCategory(trx, { categoryId: categoryMaxId, categoryName: appTitle + '介绍', categoryGroup: '应用_' + appTitle });
           await trx('xf_page').insert({ ...xfPageInsertData, categoryId: categoryMaxId });
           item.path = "/jianghu-doc-v2-seo/page/xfArticle/" + xfPageId;
           categoryMaxId++;
