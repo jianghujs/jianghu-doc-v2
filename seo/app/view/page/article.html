@@ -236,7 +236,7 @@
             <div class="jianghu-doc-contentDoc-main-doc">
               <div class="markdown-body editormd-preview-container jianghu-markdown" id="doc-content">
                 <h1 id="links-0"><$ article.articleTitle $></h1>
-                <span id="category-id" style="z-index: -1; position: absolute; left: 0; top: 0"><$ article.categoryName $></span>
+                <span id="category-id" style="z-index: -1; position: absolute; left: 0; top: 0"><$ article.categoryId $></span>
                 <!-- 封面 -->
                 {% if article.articleCoverImage %}
                 <div class="items-center-box" style="margin-bottom: 20px">
@@ -357,7 +357,7 @@ docsSearchBar({
   enhancedSearchInput: true,
   transformData: function(hits) {
     console.log('hits', hits);
-    return hits.filter(e => e['hierarchy_lvl0'] == '<$ article.categoryName $>')
+    return hits.filter(e => e['anchor'] == '<$ article.categoryId $>')
   },
 })
 </script>
