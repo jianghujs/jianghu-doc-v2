@@ -235,7 +235,8 @@
             {% endif %}
             <div class="jianghu-doc-contentDoc-main-doc">
               <div class="markdown-body editormd-preview-container jianghu-markdown" id="doc-content">
-                <h1 id="links-0"><$ article.articleTitle $><span id="category-id" style="opacity: 0;"><$ article.categoryId $></span></h1>
+                <h1 id="links-0"><$ article.articleTitle $></h1>
+                <span id="category-id" style="display: none;"><$ article.categoryId $></span>
                 <!-- 封面 -->
                 {% if article.articleCoverImage %}
                 <div class="items-center-box" style="margin-bottom: 20px">
