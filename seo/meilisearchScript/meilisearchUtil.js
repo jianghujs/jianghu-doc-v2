@@ -16,9 +16,9 @@ async function getKeys() {
 
 async function createKey() {
   const createKeyRes = await client.createKey({
-    description: '只读的api key[cn_openjianghu_org_public]',
+    description: '只读的api key',
     actions: ['search'],
-    indexes: ['cn_openjianghu_org_public', 'cn_openjianghu_org_all'],
+    indexes: ['cn_jianghujs_org_public', 'cn_jianghujs_org_all', 'demo_jianghujs_org_public', 'demo_jianghujs_org_all'],
     expiresAt: '2030-01-01T00:00:00Z'
   })
   console.log("meilisearchScript:createKey success", createKeyRes);

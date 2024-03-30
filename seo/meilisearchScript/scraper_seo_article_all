@@ -13,14 +13,14 @@ if HOST_URL is None or API_KEY is None:
     sys.exit(1)
 
 
-def getAuthToken(domain, userId, password):
-    response = requests.post(domain + '/doc/resource',
+def getAuthToken(domain, appId, userId, password):
+    response = requests.post(domain + '/' + appId + '/resource',
         headers={ 'content-type': 'application/json; charset=utf-8', 'Accept': 'application/json' },
         json={
             'packageId': '123456',
             'packageType': 'httpRequest',
             'appData': {
-                'appId': 'doc',
+                'appId': appId,
                 'pageId': 'login',
                 'actionId': 'passwordLogin',
                 'userAgent': 'docs-scraper',
@@ -45,10 +45,11 @@ def getAuthToken(domain, userId, password):
     return authToken
 
 DOMAIN=os.environ.get('SEO_DOMAIN')
+APPID=os.environ.get('SEO_APPID')
 USERID=os.environ.get('SEO_USERID')
 PASSWORD=os.environ.get('SEO_PASSWORD')
 
 print(DOMAIN+": all文章抓取开始")
-authToken = getAuthToken(domain=DOMAIN, userId=USERID, password=PASSWORD)
+authToken = getAuthToken(domain=DOMAIN, appId=APPID, userId=USERID, password=PASSWORD)
 run_config('./scraper_seo_article_all.json', authToken)
 

@@ -1,6 +1,6 @@
 {
     "index_uid": "test_all",
-    "start_urls": ["https://xxx.xxx.xxx/doc/"],
+    "start_urls": ["https://xxx.xxx.xxx/jianghu-doc-v2-seo/"],
     "sitemap_urls": [],
     "stop_urls": [],
     "selectors": {
