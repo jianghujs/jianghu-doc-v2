@@ -331,6 +331,20 @@ $(function () {
   doUiAction('init')
   addCopyCode()
 })
+
+// 使用docsSearchBar初始化搜索框
+docsSearchBar({
+  hostUrl: '<$ ctx.app.config.meilisearch.host $>',
+  apiKey: '<$ ctx.app.config.meilisearch.apiKey $>',
+  indexUid: '<$ userId $>' ? '<$ ctx.app.config.meilisearch.allIndexUid $>' : '<$ ctx.app.config.meilisearch.publicIndexUid $>',
+  inputSelector: '#search-bar-input',
+  debug: true, // Set debug to true if you want to inspect the dropdown
+  enableDarkMode: false,
+  enhancedSearchInput: true,
+  algoliaOptions: {
+    'facetFilters': ['category:<$ article.categoryId $>']
+  }
+})
 </script>
 
 <style>
