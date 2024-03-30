@@ -296,6 +296,23 @@
      </div>
   </div>
 
+  <!-- 分类搜索 -->
+  <div class="modal fade" id="searchModalCategory" data-mdb-keyboard="false" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="changePwdModalLabel"><$ constantUiMap.button.search $></h6>
+          <a role="button" data-mdb-dismiss="modal">
+            Cancel
+          </a>
+        </div>
+         <div class="modal-body">
+              <input id="search-bar-input-category" autofocus class="form-control" />
+         </div>
+       </div>
+     </div>
+  </div>
+
   <!-- 二级菜单 -->
   {% if constantUiMap.submenu[pageData.categoryGroup] %}
   <ul class="nav nav-tabs jh-nav-sub" id="nav-sub" role="tablist">
