@@ -11,23 +11,25 @@
     <div>
         <div class="container-lg p-4">
 
-
-            <form class="max-w-2xl mx-auto">
-                <div class="relative border border-gray-300 bg-white overflow-hidden rounded-full">
-                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                        </svg>
+            <div style="position: fixed; top: 115px; left: 0; width: 100%; padding-top: 10px; padding-bottom: 10px; background: #fafafa;">
+                <form class="max-w-2xl mx-auto">
+                    <div class="relative border border-gray-300 bg-white overflow-hidden rounded-full">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                            </svg>
+                        </div>
+                        <input type="search" id="default-search"
+                               class="block bg-white w-full ml-5 p-4 py-3 text-sm text-gray-900 rounded bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                               placeholder="搜索资源库，例如：jianghujs" required/>
                     </div>
-                    <input type="search" id="default-search"
-                           class="block bg-white w-full ml-5 p-4 py-3 text-sm text-gray-900 rounded bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                           placeholder="搜索资源库，例如：jianghujs" required/>
-                </div>
-            </form>
+                </form>
+            </div>
 
 
+            <div style="height: 30px;"></div>
             <!-- <p class="text-sm font-normal text-gray-500 dark:text-gray-400">资源列表</p> -->
             <div class="bg-white bg-white rounded-xl my-4">
                 <ul class="list py-4">
