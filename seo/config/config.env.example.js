@@ -11,8 +11,8 @@ module.exports = appInfo => {
     meilisearch: {
       host: 'https://meilisearch.openjianghu.org',
       apiKey: '只读权限的apiKey',
-      allIndexUid: 'cn_openjianghu_org_doc_all',
-      publicIndexUid: 'cn_openjianghu_org_doc_public',
+      allIndexUid: 'demo_jianghujs_org_all',
+      publicIndexUid: 'demo_jianghujs_org_public',
     },
     static: {
       maxAge: 0,

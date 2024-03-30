@@ -1,5 +1,10 @@
 # meilisearch
 
+## meilisearch参考链接
+
+- https://github.com/meilisearch/meilisearch
+- https://github.com/meilisearch/docs-scraper
+
 ## meilisearch 服务器搭建
 
 - 创建 `/xxx/meilisearch/docker-compose.yml`
