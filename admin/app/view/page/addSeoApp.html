@@ -118,7 +118,9 @@ new Vue({
       title: '新增文章',
       action: 'add'
     },
-    editItem: {},
+    editItem: { 
+      appType: "生产应用",
+    },
     tableRowActionList: [{
       text: '修改',
       buttonType: 'edit',
@@ -134,7 +136,6 @@ new Vue({
     editor: null,
     jsonError: false,
     categorySearchInput: null,
-    editItem: {}
   }),
   computed: {
     tableData() {
@@ -311,8 +312,12 @@ new Vue({
       });
       const editItem = result.data.appData.resultData.rows[0];
       editItem.xfPageConfig = !editItem.xfPageConfig ? {} : JSON.parse(editItem.xfPageConfig);
-      this.constantObj.pageTypeList = editItem.xfPageConfig.appCategoryList.map(e => e.title);
+      this.constantObj.pageTypeList = editItem.xfPageConfig.appCategoryList.map(e => e.title) || [];
+      this.constantObj.pageTypeList = this.constantObj.pageTypeList.filter(title => title!=='全部应用');
       this.constantObj.appList = editItem.xfPageConfig.appList.map(e => e.title);
+      if (this.constantObj.appList.length > 0) {
+        this.editItem.copyAppId = this.constantObj.appList[0];
+      }
       this.isTableLoading = false;
     },
     /**
