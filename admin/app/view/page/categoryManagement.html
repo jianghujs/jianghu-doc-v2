@@ -64,7 +64,7 @@
               <span role="button" class="red--text text--accent-2 font-weight-medium font-size-2 mr-2" v-if="item.categoryPublishStatus !== 'deleted'" @click.stop="doUiAction('handleTableButton', { text: '删除', buttonType: 'delete', item })">
                 <v-icon size="16" class="red--text text--accent-2">mdi-trash-can-outline</v-icon>回收站
               </span>
-              <v-badge color="success" :content="item.count" overlap>
+              <v-badge color="success" :content="item.count === 0 ? '0' : item.count" overlap>
                 <span role="button" class="success--text font-weight-medium font-size-2 mr-2" @click.stop="doUiAction('openArticleManagementPage', item)">
                   <v-icon size="16" class="success--text">mdi-file-document-outline</v-icon>文章列表
                 </span>
@@ -205,8 +205,8 @@
       headers: [
         { text: "分类ID", value: "categoryId", width: 80, class: 'fixed', cellClass: 'fixed', disabled: true },
         { text: "分类名称", value: "categoryName", width: 200, required: true },
-        { text: "分类分组", value: "categoryGroup", width: 200 },
-        { text: "分类分组排序", value: "categoryGroupSort", width: 70, type: 'number' },
+        { text: "板块", value: "categoryGroup", width: 200 },
+        { text: "板块排序", value: "categoryGroupSort", width: 70, type: 'number' },
         { text: "分类目录中需要省略的文字", value: "categoryArticleIgnoreTiltle", width: 150, edit: true },
         { text: "发布状态", value: "categoryPublishStatus", width: 120, type: 'select', required: true },
         { text: "分类简介", value: "categoryIntro", width: 350, type: 'textarea' },

@@ -27,7 +27,7 @@
             <v-col cols="12" sm="6" md="3" xl="3" class="pa-0 pr-0 pr-md-2 pt-2 pt-sm-0">
               <v-select class="jh-v-input bg-white" v-model="serverSearchForm.categoryGroup" hide-details
                         :items="categoryGroupSearchText ? categoryGroupFilter : constantObj.categoryGroup"
-                        prefix="分类分组：" item-text="text" item-value="value" dense filled single-line>
+                        prefix="板块：" item-text="text" item-value="value" dense filled single-line>
                 <template v-slot:prepend-item>
                   <v-text-field
                       label="搜索"
