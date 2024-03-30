@@ -356,6 +356,7 @@ docsSearchBar({
   enableDarkMode: false,
   enhancedSearchInput: true,
   transformData: function(hits) {
+    console.log('hits', hits);
     return hits.filter(e => {
       e['hierarchy_lvl0'] == '<$ article.categoryName $>'
     })
