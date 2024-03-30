@@ -115,7 +115,6 @@
 
 <!-- 主内容 >>>>>>>>>>>>> -->
 <main>
-  <div id="categoryId" ><$ article.categoryId $></div>
   <!-- 左侧目录 >>>>>>>>>>>>> -->
   <div class="jianghu-doc-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
     
@@ -237,6 +236,7 @@
             <div class="jianghu-doc-contentDoc-main-doc">
               <div class="markdown-body editormd-preview-container jianghu-markdown" id="doc-content">
                 <h1 id="links-0"><$ article.articleTitle $></h1>
+                <span id="category-id" style="display: none;"><$ article.categoryId $></span>
                 <!-- 封面 -->
                 {% if article.articleCoverImage %}
                 <div class="items-center-box" style="margin-bottom: 20px">
@@ -355,9 +355,16 @@ docsSearchBar({
   debug: true, // Set debug to true if you want to inspect the dropdown
   enableDarkMode: false,
   enhancedSearchInput: true,
-  algoliaOptions: {
-    'facetFilters': ['category:<$ article.categoryId $>']
-  }
+  transformData: function(hits) {
+    console.log(hits)
+    return hits.map(function (hit) {
+      return {
+        title: hit.h1,
+        text: hit.h2,
+        url: hit.url,
+      };
+    });
+  },
 })
 </script>
 
