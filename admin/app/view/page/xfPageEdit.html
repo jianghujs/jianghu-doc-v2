@@ -102,7 +102,7 @@
                 <v-row class="pt-0 ma-0 mb-2">
                   <v-select dense filled single-line persistent-hint v-model="editItem.template"
                             :items="xfPageTemplateOptions" label="选择模板" 
-                            :hint="editItem.template ? `/view/template/${editItem.template}.html` : ''"
+                            :hint="editItem.template ? `/seo/app/view/xfpageTemplate/${editItem.template}.html` : ''"
                             item-text="text"
                             item-value="value" @change="changeTemplate"
                             >
