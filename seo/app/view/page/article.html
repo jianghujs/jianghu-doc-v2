@@ -357,7 +357,7 @@ docsSearchBar({
   enhancedSearchInput: true,
   transformData: function(hits) {
     console.log('hits', hits);
-    return hits.filter(e => e['anchor'] == '<$ article.categoryId $>')
+    return hits.filter(e => e['category'] == '<$ article.categoryId $>')
   },
 })
 </script>
