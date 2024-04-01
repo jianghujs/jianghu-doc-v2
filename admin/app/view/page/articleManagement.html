@@ -530,7 +530,7 @@ new Vue({
       window.open(`/${window.appInfo.appId}/page/article/${articleId}`, '_blank');
     },
     openArticleCreatePage() {
-      window.open(`/${window.appInfo.appId}/page/articleEdit?title=未命名`, '_blank');
+      window.open(`/${window.appInfo.appId}/page/articleEdit?title=未命名&categoryId=${this.serverSearchForm.categoryId}`, '_blank');
     },
     openArticleHistoryPage({articleId, articleTitle}) {
       window.open(`/${window.appInfo.appId}/page/articleHistoryManagement?articleId=${articleId}&title=${articleTitle}`, '_blank');

@@ -31,3 +31,9 @@ use openjianghu_seo_v2;
 ln -s /xxx/cn-openjianghu-admin-v2/upload/articleMaterial /xxx/cn-openjianghu-seo-v2/upload/articleMaterial
 ln -s /xxx/cn-openjianghu-admin-v2/upload/materialRepo /xxx/cn-openjianghu-seo-v2/upload/materialRepo
 ```
+
+## 替换资源地址
+``sql
+UPDATE xf_page
+SET xfPageConfig = REPLACE(xfPageConfig, 'https://demo.jianghujs.org/jianghu-doc-v2-admin', 'https://newdomain.com/appId');
+```

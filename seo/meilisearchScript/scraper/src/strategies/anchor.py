@@ -1,4 +1,4 @@
-
+from lxml import html
 
 class Anchor:
     def __init__(self):
@@ -6,7 +6,12 @@ class Anchor:
 
     @staticmethod
     def _get_anchor_string_from_element(element):
-        return element.get('name', element.get('id'))
+        html_str = html.tostring(element, encoding='unicode')
+        # 判断是不是 h 标签
+        is_h = html_str.startswith('<h')
+        text = element.text_content()
+        # 如果是 h 标签，并且 text 不为空 返回 text，否则返回 element.get('name', element.get('id'))
+        return text if is_h and text else element.get('name', element.get('id'))
 
     @staticmethod
     def get_anchor(element):
