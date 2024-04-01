@@ -8,7 +8,11 @@
                 </div>
                 <div class="contant-list text-gray-400 text-lg mt-2">
                     {% for item in constantUiMap.footer.contacts %}
+                    {% if item.link === '' %}
+                    <a class="p-2 d-inline-block" href="javascript:void(0);"><i class="<$ item.icon $>"></i></a>
+                    {% else %}
                     <a class="p-2 d-inline-block" href="<$ item.link $>"><i class="<$ item.icon $>"></i></a>
+                    {% endif %}
                     {% endfor %}
                 </div>
                 <div class="qrcode flex items-center mt-2">
