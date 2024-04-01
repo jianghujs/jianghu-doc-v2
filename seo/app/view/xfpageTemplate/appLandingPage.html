@@ -69,6 +69,26 @@
 
             </div>
         </div>
+        {% if xfPage.xfPageConfig.body.list %}
+        <div class="container-lg d-md-flex align-center justify-content-between h-full items-center">
+            <div class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center flex-row-reverse">
+                <div class="flex-1 d-flex justify-content-end">
+                    <div class="grid md:grid-cols-3 gap-4">
+                        {% for it in xfPage.xfPageConfig.body.list %}
+                        {% set itIndex = loop.index %}
+                        <div class="card p-3">
+                            <h3 class="text-xl font-medium d-flex align-center items-center">
+                                <img src="<$ it.icon $>" class="w-6 h-6 mr-2"/>
+                                <$ it.title $>
+                            </h3>
+                            <p class="mt-2 text-gray-500 text-sm"><$ it.content $></p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>   
+        </div>
+        {% endif %}
     </div>
     <!--    模块介绍-->
     {% for item in xfPage.xfPageConfig.features %}
