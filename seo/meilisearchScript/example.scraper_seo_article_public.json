@@ -12,21 +12,25 @@
   "selectors": {
     "default": {
       "lvl0": {
-          "selector": "#links-0",
-          "global": true,
-          "default_value": "文章"
+        "selector": "#links-0",
+        "global": true,
+        "default_value": "文章"
       },
       "lvl1": {
-          "selector": ".editormd-preview-container h2",
-          "global": false,
-          "default_value": "章节"
+        "selector": ".editormd-preview-container h2",
+        "global": false,
+        "default_value": ""
       },
       "lvl2": ".editormd-preview-container h3",
       "lvl3": ".editormd-preview-container h4",
       "lvl4": ".editormd-preview-container h5",
+      "lvl5": ".editormd-preview-container h6",
       "text": ".editormd-preview-container p, .editormd-preview-container li, .editormd-preview-container pre",
-      "anchor": "#category-id"
+      "category": "#category-id"
     },
     "xfArticle": {}
+  },
+  "custom_settings": {
+    "displayedAttributes": ["*"]
   }
 }
