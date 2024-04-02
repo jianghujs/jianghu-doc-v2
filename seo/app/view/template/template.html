@@ -148,7 +148,7 @@
               {% if username %}
               <nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu">
                 <div class="vt-flyout VPNavBarMenuGroup">
-                  <button type="button" class="vt-flyout-button" aria-haspopup="true" aria-expanded="false" aria-label="extra navigation">
+                  <button type="button" class="vt-flyout-button pl-0 pr-0" aria-haspopup="true" aria-expanded="false" aria-label="extra navigation">
                     <span class="vt-flyout-button-text"><$ username $>
                       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="vt-flyout-button-text-icon">
                         <path d="M12,16c-0.3,0-0.5-0.1-0.7-0.3l-6-6c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l5.3,5.3l5.3-5.3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-6,6C12.5,15.9,12.3,16,12,16z"></path></svg>
@@ -171,38 +171,22 @@
                   </div>
                 </div>
               </nav>
-              {% else %}
-
-              <nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu">
-                <div class="vt-flyout VPNavBarMenuGroup">
-                  <a class="vt-link link vt-menu-link" href="<$ pageUrl $>/login"><$ constantUiMap.button.login $></a>
-                  <!-- <button type="button" class="vt-flyout-button" aria-haspopup="true" aria-expanded="false" aria-label="extra navigation">
-                    <span class="vt-flyout-button-text"><$ constantUiMap.button.visitor $>
-                      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="vt-flyout-button-text-icon">
-                        <path d="M12,16c-0.3,0-0.5-0.1-0.7-0.3l-6-6c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l5.3,5.3l5.3-5.3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-6,6C12.5,15.9,12.3,16,12,16z"></path></svg>
-                    </span>
-                  </button>
-                  <div class="vt-flyout-menu">
-                    <div class="vt-menu">
-                      <div class="vt-menu-items">
-                        <a class="vt-link link vt-menu-link" href="<$ pageUrl $>/login"><$ constantUiMap.button.login $></a>
-                      </div>
-                    </div>
-                  </div> -->
-                </div>
-              </nav>
               {% endif %}
             {% endif %}
-
             <button id="jianghu-mobile-toggle-navBarMenus" type="button" class="vt-hamburger VPNavBarHamburger hamburger" aria-label="mobile navigation" aria-expanded="false" aria-controls="VPNavScreen">
               <svg t="1656740813244" class="icon jianghu-toggleNavBarMenus-menuIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13445" width="18" height="18"><path d="M128 170.666667h768v85.333333H128V170.666667z m256 298.666666h512v85.333334H384v-85.333334z m-256 298.666667h768v85.333333H128v-85.333333z" p-id="13446" fill="#213547"></path></svg>
               <svg t="1656740533679" class="icon closeIcon jianghu-toggleNavBarMenus-closeIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6749" width="18" height="18"><path d="M597.795527 511.488347 813.564755 295.718095c23.833825-23.833825 23.833825-62.47489 0.001023-86.307691-23.832801-23.832801-62.47489-23.833825-86.307691 0L511.487835 425.180656 295.717583 209.410404c-23.833825-23.833825-62.475913-23.833825-86.307691 0-23.832801 23.832801-23.833825 62.47489 0 86.308715l215.769228 215.769228L209.410915 727.258599c-23.833825 23.833825-23.833825 62.47489 0 86.307691 23.832801 23.833825 62.473867 23.833825 86.307691 0l215.768205-215.768205 215.769228 215.769228c23.834848 23.833825 62.475913 23.832801 86.308715 0 23.833825-23.833825 23.833825-62.47489 0-86.307691L597.795527 511.488347z" p-id="6750" fill="#767676"></path></svg>
             </button>
             {% if constantUiMap.header.userAction.isOpen %}
-            <button id="jianghu-mobile-toggle-userCenter" type="button" class="vt-hamburger VPNavBarHamburger hamburger" aria-label="mobile navigation" aria-expanded="false" aria-controls="VPNavScreen">
-              <svg t="1656740949404" class="icon jianghu-toggleUserCenter-userIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="14557" width="18" height="18"><path d="M858.5 763.6c-18.9-44.8-46.1-85-80.6-119.5-34.5-34.5-74.7-61.6-119.5-80.6-0.4-0.2-0.8-0.3-1.2-0.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-0.4 0.2-0.8 0.3-1.2 0.5-44.8 18.9-85 46-119.5 80.6-34.5 34.5-61.6 74.7-80.6 119.5C146.9 807.5 137 854 136 901.8c-0.1 4.5 3.5 8.2 8 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c0.1 4.4 3.6 7.8 8 7.8h60c4.5 0 8.1-3.7 8-8.2-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z" p-id="14558" fill="#213547"></path></svg>
-              <svg t="1656740533679" class="icon closeIcon jianghu-toggleUserCenter-closeIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6749" width="18" height="18"><path d="M597.795527 511.488347 813.564755 295.718095c23.833825-23.833825 23.833825-62.47489 0.001023-86.307691-23.832801-23.832801-62.47489-23.833825-86.307691 0L511.487835 425.180656 295.717583 209.410404c-23.833825-23.833825-62.475913-23.833825-86.307691 0-23.832801 23.832801-23.833825 62.47489 0 86.308715l215.769228 215.769228L209.410915 727.258599c-23.833825 23.833825-23.833825 62.47489 0 86.307691 23.832801 23.833825 62.473867 23.833825 86.307691 0l215.768205-215.768205 215.769228 215.769228c23.834848 23.833825 62.475913 23.832801 86.308715 0 23.833825-23.833825 23.833825-62.47489 0-86.307691L597.795527 511.488347z" p-id="6750" fill="#767676"></path></svg>
-            </button>
+              {% if username %}
+              <button id="jianghu-mobile-toggle-userCenter" type="button" class="vt-hamburger VPNavBarHamburger hamburger" aria-label="mobile navigation" aria-expanded="false" aria-controls="VPNavScreen">
+                <svg t="1656740949404" class="icon jianghu-toggleUserCenter-userIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="14557" width="18" height="18"><path d="M858.5 763.6c-18.9-44.8-46.1-85-80.6-119.5-34.5-34.5-74.7-61.6-119.5-80.6-0.4-0.2-0.8-0.3-1.2-0.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-0.4 0.2-0.8 0.3-1.2 0.5-44.8 18.9-85 46-119.5 80.6-34.5 34.5-61.6 74.7-80.6 119.5C146.9 807.5 137 854 136 901.8c-0.1 4.5 3.5 8.2 8 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c0.1 4.4 3.6 7.8 8 7.8h60c4.5 0 8.1-3.7 8-8.2-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z" p-id="14558" fill="#213547"></path></svg>
+                <svg t="1656740533679" class="icon closeIcon jianghu-toggleUserCenter-closeIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6749" width="18" height="18"><path d="M597.795527 511.488347 813.564755 295.718095c23.833825-23.833825 23.833825-62.47489 0.001023-86.307691-23.832801-23.832801-62.47489-23.833825-86.307691 0L511.487835 425.180656 295.717583 209.410404c-23.833825-23.833825-62.475913-23.833825-86.307691 0-23.832801 23.832801-23.833825 62.47489 0 86.308715l215.769228 215.769228L209.410915 727.258599c-23.833825 23.833825-23.833825 62.47489 0 86.307691 23.832801 23.833825 62.473867 23.833825 86.307691 0l215.768205-215.768205 215.769228 215.769228c23.834848 23.833825 62.475913 23.832801 86.308715 0 23.833825-23.833825 23.833825-62.47489 0-86.307691L597.795527 511.488347z" p-id="6750" fill="#767676"></path></svg>
+              </button>
+              {% endif %}
+              {% if not username %}
+                <a class="vt-link link vt-menu-link" href="<$ pageUrl $>/login"><$ constantUiMap.button.login $></a>
+              {% endif %}
             {% endif %}
         </div>
       </div>
@@ -223,25 +207,25 @@
         </nav>
       </div>
     </div>
+
+    {% if username %}
     <div class="VPNavScreen" id="jianghu-header-mobile-userCenter">
       <div class="jianghu-header-mobile-NavScreen-container">
         <nav class="VPNavScreenMenu menu">
-          {% if username %}
-            {% if constantUiMap.header.userAction.admin %}
-            <a class="vt-link link VPNavScreenMenuLink" href="<$ adminUrl $>" title="<$ constantUiMap.button.manage $>" target="_blank"><$ constantUiMap.button.manage $></a>
-            {% endif %}
-            {% if constantUiMap.header.userAction.password %}
-            <a class="vt-link link VPNavScreenMenuLink" href="javascript:void(0);" title="<$ constantUiMap.button.changePassword $>" data-mdb-toggle="modal" data-mdb-target="#changePwdModal"><$ constantUiMap.button.changePassword $></a>
-            {% endif %}
-            {% if constantUiMap.header.userAction.logout %}
-            <a class="vt-link link VPNavScreenMenuLink" href="javascript:void(0);" title="<$ constantUiMap.button.logout $>" onclick="logout()"><$ constantUiMap.button.logout $></a>
-            {% endif %}
-          {% else %}
-          <a class="vt-link link VPNavScreenMenuLink" href="<$ pageUrl $>/login"><$ constantUiMap.button.login $></a>
+          {% if constantUiMap.header.userAction.admin %}
+          <a class="vt-link link VPNavScreenMenuLink" href="<$ adminUrl $>" title="<$ constantUiMap.button.manage $>" target="_blank"><$ constantUiMap.button.manage $></a>
+          {% endif %}
+          {% if constantUiMap.header.userAction.password %}
+          <a class="vt-link link VPNavScreenMenuLink" href="javascript:void(0);" title="<$ constantUiMap.button.changePassword $>" data-mdb-toggle="modal" data-mdb-target="#changePwdModal"><$ constantUiMap.button.changePassword $></a>
+          {% endif %}
+          {% if constantUiMap.header.userAction.logout %}
+          <a class="vt-link link VPNavScreenMenuLink" href="javascript:void(0);" title="<$ constantUiMap.button.logout $>" onclick="logout()"><$ constantUiMap.button.logout $></a>
           {% endif %}
         </nav>
       </div>
     </div>
+    {% endif %}
+
   </header>
 
   <!-- 修改密码 -->
