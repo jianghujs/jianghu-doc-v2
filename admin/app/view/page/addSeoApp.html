@@ -38,15 +38,11 @@
             <v-text-field class="jh-v-input" dense filled single-line v-model="editItem.appTitle" :rules="validationRules.requireRules"></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="4">
-            <span class="jh-input-label">应用类型<span class="red--text text--accent-2 ml-1">*必填</span></span>
-            <v-select class="jh-v-input" dense filled single-line v-model="editItem.appType" :rules="validationRules.requireRules" :items="constantObj.pageTypeList"></v-select>
-          </v-col>
-          <v-col cols="12" sm="12" md="4">
             <span class="jh-input-label">复制应用文档<span class="red--text text--accent-2 ml-1">*必填</span></span>
             <v-select class="jh-v-input" dense filled single-line v-model="editItem.copyAppId" :rules="validationRules.requireRules" :items="constantObj.appList"></v-select>
           </v-col>
         </v-row>
-
+        </v-form>
     </div>
 
     <!-- 帮助页抽屉 >>>>>>>>>>>>> -->
@@ -312,8 +308,7 @@ new Vue({
       });
       const editItem = result.data.appData.resultData.rows[0];
       editItem.xfPageConfig = !editItem.xfPageConfig ? {} : JSON.parse(editItem.xfPageConfig);
-      this.constantObj.pageTypeList = editItem.xfPageConfig.appCategoryList.map(e => e.title) || [];
-      this.constantObj.pageTypeList = this.constantObj.pageTypeList.filter(title => title!=='全部应用');
+      this.constantObj.pageTypeList = [];
       this.constantObj.appList = editItem.xfPageConfig.appList.map(e => e.title);
       if (this.constantObj.appList.length > 0) {
         this.editItem.copyAppId = this.constantObj.appList[0];

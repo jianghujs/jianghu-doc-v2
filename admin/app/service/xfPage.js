@@ -235,11 +235,14 @@ class xfPageService extends Service {
           categoryMaxId++;
         }
         if (item.categoryName === '培训') {
+          const categoryName = appTitle + '培训';
+          item.categoryName = categoryName;
+
           // 添加目录文章
           const articleId = item.path.split('/').pop();
           const articleList = await this.articleIdToCategoryArticleList(articleId);
           // 创建 category
-          await this.createCategory(trx, { categoryId: categoryMaxId, categoryName: '培训', categoryGroup: '应用_' + appTitle });
+          await this.createCategory(trx, { categoryId: categoryMaxId, categoryName, categoryGroup: '应用_' + appTitle });
 
           item.path = "/jianghu-doc-v2-seo/page/article/" + articleMaxId;
           for (const articleTitle of ['_00_目录']) {
@@ -307,12 +310,14 @@ class xfPageService extends Service {
 
           categoryMaxId++;
         }
-        if (item.categoryName == '文档') {
+        if (item.categoryName == '文档'){
+          const categoryName = appTitle + '文档';
+          item.categoryName = categoryName;
           // 添加目录文章
           const articleId = item.path.split('/').pop();
           const articleList = await this.articleIdToCategoryArticleList(articleId);
           // 创建 category
-          await this.createCategory(trx, { categoryId: categoryMaxId, categoryName: '文档', categoryGroup: '应用_' + appTitle });
+          await this.createCategory(trx, { categoryId: categoryMaxId, categoryName, categoryGroup: '应用_' + appTitle });
 
           item.path = "/jianghu-doc-v2-seo/page/article/" + articleMaxId;
           for (const art of articleList) {
