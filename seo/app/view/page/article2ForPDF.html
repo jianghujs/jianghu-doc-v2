@@ -1,0 +1,198 @@
+{% extends 'template/template2ForPDF.html' %}
+
+{% block title %}<$ article.articleTitle $>{% endblock %}
+{% block keyword %}<$ article.articleTagList $>{% endblock %}
+
+{% block css %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Article headline",
+  "image": "",
+  "author": {
+    "@type": "Organization",
+    "name": "江湖JS"
+  },  
+  "publisher": {
+    "@type": "Organization",
+    "name": "江湖JS",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://jianghujs.org<$ ctx.app.config.appLogo $>"
+    }
+  },
+  "datePublished": "<$ article.articlePublishTime $>",
+  "articleBody": ""
+}
+</script>
+<link rel="stylesheet" href="<$ static $>/highlight/atom-one-dark.min.css">
+<link rel="stylesheet" href="<$ static $>/mdb/css/font-awesome.min.css?v=6.0.0" />
+<link rel="stylesheet" href="<$ static $>/mdb/css/roboto-font.css?family=Roboto:300,400,500,700&display=swap" />
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.min.css"/>
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.css"/>
+<script src="<$ static $>/tailwindcss/tailwindcss.js"></script>
+
+{% include 'util/jianghu/jianghuDocCss.html' %}
+{% include 'util/jianghu/jianghuDocDocsCss.html' %}
+{% endblock %}
+
+{% block content %}
+
+
+<!-- 主内容 >>>>>>>>>>>>> -->
+<main>
+
+  <!-- 文章 >>>>>>>>>>>>> -->
+  <div style="padding-top: 0px;" class="jianghu-doc-content jianghu-doc-content-has-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
+    <div class="jianghu-doc-contentDoc">
+      <div class="jianghu-doc-contentDoc-container">
+
+        <!-- 文档正文 -->
+        <div class="jianghu-doc-contentDoc-content">
+          <div class="jianghu-doc-contentDoc-main">
+            <div class="jianghu-doc-contentDoc-main-doc">
+              <div class="markdown-body editormd-preview-container jianghu-markdown" id="doc-content">
+                <h1 id="links-0"><$ article.articleTitle $></h1>
+                <span id="category-id" style="z-index: -1; position: absolute; left: 0; top: 0"><$ article.categoryId $></span>
+                <!-- 视频 -->
+
+                {% if article.articleVideoUrl %}
+                {% if article.articleVideoUrl.includes('https://') %}
+                <video src="<$ article.articleVideoUrl $>" style="width: 100%; height: auto" controls
+                      preload="none"></video>
+                {% else %}
+                <video src="/<$ ctx.app.config.appId $>/upload<$ article.articleVideoUrl $>"
+                      style="width: 100%; height: auto" controls preload="none"></video>
+                {% endif %}
+                {% endif %}
+                <$ article.articleContentForSeoByCodeView | safe $>
+                <div id="articleContentHidden" class="articleContentHidden"
+                    style="position: absolute; top: -1000px; overflow: hidden; height: 0; width: 0;">
+                  <textarea style="display: none;"><$ article.articleContent $></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <<<<<<<<<<<<< 文章 -->
+</main>
+<!-- <<<<<<<<<<<<< 主内容 -->
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.mdb.min.js"></script>
+<script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.js"></script>
+<script>
+async function doUiAction(actionId, actionData = {}) {
+  switch (actionId) {
+    case 'init':
+      init();
+      break;
+    case 'generateSidebar':
+      generateSidebar();
+      break;
+    case 'closeBackdrop':
+      closeBackdrop();
+      break;
+    default:
+      console.error("[doUiAction] actionId not find", {actionId});
+      break;
+  }
+}
+
+function init() {
+  $("h3.toggle-head").click(function () {
+    if ($(this).parent().hasClass('toggle-close')) {
+      $(this).parent().removeClass('toggle-close')
+    } else {
+      $(this).parent().addClass('toggle-close')
+    }
+    $(this).parent().find("div.toggle-content").slideToggle();
+  });
+  // 生成文档大纲
+  doUiAction('generateSidebar');
+  // 点击大纲关闭遮罩
+  $(".jianghu-doc-contentDoc-aside-outline-link").on("click", function () {
+    doUiAction('closeBackdrop');
+  });
+  // 目录滚动到指定位置
+  if ($('.jianghu-active')) {
+    $('.jianghu-doc-sidebar').scrollTop($('.jianghu-active').offset().top - 366);
+  }
+}
+
+// 给代码块添加一键复制功能
+function addCopyCode() {
+  const elements = document.getElementsByTagName("pre");
+  for (let i = 0; i < elements.length; i++) {
+      const pre = elements[i];
+      const button = document.createElement("button");
+      button.innerHTML = '<i class="fa fa-copy" title="复制代码"></i>';
+      button.classList.add("copy");
+      button.addEventListener("click", function() {
+        const code = pre.textContent;
+        const textarea = document.createElement("textarea");
+        textarea.value = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        // 复制成功的提示
+        window.vtoast.success({message: '已复制到剪贴板'});
+      });
+      pre.appendChild(button);
+  }
+}
+
+$(function () {
+  doUiAction('init')
+  addCopyCode()
+})
+
+// 使用docsSearchBar初始化搜索框
+docsSearchBar({
+  hostUrl: '<$ ctx.app.config.meilisearch.host $>',
+  apiKey: '<$ ctx.app.config.meilisearch.apiKey $>',
+  indexUid: '<$ userId $>' ? '<$ ctx.app.config.meilisearch.allIndexUid $>' : '<$ ctx.app.config.meilisearch.publicIndexUid $>',
+  inputSelector: '#search-bar-input-category',
+  debug: true, // Set debug to true if you want to inspect the dropdown
+  enableDarkMode: false,
+  enhancedSearchInput: true,
+  transformData: function(hits) {
+    console.log('hits', hits);
+    return hits.filter(e => e['category'] == '<$ article.categoryId $>')
+  },
+})
+</script>
+
+<style>
+  .treeview ul:first-child {
+    padding-left: 0;
+    margin-left: -6px;
+  }
+
+  pre {
+      position: relative;
+  }
+  pre:hover button {
+    display: block;
+    z-index: 10;
+    color: #bbb;
+  }
+  button.copy {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background: none;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    padding-right: 10px;
+}
+</style>
+{% endblock %}
