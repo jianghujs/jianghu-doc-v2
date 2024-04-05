@@ -125,7 +125,14 @@ class ArticleService extends Service {
     article.commentList = commentList;
     article.articleContentForSeo = (article.articleContentForSeo || '').replace(/__appId__/g, app.config.appId);
     // 把articleContentForSeo里的<a>标签都以新页面的方式打开，添加上target="_blank"
-    article.articleContentForSeo = article.articleContentForSeo.replace(/<a/g, '<a target="_blank"');
+    // 如果a标签href是#id的锚点，则不添加target="_blank"
+    article.articleContentForSeo = article.articleContentForSeo.replace(/<a\s+([^>]*?)href="([^"]*?)"([^>]*?)>/g, (match, p1, p2, p3) => {
+        if (p2.startsWith('#')) {
+            return `<a ${p1} href="${p2}" ${p3}>`;
+        }
+        return `<a ${p1} href="${p2}" target="_blank" ${p3}>`;
+    });
+
     article.articleContentForSeoByCodeView = await this.parseSeo(article.articleContentForSeo);
     // 一二级标题判断
     article.hasOutline = /^#{1,2} .*/.test(article.articleContent);

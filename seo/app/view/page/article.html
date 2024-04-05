@@ -91,6 +91,9 @@
     line-height: 25px !important;
   }
   /* <<<<<<<<<<<<< 右边栏 */
+  .markdown-body table th, .markdown-body table td {
+    white-space: nowrap;
+  }
 </style>
 {% endblock %}
 
@@ -148,7 +151,7 @@
             <li class="sidenav-item mt-0">
               <ul class="sidenav-collapse show">
                 <li class="sidenav-item">
-                  <a class="sidenav-link p-0 {% if article and node.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node.articleId $>"">
+                  <a class="sidenav-link p-0 {% if article and node.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node.articleId $>">
                     <span class="font-monospace"><$ node.articleTitleMap.prefix $></span><$ node.articleTitleMap.text $>
                     {% if node.articlePublishStatus == 'login' and not userId %}
                     <i class="far fa-solid fa-lock" aria-hidden="true"></i>
@@ -164,7 +167,7 @@
               <ul class="sidenav-collapse show">
                 {% for node_child in node.childrenList %}
                 <li class="sidenav-item">
-                  <a class="sidenav-link p-0 {% if article and node_child.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node_child.articleId $>"">
+                  <a class="sidenav-link p-0 {% if article and node_child.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node_child.articleId $>">
                     <span class="font-monospace"><$ node_child.articleTitleMap.prefix $></span><$ node_child.articleTitleMap.text $>
                     {% if node_child.articlePublishStatus == 'login' and not userId %}
                     <i class="far fa-solid fa-lock" aria-hidden="true"></i>
