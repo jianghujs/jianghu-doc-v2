@@ -105,6 +105,29 @@
           itemsPerPage: 15
           }"
         >
+<!--          文章标题编辑-->
+            <template v-slot:item.articleTitle="{ item }">
+               <v-text-field
+                v-model="item.articleTitle"
+                dense
+                filled
+                single-line
+                hide-details
+                class="jh-v-input"
+                @change="doUiAction('updateArticle', { id: item.id, data: { articleTitle: item.articleTitle } })"
+                ></v-text-field>
+            </template>
+          <template v-slot:item.articleGroupName="{ item }">
+            <v-text-field
+                    v-model="item.articleGroupName"
+                    dense
+                    filled
+                    single-line
+                    hide-details
+                    class="jh-v-input"
+                    @change="doUiAction('updateArticle', { id: item.id, data: { articleGroupName: item.articleGroupName } })"
+            ></v-text-field>
+          </template>
           <template v-slot:item.articlePublishStatus="{ item }">
             <v-chip small :color="item.articlePublishStatus | statusColor">
               {{ item.articlePublishStatus | parseStatus }}
@@ -271,13 +294,12 @@ new Vue({
       // {text: "ID", value: "id", width: 120, class: 'fixed', cellClass: 'fixed'},
       {text: "文章ID", value: "articleId", width: 120},
       {text: "文章标题", value: "articleTitle", width: 300},
+      {text: "文章分组", value: "articleGroupName", width: 180},
       {text: "板块", value: "categoryGroup", width: 180},
       {text: "分类", value: "categoryName", width: 150},
       {text: "发布状态", value: "articlePublishStatus", width: 120, type: 'select', required: true},
       {text: "发布时间", value: "articlePublishTime", width: 150},
       {text: "文章标签", value: "articleTagList", width: 220},
-      {text: "音频URL", value: "articleAudioUrl", width: 200},
-      {text: "视频URL", value: "articleVideoUrl", width: 200},
       {text: "修改者", value: "articleUpdateUsername", width: 120, edit: false},
       {text: "修改时间", value: "articleUpdateTime", width: 150, edit: false},
       {text: "创建者", value: "articleCreateUsername", width: 120, edit: false},
@@ -365,6 +387,9 @@ new Vue({
           break;
         case 'openArticleEditPage':
           await this.openArticleEditPage(uiActionData);
+          break;
+        case 'updateArticle':
+          await this.updateArticle(uiActionData);
           break;
       }
     },
@@ -537,6 +562,19 @@ new Vue({
     },
     openArticleEditPage({articleId, articleTitle}) {
       window.open(`/${window.appInfo.appId}/page/articleEdit?articleId=${articleId}&title=${articleTitle}`, '_blank');
+    },
+    // 更新文章
+    async updateArticle({id, data}) {
+      await window.jianghuAxios({
+        data: {
+          appData: {
+            pageId: 'articleEdit',
+            actionId: 'jhUpdateItem',
+            actionData: data,
+            where: { id }
+          }
+        }
+      });
     },
   }
 })
