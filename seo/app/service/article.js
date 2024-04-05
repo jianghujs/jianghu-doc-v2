@@ -50,6 +50,13 @@ class ArticleService extends Service {
       }
     }
 
+
+    if(ctx.originalUrl.includes('/page/article2ForPDF/')) {
+      if(!_.isEmpty(article.articleContentForSeo)) {
+        article.articleContentForSeo = await this.service.articleParser.parseJhTags(article.articleContentForSeo);
+      }
+    }
+
     if (article.articlePublishStatus === 'login' && !userStatusIsActive) {
       article.articleContent = "## 无权限访问，请登录后查看";
       article.articleContentForSeo = "<h2>无权限访问，请登录后查看</h2>";
