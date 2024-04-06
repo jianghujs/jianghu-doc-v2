@@ -174,7 +174,7 @@
 
 @media (min-width: 768px) {
 	.VPNavBar {
-		padding: 0 12px 0 32px;
+		padding: 0 32px 0 32px;
 	}
 }
 @media (min-width: 1280px) {
@@ -343,6 +343,9 @@
     color: var(--vt-c-text-2);
     display: none;
     padding: 0 10px 0 0;
+}
+.DocSearch-Category-Button-Placeholder {
+  display: inline-block !important;
 }
 @media (max-width: 960px){
     .DocSearch-Button-Keys, .DocSearch-Button-Placeholder {
@@ -1167,6 +1170,7 @@ main{
     width: 100%;
     justify-content: center;
     background-color: #FBFBFB;
+    white-space:nowrap;
 }
 .jh-nav-sub.nav-tabs .nav-link{
     font-size: 16px;
@@ -1216,6 +1220,14 @@ main{
         position: relative;
         padding-top: 0;
         top: 0;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        overflow-x: auto;
+    }
+    .jh-nav-sub.nav-tabs .nav-link {
+        margin: 10px 5px;
     }
 
     /* xfpage 兼容一级菜单、二级菜单 */

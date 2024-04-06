@@ -112,118 +112,104 @@
   <span class="jianghu-nav-mobile-menu-text">Menu</span></button>
 <button id="jianghu-mobile-toggle-docAside" class="jianghu-nav-mobile-menu" aria-expanded="false"
         aria-controls="VPSidebarNav">
-  <span class="jianghu-nav-mobile-menu-text">On this page</span></button>
+    {% if article.hasOutline %}
+    <span class="jianghu-nav-mobile-menu-text">On this page</span></button>
+    {% endif %}
 </div>
 <!-- <<<<<<<<<<<<< 手机端顶部菜单 -->
 
 <!-- 主内容 >>>>>>>>>>>>> -->
 <main>
-  <!-- 左侧目录 >>>>>>>>>>>>> -->
-  <div class="jianghu-doc-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
-    
-    <div class="jianghu-doc-sidebar-nav">
-      <!-- 搜索-pc -->
-      <div class="VPNavBarSearch search jh-header-search-pc pl-0">
-        <div data-mdb-toggle="modal" data-mdb-target="#searchModalCategory" style="width: 100%;">
-          <button type="button" class="DocSearch DocSearch-Button" aria-label="Search" style="height: 30px; border: 1px solid #eaeaea">
-            <span class="DocSearch-Button-Container">
-              <svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20">
-                <path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-              <span class="DocSearch-Button-Placeholder">分类搜索</span>
-            </span>
-          </button>
-        </div>
-      </div>
-      <nav > 
-        {% for key, data in article.sideMenu %}
-        <ul class="sidenav-menu">
-          <!-- 没有二级菜单的情况，显示分类名称 -->
-          {% if not constantUiMap.submenu[article.categoryGroup] %}
-          <li class="sidenav-item mb-4">
-            <a class="sidenav-link p-0 fs-6" ><span><$ data.categoryName $></span></a>
-          </li>
-          {% endif %}
-
-          {% for node in data.articleList %}
-            {% if node.articleId %}
-            <!-- 没有设置articleGroupName的文章 -->
-            <li class="sidenav-item mt-0">
-              <ul class="sidenav-collapse show">
-                <li class="sidenav-item">
-                  <a class="sidenav-link p-0 {% if article and node.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node.articleId $>">
-                    <span class="font-monospace"><$ node.articleTitleMap.prefix $></span><$ node.articleTitleMap.text $>
-                    {% if node.articlePublishStatus == 'login' and not userId %}
-                    <i class="far fa-solid fa-lock" aria-hidden="true"></i>
-                    {% endif %}
-                  </a>
-                </li>
-              </ul>
-            </li>
-            {% else %}
-            <!-- 设置了articleGroupName的文章，按articleGroupName分组 -->
-            <li class="sidenav-item">
-              <a class="sidenav-link p-0" ><span><$ node.articleTitle $></span></a>
-              <ul class="sidenav-collapse show">
-                {% for node_child in node.childrenList %}
-                <li class="sidenav-item">
-                  <a class="sidenav-link p-0 {% if article and node_child.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node_child.articleId $>">
-                    <span class="font-monospace"><$ node_child.articleTitleMap.prefix $></span><$ node_child.articleTitleMap.text $>
-                    {% if node_child.articlePublishStatus == 'login' and not userId %}
-                    <i class="far fa-solid fa-lock" aria-hidden="true"></i>
-                    {% endif %}
-                  </a>
-                </li>
-                {% endfor %}
-              </ul>
-            </li>
-            {% endif %}
-          {% endfor %}
-        </ul>
-        {% endfor %}
-      </nav>
-    </div>
-  </div>
-  <!-- <<<<<<<<<<<<< 左侧目录 -->
-
-  <!-- 文章 >>>>>>>>>>>>> -->
-  <div class="jianghu-doc-content jianghu-doc-content-has-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
-    <div class="jianghu-doc-contentDoc">
-      <div class="jianghu-doc-contentDoc-container">
-        <!-- 文档大纲 -->
-        {% if article.hasOutline %}
-        <div class="jianghu-doc-contentDoc-aside">
-          <div class="jianghu-doc-contentDoc-aside-container">
-            <div class="jianghu-doc-contentDoc-aside-outline">
-              <div class="jianghu-doc-contentDoc-aside-outline-title"></div>
-              <div id="scrollspy" class="sticky-top">
-                <ul class="nav flex-column nav-pills menu-sidebar jianghu-doc-contentDoc-aside-menu"
-                    id="jianghu-doc-contentDoc-aside-menu"></ul>
-              </div>
-            </div>
+  <div class="jh-main-wrapper">
+    <!-- 左侧目录 >>>>>>>>>>>>> -->
+    <div class="jianghu-doc-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
+      
+      <div class="jianghu-doc-sidebar-nav">
+        <!-- 搜索-pc -->
+        <div class="VPNavBarSearch search jh-header-search-pc pl-0">
+          <div data-mdb-toggle="modal" data-mdb-target="#searchModalCategory">
+            <button type="button" class="DocSearch DocSearch-Button" aria-label="Search" style="height: 30px; border: 1px solid #eaeaea">
+              <span class="DocSearch-Button-Container">
+                <svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20">
+                  <path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <span class="DocSearch-Button-Placeholder DocSearch-Category-Button-Placeholder">目录搜索</span>
+              </span>
+            </button>
           </div>
         </div>
-        {% endif %}
-        <!-- 文档正文 -->
-        <div class="jianghu-doc-contentDoc-content">
-          <div class="jianghu-doc-contentDoc-main">
-            {% if username %}
-            <div class="jianghu-doc-contentDoc-main-edit-links fixed bottom-20 right-10 z-10 d-flex flex-col">
-              <a href="<$ adminUrl $>/page/articleEdit?articleId=<$ article.articleId $>&title=<$ article.articleTitle $>"
-                 target="_blank" class="jianghu-doc-contentDoc-main-edit-link">
-                <button title="修改这个页面" type="button"
-                        class="mb-4 w-10 h-10 d-flex justify-center text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center">
-                  <i class="text-white far fa-edit text-lg"></i>
-                </button>
-              </a>
-              <a href="<$ adminUrl $>/page/articleEdit?categoryId=<$ article.categoryId $>&articleGroupName=<$ article.articleGroupName $>&articlePublishStatus=<$ article.articlePublishStatus $>"
-                 target="_blank" class="jianghu-doc-contentDoc-main-edit-link">
-                <button title="新增文章" type="button"
-                        class="w-10 h-10 d-flex justify-center text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center">
-                  <i class="text-white far fa-plus-square text-lg"></i>
-                </button>
-              </a>
-            </div>
+        <nav > 
+          {% for key, data in article.sideMenu %}
+          <ul class="sidenav-menu">
+            <!-- 没有二级菜单的情况，显示分类名称 -->
+            {% if not constantUiMap.submenu[article.categoryGroup] %}
+            <li class="sidenav-item mb-4">
+              <a class="sidenav-link p-0 fs-6" ><span><$ data.categoryName $></span></a>
+            </li>
+            {% endif %}
+  
+            {% for node in data.articleList %}
+              {% if node.articleId %}
+              <!-- 没有设置articleGroupName的文章 -->
+              <li class="sidenav-item mt-0">
+                <ul class="sidenav-collapse show">
+                  <li class="sidenav-item">
+                    <a class="sidenav-link p-0 {% if article and node.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node.articleId $>"">
+                      <span class="font-monospace"><$ node.articleTitleMap.prefix $></span><$ node.articleTitleMap.text $>
+                      {% if node.articlePublishStatus == 'login' and not userId %}
+                      <i class="far fa-solid fa-lock" aria-hidden="true"></i>
+                      {% endif %}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              {% else %}
+              <!-- 设置了articleGroupName的文章，按articleGroupName分组 -->
+              <li class="sidenav-item">
+                <a class="sidenav-link p-0" ><span><$ node.articleTitle $></span></a>
+                <ul class="sidenav-collapse show">
+                  {% for node_child in node.childrenList %}
+                  <li class="sidenav-item">
+                    <a class="sidenav-link p-0 {% if article and node_child.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node_child.articleId $>"">
+                      <span class="font-monospace"><$ node_child.articleTitleMap.prefix $></span><$ node_child.articleTitleMap.text $>
+                      {% if node_child.articlePublishStatus == 'login' and not userId %}
+                      <i class="far fa-solid fa-lock" aria-hidden="true"></i>
+                      {% endif %}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+          {% endfor %}
+        </nav>
+      </div>
+    </div>
+    <!-- <<<<<<<<<<<<< 左侧目录 -->
+  
+    <!-- 文章 >>>>>>>>>>>>> -->
+    <div class="jianghu-doc-content jianghu-doc-content-has-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
+      <!-- 文档正文 -->
+      <div class="jianghu-doc-contentDoc-main">
+        {% if username %}
+        <div class="jianghu-doc-contentDoc-main-edit-links fixed bottom-20 right-10 z-10 d-flex flex-col">
+          <a href="<$ adminUrl $>/page/articleEdit?articleId=<$ article.articleId $>&title=<$ article.articleTitle $>"
+              target="_blank" class="jianghu-doc-contentDoc-main-edit-link">
+            <button title="修改这个页面" type="button"
+                    class="mb-4 w-10 h-10 d-flex justify-center text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center">
+              <i class="text-white far fa-edit text-lg"></i>
+            </button>
+          </a>
+          <a href="<$ adminUrl $>/page/articleEdit?categoryId=<$ article.categoryId $>&articleGroupName=<$ article.articleGroupName $>&articlePublishStatus=<$ article.articlePublishStatus $>"
+              target="_blank" class="jianghu-doc-contentDoc-main-edit-link">
+            <button title="新增文章" type="button"
+                    class="w-10 h-10 d-flex justify-center text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center">
+              <i class="text-white far fa-plus-square text-lg"></i>
+            </button>
+          </a>
+        </div>
 <!--            -->
 <!--            <div class="jianghu-doc-contentDoc-main-edit-links">-->
 <!--                <span>-->
@@ -235,47 +221,58 @@
 <!--                      class="far fa-plus-square jianghu-doc-contentDoc-main-edit-icon"></i><$ constantUiMap.button.add $></a>-->
 <!--                </span>-->
 <!--            </div>-->
+        {% endif %}
+        <div class="jianghu-doc-contentDoc-main-doc">
+          <div class="markdown-body editormd-preview-container jianghu-markdown" id="doc-content">
+            <h1 id="links-0"><$ article.articleTitle $></h1>
+            <span id="category-id" style="z-index: -1; position: absolute; left: 0; top: 0"><$ article.categoryId $></span>
+            <!-- 封面 -->
+            {% if article.articleCoverImage %}
+            <div class="items-center-box" style="margin-bottom: 20px">
+              <img style="width: 100%; background-color: #e0e0e0"
+                  src="/<$ ctx.app.config.appId $>/upload<$ article.articleCoverImage $>" alt=""/>
+            </div>
             {% endif %}
-            <div class="jianghu-doc-contentDoc-main-doc">
-              <div class="markdown-body editormd-preview-container jianghu-markdown" id="doc-content">
-                <h1 id="links-0"><$ article.articleTitle $></h1>
-                <span id="category-id" style="z-index: -1; position: absolute; left: 0; top: 0"><$ article.categoryId $></span>
-                <!-- 封面 -->
-                {% if article.articleCoverImage %}
-                <div class="items-center-box" style="margin-bottom: 20px">
-                  <img style="width: 100%; background-color: #e0e0e0"
-                      src="/<$ ctx.app.config.appId $>/upload<$ article.articleCoverImage $>" alt=""/>
-                </div>
-                {% endif %}
-                <!-- 音频 -->
-                {% if article.articleAudioUrl %}
-                <audio src="/<$ ctx.app.config.appId $>/upload<$ article.articleAudioUrl $>" style="width: 100%;" controls
-                      preload="none"></audio>
-                {% endif %}
-                <!-- 视频 -->
+            <!-- 音频 -->
+            {% if article.articleAudioUrl %}
+            <audio src="/<$ ctx.app.config.appId $>/upload<$ article.articleAudioUrl $>" style="width: 100%;" controls
+                  preload="none"></audio>
+            {% endif %}
+            <!-- 视频 -->
 
-                {% if article.articleVideoUrl %}
-                {% if article.articleVideoUrl.includes('https://') %}
-                <video src="<$ article.articleVideoUrl $>" style="width: 100%; height: auto" controls
-                      preload="none"></video>
-                {% else %}
-                <video src="/<$ ctx.app.config.appId $>/upload<$ article.articleVideoUrl $>"
-                      style="width: 100%; height: auto" controls preload="none"></video>
-                {% endif %}
-                {% endif %}
-                <$ article.articleContentForSeoByCodeView | safe $>
-                <div id="articleContentHidden" class="articleContentHidden"
-                    style="position: absolute; top: -1000px; overflow: hidden; height: 0; width: 0;">
-                  <textarea style="display: none;"><$ article.articleContent $></textarea>
-                </div>
-              </div>
+            {% if article.articleVideoUrl %}
+            {% if article.articleVideoUrl.includes('https://') %}
+            <video src="<$ article.articleVideoUrl $>" style="width: 100%; height: auto" controls
+                  preload="none"></video>
+            {% else %}
+            <video src="/<$ ctx.app.config.appId $>/upload<$ article.articleVideoUrl $>"
+                  style="width: 100%; height: auto" controls preload="none"></video>
+            {% endif %}
+            {% endif %}
+            <$ article.articleContentForSeoByCodeView | safe $>
+            <div id="articleContentHidden" class="articleContentHidden"
+                style="position: absolute; top: -1000px; overflow: hidden; height: 0; width: 0;">
+              <textarea style="display: none;"><$ article.articleContent $></textarea>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- 文档大纲 -->
+    <div class="jianghu-doc-contentDoc-aside">
+      <div class="jianghu-doc-contentDoc-aside-container">
+        <div class="jianghu-doc-contentDoc-aside-outline">
+          <div class="jianghu-doc-contentDoc-aside-outline-title"></div>
+          <div id="scrollspy" class="sticky-top">
+            <ul class="nav flex-column nav-pills menu-sidebar jianghu-doc-contentDoc-aside-menu"
+                id="jianghu-doc-contentDoc-aside-menu"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <<<<<<<<<<<<< 文章 -->
+
   </div>
-  <!-- <<<<<<<<<<<<< 文章 -->
 </main>
 <!-- <<<<<<<<<<<<< 主内容 -->
 {% endblock %}
@@ -341,6 +338,7 @@ function addCopyCode() {
         window.vtoast.success({message: '已复制到剪贴板'});
       });
       pre.appendChild(button);
+
   }
 }
 
