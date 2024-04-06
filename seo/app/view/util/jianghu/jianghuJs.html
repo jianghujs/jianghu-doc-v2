@@ -232,7 +232,7 @@ $(function(){
 
       const table = $(this);
       
-      const button2 = $('<i class="fa fa-maximize" title="放大查看"></i>').addClass("zoom d-none d-md-inline");
+      const button2 = $('<i class="fa fa-up-right-and-down-left-from-center" alt="放大查看" title="放大查看"></i>').addClass("zoom").css("float", "right").css("color", "var(--vt-c-green)");
       button2.on("click", function() {
         // 放大整个table全屏查看
         const tableHtml = table.prop("outerHTML");
@@ -244,7 +244,10 @@ $(function(){
         var modalContent = $('<div class="modal-content">');
         var modalHeader = $('<div class="modal-header">');
         var modalTitle = $('<h5 class="modal-title">').text('查看表格');
-        var modalCloseButton = $('<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">');
+        var modalCloseButton = $('<button class="btn-close" data-bs-dismiss="modal" aria-label="Close">');
+        modalCloseButton.on("click", function() {
+          modal.modal('hide');
+        });
         var modalBody = $('<div class="modal-body">').html(tableHtml2);
 
         tableAddShadow($(table));
@@ -252,8 +255,10 @@ $(function(){
         // Add Bootstrap table class to the table
         modalBody.addClass('table-wrapper');
 
-        // 将 Modal 元素组装起来
+        // 将关闭图标按钮添加到 Modal 头部
         modalHeader.append(modalTitle, modalCloseButton);
+
+        // 将 Modal 元素组装起来
         modalContent.append(modalHeader, modalBody);
         modalDialog.append(modalContent);
         modal.append(modalDialog);
@@ -262,8 +267,8 @@ $(function(){
         $('body').append(modal);
 
         // 设置 Modal 宽度为80vw
-        modalDialog.css('width', '95vw');
-        modalDialog.css('min-width', '95vw');
+        modalDialog.css('width', '90vw');
+        modalDialog.css('min-width', '90vw');
 
         // 显示 Modal
         modal.modal('show');
