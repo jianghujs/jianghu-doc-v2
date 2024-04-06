@@ -234,7 +234,7 @@ class xfPageService extends Service {
           item.path = "/jianghu-doc-v2-seo/page/xfArticle/" + xfPageId;
           categoryMaxId++;
         }
-        if (item.categoryName === '培训') {
+        if ((item.categoryName || '').includes('培训')) {
           const categoryName = appTitle + '培训';
           item.categoryName = categoryName;
 
@@ -310,7 +310,7 @@ class xfPageService extends Service {
 
           categoryMaxId++;
         }
-        if (item.categoryName == '文档'){
+        if ((item.categoryName || '').includes('文档')){
           const categoryName = appTitle + '文档';
           item.categoryName = categoryName;
           // 添加目录文章
