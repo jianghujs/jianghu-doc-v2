@@ -196,31 +196,7 @@ class ArticleService extends Service {
       palyGroundType = 'JavaScriptPlayground';
     }
     return `
-     <v-card>
-      <v-card-title>
-          <div class="d-flex w-full p-2 bg-gray-200">
-              <div class="flex-1">代码演示</div>
-              <div>
-                  <v-btn
-                  icon
-                  color="pink"
-                  >
-                      <a target="_blank" href="/${app.config.appId}/page/test/${palyGroundType}?code=${codeId}"><v-icon>mdi-codepen</v-icon></a>
-                  </v-btn>
-                  <v-btn
-                  icon
-                  color="pink"
-                  >
-                      <v-icon>mdi-code-tags </v-icon>
-                  </v-btn>
-              </div>
-          </div>
-      </v-card-title>
-      <v-card-text class="border border-sold border-gray-400">
-          ${code}
-          ${this.codeToMdHtml(code, language)}
-      </v-card-text>
-    </v-card>
+     
     `;
   }
   codeToMdHtml(code, language = "html") {

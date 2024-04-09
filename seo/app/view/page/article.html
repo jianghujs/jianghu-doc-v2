@@ -13,7 +13,7 @@
   "author": {
     "@type": "Organization",
     "name": "江湖JS"
-  },  
+  },
   "publisher": {
     "@type": "Organization",
     "name": "江湖JS",
@@ -31,7 +31,6 @@
 <link rel="stylesheet" href="<$ static $>/mdb/css/roboto-font.css?family=Roboto:300,400,500,700&display=swap" />
 <link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.min.css"/>
 <link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.css"/>
-<script src="<$ static $>/tailwindcss/tailwindcss.js"></script>
 
 {% include 'util/jianghu/jianghuDocCss.html' %}
 {% include 'util/jianghu/jianghuDocDocsCss.html' %}
@@ -94,6 +93,10 @@
   .markdown-body table th, .markdown-body table td {
     white-space: nowrap;
   }
+  .jianghu-doc-contentDoc-main-edit-links {
+      z-index: 100;
+      position: fixed;right: 40px; bottom: 40px
+  }
 </style>
 {% endblock %}
 
@@ -123,7 +126,7 @@
   <div class="jh-main-wrapper">
     <!-- 左侧目录 >>>>>>>>>>>>> -->
     <div class="jianghu-doc-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
-      
+
       <div class="jianghu-doc-sidebar-nav">
         <!-- 搜索-pc -->
         <div class="VPNavBarSearch search jh-header-search-pc pl-0">
@@ -138,7 +141,7 @@
             </button>
           </div>
         </div>
-        <nav > 
+        <nav >
           {% for key, data in article.sideMenu %}
           <ul class="sidenav-menu">
             <!-- 没有二级菜单的情况，显示分类名称 -->
@@ -147,7 +150,7 @@
               <a class="sidenav-link p-0 fs-6" ><span><$ data.categoryName $></span></a>
             </li>
             {% endif %}
-  
+
             {% for node in data.articleList %}
               {% if node.articleId %}
               <!-- 没有设置articleGroupName的文章 -->
@@ -188,28 +191,24 @@
       </div>
     </div>
     <!-- <<<<<<<<<<<<< 左侧目录 -->
-  
+
     <!-- 文章 >>>>>>>>>>>>> -->
     <div class="jianghu-doc-content jianghu-doc-content-has-sidebar {% if constantUiMap.submenu[article.categoryGroup] %}jh-has-submenu{% endif %}">
       <!-- 文档正文 -->
       <div class="jianghu-doc-contentDoc-main">
         {% if username %}
-        <div class="jianghu-doc-contentDoc-main-edit-links fixed bottom-20 right-10 z-10 d-flex flex-col">
-          <a href="<$ adminUrl $>/page/articleEdit?articleId=<$ article.articleId $>&title=<$ article.articleTitle $>"
-              target="_blank" class="jianghu-doc-contentDoc-main-edit-link">
-            <button title="修改这个页面" type="button"
-                    class="mb-4 w-10 h-10 d-flex justify-center text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center">
-              <i class="text-white far fa-edit text-lg"></i>
-            </button>
-          </a>
-          <a href="<$ adminUrl $>/page/articleEdit?categoryId=<$ article.categoryId $>&articleGroupName=<$ article.articleGroupName $>&articlePublishStatus=<$ article.articlePublishStatus $>"
-              target="_blank" class="jianghu-doc-contentDoc-main-edit-link">
-            <button title="新增文章" type="button"
-                    class="w-10 h-10 d-flex justify-center text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center">
-              <i class="text-white far fa-plus-square text-lg"></i>
-            </button>
-          </a>
-        </div>
+          <div class="jianghu-doc-contentDoc-main-edit-links fixed bottom-20 right-10 z-10">
+              <div class="fixed-action-btn2 d-flex flex-column">
+                  <a href="<$ adminUrl $>/page/articleEdit?articleId=<$ article.articleId $>&title=<$ article.articleTitle $>"
+                     target="_blank" class="btn btn-lg btn-floating text-white" style="background-color: #42b883;">
+                      <i class="text-white far fa-edit text-lg" style="font-size:18px"></i>
+                  </a>
+                  <a href="<$ adminUrl $>/page/articleEdit?categoryId=<$ article.categoryId $>&articleGroupName=<$ article.articleGroupName $>&articlePublishStatus=<$ article.articlePublishStatus $>"
+                     target="_blank" class="btn btn-lg btn-floating text-white mt-3" style="background-color: #42b883;">
+                      <i class="text-white far fa-plus-square text-lg" style="font-size:18px"></i>
+                  </a>
+              </div>
+          </div>
 <!--            -->
 <!--            <div class="jianghu-doc-contentDoc-main-edit-links">-->
 <!--                <span>-->
@@ -249,15 +248,51 @@
                   style="width: 100%; height: auto" controls preload="none"></video>
             {% endif %}
             {% endif %}
+
+
             <template id="my-template">
               <div>
                   <$ article.articleContentForSeoByCodeView | safe $>
+                <div class="card">
+                  <div class="card-header d-flex">
+                    <div class="flex-grow-1">
+                      代码演示
+                    </div>
+                    <div>
+                      <v-btn
+                        icon
+                        color="pink"
+
+                      >
+                        <a target="_blank" href="/${app.config.appId}/page/test/${palyGroundType}?code=${codeId}"><v-icon>mdi-codepen</v-icon></a>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        color="pink"
+                        type="button"
+                        data-mdb-toggle="collapse" data-mdb-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+                      >
+                        <v-icon>mdi-code-tags </v-icon>
+                      </v-btn>
+                    </div>
+                  </div>
+                  <div class="card-body">
+234234
+                  </div>
+                  <div class="card-footer text-muted collapse" id="collapseExample">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                    squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                    sapiente ea proident.
+                  </div>
+                </div>
+
               </div>
           </template>
 
           <div id="app"></div>
             <div id="articleContentHidden" class="articleContentHidden"
                 style="position: absolute; top: -1000px; overflow: hidden; height: 0; width: 0;">
+
               <textarea style="display: none;"><$ article.articleContent $></textarea>
             </div>
           </div>
@@ -317,6 +352,7 @@ async function doUiAction(actionId, actionData = {}) {
 }
 
 function init() {
+
   $("h3.toggle-head").click(function () {
     if ($(this).parent().hasClass('toggle-close')) {
       $(this).parent().removeClass('toggle-close')

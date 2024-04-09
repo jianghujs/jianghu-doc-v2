@@ -6,26 +6,32 @@
 {% block content %}
 
 {% if username %}
-<div class="jianghu-doc-contentDoc-main-edit-links fixed bottom-20 right-10 z-10">
+<style>
+    .jianghu-doc-contentDoc-main-edit-links {
+        z-index: 100;
+        position: fixed;right: 40px; bottom: 40px
+    }
+</style>
+<div class="jianghu-doc-contentDoc-main-edit-links d-flex flex-column fixed bottom-20 right-10 z-10">
   <$ article.xfPageId $>
-    {% if ctx.app.config.xfPageRouteMap.app ==  xfPage.xfPageId %}
-    <a href="<$ adminUrl $>/page/addSeoApp?xfPageId=<$ xfPage.xfPageId $>&title=<$ xfPage.xfPageTitle $>" 
-      target="_blank" class="jianghu-doc-contentDoc-main-edit-link">
-      <button title="新建应用<$ ctx.app.config.xfPageRouteMap.app $>" type="button"
-              class="mb-4 w-10 h-10 d-flex justify-center text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center">
-          <i class="far fa-plus-square jianghu-doc-contentDoc-main-add-icon text-lg"></i>
-      </button>
-    </a>
-    {% endif %}
-    <a href="<$ adminUrl $>/page/xfPageEdit?xfPageId=<$ xfPage.xfPageId $>&title=<$ xfPage.xfPageTitle $>"
-       target="_blank" class="jianghu-doc-contentDoc-main-edit-link">
-        <button title="修改这个页面" type="button"
-                class="w-10 h-10 d-flex justify-center text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center">
-            <i class="far fa-edit jianghu-doc-contentDoc-main-edit-icon text-lg"></i>
-        </button>
-    </a>
+
+
+        {% if ctx.app.config.xfPageRouteMap.app ==  xfPage.xfPageId %}
+        <a href="<$ adminUrl $>/page/addSeoApp?xfPageId=<$ xfPage.xfPageId $>&title=<$ xfPage.xfPageTitle $>"
+           target="_blank" class="btn btn-lg btn-floating text-white mt-4" data-mdb-ripple-init style="background-color: #42b883;">
+            <i class="text-white far fa-plus-square text-lg" style="font-size:18px"></i>
+
+        </a>
+        {% endif %}
+        <a href="<$ adminUrl $>/page/xfPageEdit?xfPageId=<$ xfPage.xfPageId $>&title=<$ xfPage.xfPageTitle $>"
+           target="_blank" class="btn btn-lg btn-floating text-white mt-3" data-mdb-ripple-init style="background-color: #42b883;">
+            <i class="text-white far fa-edit text-lg" style="font-size:18px"></i>
+
+        </a>
+
 </div>
 {% endif %}
+
 
 {% include 'xfpageTemplate/' + xfPage.template + '.html' %}
 <!-- Footer -->
