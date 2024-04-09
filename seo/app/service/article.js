@@ -89,7 +89,7 @@ class ArticleService extends Service {
           text: articleText,
         },
       }
-    }) 
+    })
     // 分类列表 - 名称排序
     const keys = _.uniqBy(_.sortBy(categoryArticleData, ['categoryGroupSort']), 'categoryName').map(item => item.categoryName);
 
@@ -189,14 +189,39 @@ class ArticleService extends Service {
     const { ctx, app} = this;
     // 如果指定了语言，则在pre标签中添加class属性
     // code 原样转义
-    const tCode = this.codeToMdHtml(code, language);
+
 
     let palyGroundType = 'HTMLPlayground';
     if (language === 'javascript') {
       palyGroundType = 'JavaScriptPlayground';
     }
-    return tCode + `<a role="button" href="/${app.config.appId}/page/test/${palyGroundType}?code=${codeId}"
-    class="jianghu-home-hero-button try-btn" target="_blank">尝试一下<i class="fas fa-arrow-right jianghu-home-hero-icon-right"></i></a>`;
+    return `
+     <v-card>
+      <v-card-title>
+          <div class="d-flex w-full p-2 bg-gray-200">
+              <div class="flex-1">代码演示</div>
+              <div>
+                  <v-btn
+                  icon
+                  color="pink"
+                  >
+                      <a target="_blank" href="/${app.config.appId}/page/test/${palyGroundType}?code=${codeId}"><v-icon>mdi-codepen</v-icon></a>
+                  </v-btn>
+                  <v-btn
+                  icon
+                  color="pink"
+                  >
+                      <v-icon>mdi-code-tags </v-icon>
+                  </v-btn>
+              </div>
+          </div>
+      </v-card-title>
+      <v-card-text class="border border-sold border-gray-400">
+          ${code}
+          ${this.codeToMdHtml(code, language)}
+      </v-card-text>
+    </v-card>
+    `;
   }
   codeToMdHtml(code, language = "html") {
     const validLanguage = hljs.getLanguage(language) ? language : "plaintext";

@@ -249,7 +249,13 @@
                   style="width: 100%; height: auto" controls preload="none"></video>
             {% endif %}
             {% endif %}
-            <$ article.articleContentForSeoByCodeView | safe $>
+            <template id="my-template">
+              <div>
+                  <$ article.articleContentForSeoByCodeView | safe $>
+              </div>
+          </template>
+
+          <div id="app"></div>
             <div id="articleContentHidden" class="articleContentHidden"
                 style="position: absolute; top: -1000px; overflow: hidden; height: 0; width: 0;">
               <textarea style="display: none;"><$ article.articleContent $></textarea>
@@ -277,6 +283,19 @@
 <!-- <<<<<<<<<<<<< 主内容 -->
 {% endblock %}
 {% block javascript %}
+<link href="/<$ ctx.app.config.appId $>/public/lib/vuetify/materialdesignicons.min.css" rel="stylesheet">
+<link href="/<$ ctx.app.config.appId $>/public/lib/vuetify/vuetify.min.css" rel="stylesheet">
+<script src="/<$ ctx.app.config.appId $>/public/lib/vue/vue.min.js"></script>
+<script src="/<$ ctx.app.config.appId $>/public/lib/vuetify/vuetify.min.js"></script>
+<script type="module">
+  new Vue({
+      el: '#app',
+      template: '#my-template',
+      vuetify: new Vuetify(),
+      data: () => ({})
+  })
+</script>
+
 <script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.mdb.min.js"></script>
 <script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.js"></script>
 <script>
