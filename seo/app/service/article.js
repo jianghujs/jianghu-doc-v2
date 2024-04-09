@@ -204,7 +204,7 @@ class ArticleService extends Service {
             <v-btn
               icon
               color="pink"
-
+              title="尝试一下"
             >
               <a target="_blank" href="/${app.config.appId}/page/test/${palyGroundType}?code=${codeId}"><v-icon>mdi-codepen</v-icon></a>
             </v-btn>
@@ -212,7 +212,8 @@ class ArticleService extends Service {
               icon
               color="pink"
               type="button"
-              data-mdb-toggle="collapse" data-mdb-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+              title="查看代码"
+              data-mdb-toggle="collapse" data-mdb-target="#collapseExample${codeId}" aria-expanded="false" aria-controls="collapseExample"
             >
               <v-icon>mdi-code-tags </v-icon>
             </v-btn>
@@ -221,7 +222,7 @@ class ArticleService extends Service {
         <div class="card-body">
         ${code}
         </div>
-        <div class="card-footer text-muted collapse" id="collapseExample">
+        <div class="card-footer text-muted collapse" id="collapseExample${codeId}">
           ${this.codeToMdHtml(code, language)}
         </div>
       </div>
