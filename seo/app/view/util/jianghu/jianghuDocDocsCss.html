@@ -168,7 +168,61 @@
     word-break: keep-all;
     border-collapse: collapse;
     border-spacing: 0;
+    position: relative;
 }
+/* 外层容器 - 为了添加横向阴影 */
+.markdown-body .table-wrapper {
+    display: block;
+    width: 100%;
+    position: relative;
+}
+
+/* 外层容器 - 为了添加横向阴影 */
+.markdown-body .table-wrapper .zoom {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    z-index: 2;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+
+.markdown-body .table-wrapper.shadow-left:before,
+.markdown-body .table-wrapper.shadow-right:after {
+  width: 20px;
+}
+
+.markdown-body .table-wrapper:before,
+.markdown-body .table-wrapper:after {
+  top: 0;
+  width: 1px;
+  height: 100%;
+  content: '';
+  position: absolute;
+  z-index: 1;
+}
+.markdown-body .table-wrapper:before {
+  /* border-left: 1px solid #ccc; */
+}
+.markdown-body .table-wrapper:after {
+  right: 0;
+  /* border-right: 1px solid #ccc; */
+}
+
+.markdown-body .table-wrapper.shadow-left:before {
+  background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.15)), to(transparent));
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.15) 0%, transparent 100%);
+}
+
+.markdown-body .table-wrapper.shadow-right:after {
+  background: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.15)), to(transparent));
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.15) 0%, transparent 100%);
+  right: 0;
+}
+/* 外层容器 - 阴影结束 */
+
 .editormd-preview-container table thead tr, .editormd-html-preview table thead tr {
     background-color: #F8F8F8;
 }

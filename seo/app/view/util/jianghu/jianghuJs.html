@@ -192,6 +192,96 @@ $(function(){
             closeBackdrop()
         }
     });
+
+    // table 动态添加外层容器
+    $(".markdown-body table").each(function() {
+      // 创建一个包裹容器
+      var $tableWrapper = $("<div>").addClass("table-wrapper");
+      
+      // 将当前表格移到包裹容器内
+      $(this).before($tableWrapper);
+      $tableWrapper.append($(this));
+
+    });
+
+    // table 滚动阴影
+    $(".markdown-body table").on("scroll", function () {
+      tableAddShadow($(this));
+    });
+
+    function tableAddShadow(table) {
+      var cur = table.scrollLeft();
+      var max = table[0].scrollWidth - table.parent().width();
+      var bodyWidth = table.find("tbody").width();
+      
+      if (cur == 0) {
+        table.parent().addClass('shadow-right').removeClass('shadow-left');
+      } else if (cur >= max) {
+        table.parent().addClass('shadow-left').removeClass('shadow-right');
+      } else {
+        table.parent().addClass('shadow-right shadow-left');
+      }
+      if (bodyWidth <= table.parent().width()) {
+        table.parent().removeClass('shadow-right shadow-left');
+      } else if (cur + 1 >= max) {
+        table.parent().removeClass('shadow-right');
+      }
+    }
+    // 默认触发一次
+    $(".markdown-body table").each(function() {
+
+      const table = $(this);
+      
+      const button2 = $('<i class="fa fa-up-right-and-down-left-from-center" alt="放大查看" title="放大查看"></i>').addClass("zoom").css("float", "right").css("color", "var(--vt-c-green)");
+      button2.on("click", function() {
+        // 放大整个table全屏查看
+        const tableHtml = table.prop("outerHTML");
+        const tableHtml2 = '<div class="table-fullscreen">' + tableHtml + '</div>';
+
+        // 创建 Modal 元素
+        var modal = $('<div class="modal fade" tabindex="-1" role="dialog">');
+        var modalDialog = $('<div class="modal-dialog modal-dialog-centered modal-lg markdown-body" role="document">');
+        var modalContent = $('<div class="modal-content">');
+        var modalHeader = $('<div class="modal-header">');
+        var modalTitle = $('<h5 class="modal-title">').text('查看表格');
+        var modalCloseButton = $('<button class="btn-close" data-bs-dismiss="modal" aria-label="Close">');
+        modalCloseButton.on("click", function() {
+          modal.modal('hide');
+        });
+        var modalBody = $('<div class="modal-body">').html(tableHtml2);
+
+        tableAddShadow($(table));
+
+        // Add Bootstrap table class to the table
+        modalBody.addClass('table-wrapper');
+
+        // 将关闭图标按钮添加到 Modal 头部
+        modalHeader.append(modalTitle, modalCloseButton);
+
+        // 将 Modal 元素组装起来
+        modalContent.append(modalHeader, modalBody);
+        modalDialog.append(modalContent);
+        modal.append(modalDialog);
+
+        // 将 Modal 添加到页面中
+        $('body').append(modal);
+
+        // 设置 Modal 宽度为80vw
+        modalDialog.css('width', '90vw');
+        modalDialog.css('min-width', '90vw');
+
+        // 显示 Modal
+        modal.modal('show');
+
+        // 移除 Modal
+        modal.on('hidden.bs.modal', function() {
+          modal.remove();
+        });
+      });
+      $(this).before(button2);
+      $(this).trigger("scroll");
+    });
+
 });
 </script>
 
