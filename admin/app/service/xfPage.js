@@ -245,10 +245,24 @@ class xfPageService extends Service {
           await this.createCategory(trx, { categoryId: categoryMaxId, categoryName, categoryGroup: '应用_' + appTitle });
 
           item.path = "/jianghu-doc-v2-seo/page/article/" + articleMaxId;
-          for (const articleTitle of ['_00_目录']) {
-            // 创建 article
-            const content = `## 目录
-              
+          // 创建 article
+          const content = `
+          [jh-article-query]
+          {
+           "tableName": "article",
+           "where": "where categoryId = ${categoryMaxId}",
+           "queryType": "order",
+           "orderBy": "order by articleTitle asc",
+           "limit": 20
+          }
+          [/jh-article-query]
+                        `;
+          await this.createArticle(trx, {
+            articleTitle: `_00_目录`,
+            categoryId: categoryMaxId,
+            articleId: articleMaxId,
+            articleContent: `## 目录
+            
             [jh-article-query]
             {
              "tableName": "article",
@@ -258,56 +272,20 @@ class xfPageService extends Service {
              "limit": 20
             }
             [/jh-article-query]
-                          `;
-            await this.createArticle(trx, { 
-              articleTitle: `_00_目录【应用_${appTitle}】`,
-              categoryId: categoryMaxId, 
-              articleId: articleMaxId,
-              articleContent: `## 目录
-              
-              [jh-article-query]
-              {
-               "tableName": "article",
-               "where": "where categoryId = ${categoryMaxId}",
-               "queryType": "order",
-               "orderBy": "order by articleTitle asc",
-               "limit": 20
-              }
-              [/jh-article-query]
-                            `,
-              articleContentForSeo: `<h2 id="h2-u76EEu5F55"><a class="reference-link" name="目录"></a><span class="header-link octicon octicon-link"></span>目录</h2>
-              [jh-article-query]
-              {
-               "tableName": "article",
-               "where": "where categoryId = ${categoryMaxId}",
-               "queryType": "order",
-               "orderBy": "order by articleTitle asc",
-               "limit": 20
-              }
-              [/jh-article-query]
-                            `
-            });
-            articleMaxId++;
-            await this.createArticle(trx, { 
-              articleTitle: `_01_第一步`,
-              articleGroupName: `_01_操作`,
-              categoryId: categoryMaxId, 
-              articleId: articleMaxId,
-              articleContent: '',
-              articleContentForSeo: ''
-            });
-            articleMaxId++;
-            await this.createArticle(trx, { 
-              articleTitle: `_02_第二步`,
-              articleGroupName: `_01_操作`,
-              categoryId: categoryMaxId, 
-              articleId: articleMaxId,
-              articleContent: '',
-              articleContentForSeo: ''
-            });
-            articleMaxId++;
-          }
-
+                          `,
+            articleContentForSeo: `<h2 id="h2-u76EEu5F55"><a class="reference-link" name="目录"></a><span class="header-link octicon octicon-link"></span>目录</h2>
+            [jh-article-query]
+            {
+             "tableName": "article",
+             "where": "where categoryId = ${categoryMaxId}",
+             "queryType": "order",
+             "orderBy": "order by articleTitle asc",
+             "limit": 20
+            }
+            [/jh-article-query]
+                          `
+          });
+          articleMaxId++;
           categoryMaxId++;
         }
         if ((item.categoryName || '').includes('文档')){

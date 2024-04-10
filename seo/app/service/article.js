@@ -150,6 +150,35 @@ class ArticleService extends Service {
 
     return article;
   }
+  async parseSeo2(sontentForSeo) {
+    if (!sontentForSeo) return sontentForSeo;
+    let content = _.cloneDeep(sontentForSeo);
+    // 取content中[jh-code-view type="html"]标签
+    const articleQueryTagList = content.match(/\[jh-code-view(\s+\w+="[^"]*")*\s*\]([\s\S]*?)\[\/jh-code-view\]/g);
+    if (!articleQueryTagList) return sontentForSeo;
+
+
+    //遍历articleQueryTagList，取出type和content, type是在jh-code-view标签中的type属性，content是在[jh-code-view]和[/jh-code-view]之间的内容
+    for (let item of articleQueryTagList) {
+
+      const params = this.extractedParams(item);
+      const { type } = params;
+      let codeContent = item.match(/\[jh-code-view(\s+\w+="[^"]*")*\s*\]([\s\S]*?)\[\/jh-code-view\]/)[2];
+      // 将codeContent中的&gt;和&lt;转义回来
+      codeContent = codeContent.replace(/&gt;/g, '>')
+          .replace(/&lt;/g, '<')
+          .replace(/<br>/g, '')
+          .replace(/<p><\/p>/g, '');
+
+      // loadsh随机生成一个codeId
+      const codeId = _.uniqueId('codeId_');
+      const codeView = this.markdownToHtml(type, codeContent, codeId);
+
+      content = content.replace(item, codeView);
+    }
+    return content;
+  }
+
   async parseSeo(sontentForSeo) {
     if (!sontentForSeo) return sontentForSeo;
     let content = _.cloneDeep(sontentForSeo);
