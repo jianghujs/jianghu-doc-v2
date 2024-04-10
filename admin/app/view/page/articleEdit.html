@@ -814,7 +814,9 @@ new Vue({
             onchange: function () {
               that.mdChanged = true;
               that.editItem.articleContent = this.getMarkdown();
-              that.editItem.articleContentForSeo = this.getPreviewedHTML2();
+              let articleContentForSeo = this.getPreviewedHTML2();
+              articleContentForSeo = articleContentForSeo.replace(/<pre/g, '<pre v-pre');
+              that.editItem.articleContentForSeo = articleContentForSeo;
               // console.log('onchangeSeo', that.editItem.articleContentForSeo);
             },
           });
