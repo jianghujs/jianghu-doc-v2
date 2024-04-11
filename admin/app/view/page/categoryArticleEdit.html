@@ -1253,6 +1253,12 @@ new Vue({
         })
         // ref tree-view-list 滚动到最下方
       } else {
+        // 查询是否还有articleId 未保存的
+        const isExist = this.treeView.some(item => item.articleId == null || item.children?.some(child => child.articleId == null));
+        if (isExist) {
+          window.vtoast.fail('已有新增文章尚未保存，请先保存');
+          return
+        }
         if (group) {
           for (const item of this.treeView) {
             if (item.name == group) {
