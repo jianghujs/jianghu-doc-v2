@@ -197,8 +197,8 @@ class ArticleService extends Service {
     let newArticleList = hasGroupNameArticlelist.concat(noGroupNameArticlelist);
     newArticleList = _.orderBy(
       newArticleList,
-      ["articleTitle"],
-      ["asc"]
+      ["articleSort", "articleTitle"],
+      ["asc", 'asc']
     );
     article.articleList = newArticleList;
     // 全部替换 __appId__
