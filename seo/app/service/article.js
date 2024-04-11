@@ -106,7 +106,7 @@ class ArticleService extends Service {
         return {
           articleTitle: articleGroupName,
           isGroup: true,
-          childrenList: list,
+          childrenList: _.sortBy(list, ['articleSort', 'articleTitle']),
         };
       });
       groupArticle = _.orderBy(groupArticle, ['articleSort', 'articleTitle'], ['asc', 'asc']);
