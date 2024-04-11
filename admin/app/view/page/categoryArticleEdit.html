@@ -1264,6 +1264,7 @@ new Vue({
                 children: [],
                 categoryId: this.editItem.categoryId,
               })
+              await this.activeArticle(item.children[item.children.length - 1]);
               return
             }
           }
@@ -1277,6 +1278,7 @@ new Vue({
             categoryId: this.editItem.categoryId,
           })
         }
+        await this.activeArticle(this.treeView[this.treeView.length - 1]);
       }
       this.$nextTick(() => {
         var scrollTarget = document.getElementById("tree-view-box-container");
