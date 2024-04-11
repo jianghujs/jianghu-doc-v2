@@ -68,7 +68,7 @@ class ArticleService extends Service {
     // 该分类/分类分组下的所有文章
     const { categoryId, categoryGroup } = article;
     const whereObj = categoryGroup ? { categoryGroup } : { categoryId };
-    let categoryArticleData = await jianghuKnex(tableEnum.view01_article).where(whereObj).whereIn('articlePublishStatus', articlePublishStatus).orderBy('articleTitle', 'asc').select();
+    let categoryArticleData = await jianghuKnex(tableEnum.view01_article).where(whereObj).whereIn('articlePublishStatus', articlePublishStatus).orderBy('articleSort', 'asc').orderBy('articleTitle', 'asc').select();
     categoryArticleData = _.map(categoryArticleData, item => {
       const { articleTitle } = item;
       let articleTitleShow = articleTitle;
