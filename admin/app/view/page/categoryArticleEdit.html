@@ -24,9 +24,13 @@
           <v-row class="ma-0 align-center flex-none pa-0" :class="{'pa-2': !isMobile, 'pa-2': isMobile}" align="center"
                  style="height: 100%;">
             <v-col class="d-flex" :class="{'pt-2': isMobile, 'pl-0': isMobile, 'pr-0': !isMobile}" style="justify-content: end">
+              <v-btn @click="openArticleHistoryPage" color="primary" depressed small class="mr-1">
+                <v-icon class="mr-1" small>mdi-history</v-icon>
+                文章历史
+              </v-btn>
               <v-btn color="primary" @click="openMaterialUploadDrawer" small class="mr-1">
                 <v-icon class="mr-1" small>mdi-folder-multiple-image</v-icon>
-              文章素材管理
+                文章素材
               </v-btn>
               <!-- <v-btn v-if="editItem.articleId && editItem.articlePublishStatus !== 'deleted'" @click="deletedArticle"
                      color="error mr-1" depressed small>
@@ -881,6 +885,9 @@ new Vue({
         this.writeBackType = '';
         this.isEditDrawerShown = true;
       }
+    },
+    async openArticleHistoryPage() {
+      window.open(`/${window.appInfo.appId}/page/articleHistoryManagement?articleId=${this.editItem.articleId}&title=${this.editItem.articleTitle}`, '_blank');
     },
     /**
      * 获取表格数据
