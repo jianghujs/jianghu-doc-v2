@@ -109,7 +109,7 @@ class ArticleService extends Service {
           childrenList: list,
         };
       });
-      groupArticle = _.orderBy(groupArticle, ["articleTitle"], ["asc"]);
+      groupArticle = _.orderBy(groupArticle, ['articleSort', 'articleTitle'], ['asc', 'asc']);
 
       // 将articleTitle上的 "01_" 替换成 ""
       noGroupArticle.forEach(item => {
