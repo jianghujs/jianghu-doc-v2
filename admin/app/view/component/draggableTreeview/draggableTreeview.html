@@ -1,0 +1,157 @@
+<template id="draggableTreeview">
+  <draggable
+    :value="localValue"
+    :group="group"
+    class="v-treeview v-treeview-draggable"
+    :class="themeClassName"
+    ghost-class="ghost"
+    @input="updateValue"
+    :move="onMove"
+    @end="$emit('end')"
+  >
+    <draggable-treeview-node
+      v-for="item in value"
+      :key="item[itemKey]"
+      :group="group"
+      :value="item"
+      :expand-icon="expandIcon"
+      @input="updateItem"
+      :dense="dense"
+      @active="active"
+      :active-id="activeId"
+      :item-key="itemKey"
+      @end="$emit('end')"
+    >
+      <template v-slot:prepend="{ item, open }">
+        <slot name="prepend" v-bind="{ item, open }"> </slot>
+      </template>
+      <template v-slot:label="{ item, open }">
+        <slot name="label" v-bind="{ item, open }"> </slot>
+      </template>
+      <template v-slot:append="{ item, open }">
+        <slot name="append" v-bind="{ item, open }"> </slot>
+      </template>
+    </draggable-treeview-node>
+  </draggable>
+</template>
+
+<script>
+Vue.component("draggable-treeview", {
+  vuetify: new Vuetify(),
+  template: '#draggableTreeview',
+  props: {
+    value: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+    group: {
+      type: String,
+      default: null,
+    },
+    expandIcon: {
+      type: String,
+      default: "mdi-chevron-down",
+    },
+    dense: {
+      type: Boolean,
+      default: false,
+    },
+    activeId: {
+      type: String,
+      default: '',
+    },
+    itemKey: {
+      type: String,
+      default: 'id',
+    },
+  },
+  data() {
+    return {
+      localValue: [...this.value],
+    };
+  },
+  computed: {
+    themeClassName() {
+      return this.$vuetify.theme.isDark ? "theme--dark" : "theme--light";
+    },
+  },
+  watch: {
+    value: {
+      handler(value) {
+        this.localValue = [...value];      
+        console.log("value", value);
+      },
+      immediate: true,
+    },
+    activeId: {
+      handler(value) {
+        console.log("activeId", value);
+      },
+      immediate: true,
+    },
+  },
+  methods: {
+    updateValue(value) {
+      this.localValue = value;
+      this.$emit("input", this.localValue);
+    },
+    updateItem(itemValue) {
+      const index = this.localValue.findIndex((v) => v[this.itemKey] === itemValue[this.itemKey]);
+      this.$set(this.localValue, index, itemValue);
+      this.$emit("input", this.localValue);
+    },
+    active(item) {
+      this.$emit("active", item);
+    },
+    
+    onMove(e,originalEvent){
+      // draggedContext 表示被拖拽的元素
+      const dragged = e.draggedContext;
+      // relatedContext 表示目标停靠对象
+      const related = e.relatedContext;
+      // console.log("onMove", dragged, related);
+
+      let isSort = false;
+      if (related.hasOwnProperty('index') && related.hasOwnProperty('element')) {
+        isSort = true;
+        return true;
+      }
+      // console.log("onMove sort", isSort);
+      const isGroup = dragged.element?.type == 'group';
+      if (isGroup && !isSort) {
+        return false;
+      }
+      
+      const isTargetArticle = !related.element?.type;
+      // console.log("isTargetArticle", isSort , isTargetArticle, dragged, related);
+      if (isTargetArticle && !isSort) {
+        return false;
+      }
+      return true;
+    }, 
+    onStart(e){
+      console.log("onStart", e);
+    },
+  },
+});
+</script>
+<style>
+  .sortable-chosen {
+    position: relative;
+  }
+  .sortable-chosen:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px dashed #0088F8;
+  }
+  .sortable-chosen:hover:before {
+    border: none;
+  }
+
+</style>

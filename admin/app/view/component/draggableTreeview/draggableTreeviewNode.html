@@ -1,0 +1,192 @@
+<template id="draggableTreeviewNode">
+  <div
+    :class="`v-treeview-node v-treeview-node--click ${
+      hasChildren ? '' : 'v-treeview-node--leaf'
+    } ${dense ? 'v-treeview--dense' : ''}`"
+  >
+    <div class="v-treeview-node__root" @click="onActive()" :class="{'primary--text': this.activeId == this.value[itemKey], 'v-treeview-node--active': this.activeId == this.value[itemKey]}">
+      <div
+        v-for="index in appendLevel"
+        :key="index"
+        class="v-treeview-node__level"
+      ></div>
+      <i
+        v-if="hasChildren"
+        role="button"
+        class="v-icon notranslate v-treeview-node__toggle v-icon--link mdi"
+        :class="[
+          {
+            'v-treeview-node__toggle--open': open,
+            'theme--dark': isDark,
+            'theme--light': !isDark,
+          },
+          expandIcon,
+        ]"
+        style="font-size: 20px;"
+      ></i>
+      <slot name="prepend" v-bind="{ item: value, open }" ></slot>
+      <div class="v-treeview-node__label">
+        <slot name="label" v-bind="{ item: value, open }">
+          {{ value.name }}
+        </slot>
+      </div>
+      <slot name="append" v-bind="{ item: value }" ></slot>
+    </div>
+    <div
+      v-if="open"
+      class="v-treeview-node__children v-treeview-node__children__draggable"
+    >
+      <draggable
+        :group="group"
+        :value="value.children"
+        ghost-class="ghost"
+        @input="updateValue"
+        :move="onMove"
+        @end="$emit('end')"
+      >
+        <draggable-treeview-node
+          v-for="child in value.children"
+          :key="child[itemKey]"
+          :group="group"
+          :value="child"
+          :level="level + 1"
+          :expand-icon="expandIcon"
+          @input="updateChildValue"
+          @active="$emit('active', $event)"
+          :active-id="activeId"
+          :item-key="itemKey"
+          @end="$emit('end')"
+        >
+          <template v-slot:prepend="{ item, open }">
+            <slot name="prepend" v-bind="{ item, open }" />
+          </template>
+          <template v-slot:label="{ item, open }">
+            <slot name="label" v-bind="{ item, open }"></slot>
+          </template>
+          <template v-slot:append="{ item }">
+            <slot name="append" v-bind="{ item }" />
+          </template>
+        </draggable-treeview-node>
+      </draggable>
+    </div>
+  </div>
+</template>
+
+<script>
+
+Vue.component("draggable-treeview-node", {
+  vuetify: new Vuetify(),
+  template: '#draggableTreeviewNode',
+  props: {
+    level: {
+      type: Number,
+      default: 0,
+    },
+    value: {
+      type: Object,
+      default: () => ({
+        id: 0,
+        name: "",
+        children: [],
+      }),
+    },
+    root: {
+      type: Boolean,
+      default: () => false,
+    },
+    group: {
+      type: String,
+      default: null,
+    },
+    expandIcon: {
+      type: String,
+      default: "mdi-chevron-down",
+    },
+    dense: {
+      type: Boolean,
+      default: false,
+    },
+    activeId: {
+      type: String,
+      default: '',
+    },
+    itemKey: {
+      type: String,
+      default: 'id',
+    },
+  },
+  data() {
+    return {
+      open: true,
+      localValue: { ...this.value },
+    };
+  },
+  computed: {
+    hasChildren() {
+      return this.value.children != null && this.value.children.length > 0;
+    },
+    isDark() {
+      return this.$vuetify.theme.isDark;
+    },
+    appendLevel() {
+      return this.level + (this.hasChildren ? 0 : 1);
+    },
+  },
+  watch: {
+    value(value) {
+      this.localValue = { ...value };
+    },
+    activeId(value) {
+      console.log("active", value);
+    },
+  },
+  methods: {
+    updateValue(value) {
+      this.localValue.children = [...value];
+      this.$emit("input", this.localValue);
+    },
+    updateChildValue(value) {
+      const index = this.localValue.children.findIndex(
+        (c) => c[this.itemKey] == value[this.itemKey]
+      );
+      this.$set(this.localValue.children, index, value);
+      this.$emit("input", this.localValue);
+    },
+    onActive() {
+      if (this.value.type == 'group') {
+        this.open = !this.open;
+      } else {
+        this.$emit("active", this.value);
+      }
+    },
+    onMove(e,originalEvent){
+      // draggedContext 表示被拖拽的元素
+      const dragged = e.draggedContext;
+      // relatedContext 表示目标停靠对象
+      const related = e.relatedContext;
+      // console.log("onMove", dragged, related);
+
+      let isSort = false;
+      if (related.hasOwnProperty('index') && related.hasOwnProperty('element')) {
+        isSort = true;
+        return true;
+      }
+      // console.log("onMove sort", isSort);
+      const isGroup = dragged.element?.type == 'group';
+      if (isGroup && !isSort) {
+        return false;
+      }
+
+      const isTargetArticle = !related.element?.type;
+      // console.log("isTargetArticle", isSort , isTargetArticle, dragged, related);
+      if (isTargetArticle && !isSort) {
+        return false;
+      }
+      return true;
+    }, 
+    onStart(e){
+      console.log("onStart", e);
+    }
+  },
+});
+</script>

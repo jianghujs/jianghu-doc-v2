@@ -34,12 +34,10 @@
     "stop": "egg-scripts stop --title=jianghu_doc_admin_v2",
     "dev": "egg-bin dev --port=7368",
     "restart": "npm run stop && npm run start",
-
     "start:en": "egg-scripts start --daemon  --port=7378 --title=en_jianghu_doc_admin_v2 --workers=2",
     "stop:en": "egg-scripts stop --title=en_jianghu_doc_admin_v2",
     "dev:en": "egg-bin dev --port=7378",
     "restart:en": "npm run stop:en && npm run start:en",
-    
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",

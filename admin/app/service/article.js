@@ -254,6 +254,77 @@ class ArticleService extends Service {
     return str + `<a role="button" href="/${app.config.appId}/page/test/HTMLPlayground?code=${codeId}"
     class="jianghu-home-hero-button try-btn">尝试一下<i class="fas fa-arrow-right jianghu-home-hero-icon-right"></i></a>`;
   }
+
+  async selectCategoryArticleTree(actionData) {
+    const {categoryId} = actionData;
+    const {jianghuKnex} = this.app;
+    const articleList = await jianghuKnex(tableEnum.article).where({categoryId}).select();
+    articleList.forEach(e => {
+      e.articleGroupName = e.articleGroupName || '';
+    });
+    const articleGroupBy = _.groupBy(articleList, "articleGroupName");
+    const res = [];
+    Object.keys(articleGroupBy).sort().forEach(key => {
+      const value = articleGroupBy[key];
+      if (key && key !== 'null') {
+        res.push({
+          articleId: key,
+          name: key,
+          type: "group",
+          isEdit: false,
+          children: _.sortBy(value.map(e => {
+            return { 
+              articleId: e.articleId, 
+              articleSort: e.articleSort, 
+              articleName: e.articleName, 
+              articleGroupName: e.articleGroupName, 
+              categoryId: e.categoryId, 
+              name: e.articleTitle,
+              articlePublishStatus: e.articlePublishStatus
+            }
+          }), 'articleSort'),
+        });
+      } else {
+        res.push(..._.sortBy(value.map(e => {
+          return { 
+            articleId: e.articleId, 
+            articleSort: e.articleSort, 
+            articleName: e.articleName, 
+            articleGroupName: e.articleGroupName, 
+            categoryId: e.categoryId, 
+            name: e.articleTitle,
+            articlePublishStatus: e.articlePublishStatus
+          }
+        }), 'articleSort'));
+      }
+    });
+    return {rows: res};
+  }
+
+  async bathUpdateSort(actionData) {
+    const { jianghuKnex } = this.app;
+    const { dataList, categoryId } = actionData;
+    const articleList = await jianghuKnex(tableEnum.article).where({categoryId}).select();
+
+    // 对比新旧数据，找出需要更新的数据 articleSort !== articleSort 或者 articleGroupName !== articleGroupName
+    const updateList = [];
+    for (const item of dataList) {
+      const { articleId, articleSort, articleGroupName } = item;
+      const oldItem = articleList.find(e => e.articleId === articleId);
+      if (!oldItem) {
+        continue;
+      }
+      if (oldItem.articleSort !== articleSort || oldItem.articleGroupName !== articleGroupName) {
+        updateList.push(item);
+      }
+    }
+
+    // 更新数据
+    for (const item of updateList) {
+      const { articleId, articleSort, articleGroupName } = item;
+      await jianghuKnex(tableEnum.article).where({articleId}).update({articleSort, articleGroupName});
+    }
+  }
 }
 
 module.exports = ArticleService;
