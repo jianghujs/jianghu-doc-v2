@@ -910,11 +910,15 @@ new Vue({
       this.isTableLoading = false;
     },
     async articleIdCheck() {
+      if (this.articleId) {
+        this.material.dir = 'articleMaterial/' + this.articleId;
+      }
       if (!this.articleId) {
         await this.insertItem();
         window.location.reload();
         return false
       }
+
       return true;
     },
     /**
