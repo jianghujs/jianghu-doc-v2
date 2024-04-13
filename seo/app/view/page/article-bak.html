@@ -207,7 +207,7 @@ function addCopyCode() {
       button.innerHTML = '<i class="fa fa-copy" title="复制代码"></i>';
       button.classList.add("copy");
       button.addEventListener("click", function() {
-        const code = pre.textContent;
+        const code = pre.innerText;
         const textarea = document.createElement("textarea");
         textarea.value = code;
         document.body.appendChild(textarea);
