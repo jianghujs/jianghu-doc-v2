@@ -1,0 +1,33 @@
+{% extends 'template/jhTemplateV4.html'%}
+
+{% block vueTemplate %}
+<script type="text/html" id="app-template">
+<div>
+<v-app mobile-breakpoint="sm">
+  <$ code.htmlCode | safe $>
+</v-app>
+
+<jh-toast />
+<jh-mask />
+<jh-confirm-dialog />
+</div>
+</script>
+
+
+<div id="app">
+</div>
+{% endblock %}
+
+{% block vueScript %}
+<script type="module">
+  new Vue({
+    el: '#app',
+    template: '#app-template',
+    vuetify: new Vuetify(),
+    <$ code.jsCode | safe $>
+  })
+</script>
+
+<style scoped>
+</style>
+{% endblock %}

@@ -7,67 +7,9 @@
   <!-- <jh-menu /> -->
   <v-main class="mt-13">
     <v-container>
-      <v-form ref="createForm" lazy-validation>
-        <v-row no-gutters>
-          <span class="text-h7 font-weight-bold pa-4 pl-0">表单组件</span>
-        </v-row>
-        <v-divider class="jh-divider"></v-divider>
-        <v-row>
-            <v-col cols="12" sm="12" md="4">
-                <span class="jh-input-label">学生名</span>
-                <v-text-field v-model="studentName" :rules="validationRules.studentName" class="jh-v-input" dense single-line filled></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" md="4">
-                <span class="jh-input-label">选择省</span>
-                <v-select v-model="selectedState" :items="provinceList" class="jh-v-input" dense single-line filled></v-select>
-            </v-col>
-
-            <v-col cols="12" sm="12" md="4">
-                <span class="jh-input-label">水果搜索</span>
-                <v-autocomplete v-model="selectedItem" :items="items" hint="开始打字..." persistent-hint class="jh-v-input" dense single-line filled></v-autocomplete>
-            </v-col>
-            <v-col cols="12" sm="12" md="4">
-                <v-checkbox v-model="termsAccepted" label="同意条款" class="jh-v-input" dense single-line filled></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="12" md="4">
-                <span class="jh-input-label">开关</span>
-                <v-switch v-model="switchEnable" class="jh-v-input" dense single-line filled></v-switch>
-            </v-col>
-            <v-col cols="12" sm="12" md="4">
-                <span class="jh-input-label">音量</span>
-                <v-slider v-model="volume" max="100" thumb-label class="jh-v-input" dense single-line filled></v-slider>
-            </v-col>
-            <v-col cols="12" sm="12" md="4">
-                <span class="jh-input-label">价格范围</span>
-                <v-range-slider v-model="rangeValues" min="0" max="100" class="jh-v-input" dense single-line filled></v-range-slider>
-            </v-col>
-            <v-col cols="12" sm="12" md="4">
-                <span class="jh-input-label">评分</span>
-                <v-rating v-model="rating" :readonly="false" color="yellow darken-3" background-color="grey darken-1" class="jh-v-input" dense single-line filled></v-rating>
-            </v-col>
-            <v-col cols="12" sm="12" md="4">
-              <span class="jh-input-label">上传文件</span>
-              <v-file-input v-model="file" class="jh-v-input" dense filled single-line chips label="请选择文件" ></v-file-input>
-            </v-col>
-            <v-col cols="12" sm="12" md="4">
-              <span class="jh-input-label">评论</span>
-              <v-textarea v-model="comment" rows="3" class="jh-v-input" dense single-line filled></v-textarea>
-            </v-col>
-            <v-col cols="12" sm="12" md="4">
-                <span class="jh-input-label">选择季节</span>
-                <v-radio-group v-model="favSeason" class="jh-v-input" dense single-line filled>
-                    <v-radio value="春季" label="春季" class="jh-v-input"/>
-                    <v-radio value="夏季" label="夏季" class="jh-v-input"/>
-                    <v-radio value="秋季" label="秋季" class="jh-v-input"/>
-                    <v-radio value="冬季" label="冬季" class="jh-v-input"/>
-                </v-radio-group>
-            </v-col>
-
-        </v-row>
-        <v-row class="justify-end mx-0 my-8 px-4">
-          <v-btn color="success" small @click="doUiAction('createStudent')">保存</v-btn>
-        </v-row>
-      </v-form>  
+      <v-textarea v-model="htmlCode" @change="playgroundRenderKey++" rows="4" class="jh-v-input" dense single-line filled></v-textarea>
+      <v-textarea v-model="jsCode" rows="4" class="jh-v-input" dense single-line filled></v-textarea>
+      <iframe src="/<$ ctx.app.config.appId $>/page/test/JHPlaygroundRender" frameborder="0" style="width: 70%; height: auto;"></iframe>
     </v-container>
   </v-main>
 </v-app>
@@ -89,6 +31,13 @@
     template: '#app-template',
     vuetify: new Vuetify(),
     data: () => ({
+      htmlCode: `<v-col cols="12" sm="12" md="4">
+    <span class="jh-input-label">学生名</span>
+    <v-text-field v-model="studentName" class="jh-v-input" dense single-line filled></v-text-field>
+</v-col>`,
+      jsCode: 'js...',
+      playgroundRenderKey: 0,
+
       validationRules: {
         studentName: [
             v => !!v || '学生名字是必填项',
@@ -96,18 +45,6 @@
         ],
       },
       studentName: '张',
-      comment: '评论内容...',
-      provinceList: ['四川省', '湖北省', '湖南省', '云南省', '山东省', '浙江省', '江苏省'],
-      selectedState: null,
-      selectedItem: null,
-      items: ['苹果', '香蕉', '橙子', '草莓', '葡萄'],
-      termsAccepted: false,
-      favSeason: '夏季',
-      switchEnable: false,
-      volume: 50,
-      rangeValues: [0, 100],
-      rating: 3,
-      file: null,
     }),
     async created() {
     },
@@ -145,5 +82,11 @@
 </script>
 
 <style scoped>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
 </style>
 {% endblock %}
