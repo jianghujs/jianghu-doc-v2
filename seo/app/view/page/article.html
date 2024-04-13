@@ -254,14 +254,12 @@
             {% endif %}
 
 
-            <!-- <template id="my-template">
-              <div>
-                  <$ article.articleContentForSeoByCodeView | safe $>
-              </div>
-          </template> -->
-          <$ article.articleContentForSeoByCodeView | safe $>
+            <!-- <div id="app">
+              <$ article.articleContentForSeoByCodeView | safe $>
+            </div> -->
+            <$ article.articleContentForSeoByCodeView | safe $>
 
-          <div id="app"></div>
+  
             <div id="articleContentHidden" class="articleContentHidden"
                 style="position: absolute; top: -1000px; overflow: hidden; height: 0; width: 0;">
 
@@ -297,7 +295,6 @@
 <!-- <script type="module">
   new Vue({
       el: '#app',
-      template: '#my-template',
       vuetify: new Vuetify(),
       data: () => ({})
   })
@@ -369,9 +366,28 @@ function addCopyCode() {
   }
 }
 
+// 给代码块添加一键尝试一下
+function addTryCode() {
+  const elements = document.getElementsByTagName("pre");
+  for (let i = 0; i < elements.length; i++) {
+      const pre = elements[i];
+      const button = document.createElement("button");
+      button.innerHTML = '<i class="fa fa-play" title="尝试一下"></i>';
+      button.classList.add("try");
+      button.addEventListener("click", function() {
+        const code = pre.innerText;
+        window.open(`/<$ ctx.app.config.appId $>/page/test/JHPlayground`, '_blank')
+        // window.vtoast.success({message: '已复制到剪贴板'});
+      });
+      pre.appendChild(button);
+
+  }
+}
+
 $(function () {
   doUiAction('init')
-  addCopyCode()
+  addCopyCode();
+  addTryCode();
 })
 
 // 使用docsSearchBar初始化搜索框
@@ -399,13 +415,18 @@ docsSearchBar({
   pre {
       position: relative;
   }
-  pre:hover button {
+  // pre:hover button {
+  //   display: block;
+  //   z-index: 10;
+  //   color: #bbb;
+  // }
+  pre button {
     display: block;
     z-index: 10;
     color: #bbb;
   }
-  button.copy {
-    display: none;
+  button.copy, button.try {
+    display: block;
     position: absolute;
     top: 0;
     right: 0;
@@ -415,6 +436,9 @@ docsSearchBar({
     cursor: pointer;
     font-size: 16px;
     padding-right: 10px;
-}
+  }
+  button.try {
+    margin-right: 30px;
+  }
 </style>
 {% endblock %}
