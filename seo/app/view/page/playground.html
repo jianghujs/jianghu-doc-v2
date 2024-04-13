@@ -1,0 +1,200 @@
+{% extends 'template/jhTemplateV4.html'%}
+
+{% block vueTemplate %}
+<script type="text/html" id="app-template">
+<div>
+<v-app mobile-breakpoint="sm">
+  <v-main>
+    <v-container>
+      <v-row no-gutters>
+          <span class="text-h7 font-weight-bold pa-4 pl-0">代码在线调试</span>
+      </v-row>
+      <v-divider class="jh-divider"></v-divider>
+      <v-row class="mt-0 px-4">
+          <v-col cols="4">
+              <v-row>
+                <v-row>
+                  <v-col cols="12">
+                      <span class="jh-input-label">HTML代码</span>
+                      <v-textarea v-model="htmlCode" @change="doUiAction('saveCode')" rows="12" class="jh-v-input" dense single-line filled></v-textarea>
+                  </v-col>
+                  <v-col cols="12" class="pt-0">
+                    <span class="jh-input-label">Javascript代码</span>
+                    <v-textarea v-model="jsCode" @change="doUiAction('saveCode')" rows="12" class="jh-v-input" dense single-line filled></v-textarea>
+                </v-col>
+              </v-row>
+          </v-col>
+          <v-col cols="8" class="pt-0">
+            <div class="d-flex justify-space-between">
+              <span class="jh-input-label">
+                页面预览
+              </span>
+              <span class="jh-input-label">
+                codeId: {{codeId}}
+                <v-btn v-if="!iframeLoading" color="primary" text x-small @click="window.open(`/<$ ctx.app.config.appId $>/page/playgroundRender?codeId=${codeId}`, '_blank');">单独打开</v-btn>
+                <v-btn v-if="!iframeLoading" color="primary" text x-small @click="doUiAction('playgroundShare')">分享代码</v-btn>
+              </span>
+            </div>
+            <div class="pa-4" style="width: 100%; min-height: 85vh; border: 1px solid #ddd;">
+              <iframe v-if="!iframeLoading" :src="`/<$ ctx.app.config.appId $>/page/playgroundRender?codeId=${codeId}`" frameborder="0" style="width: 100%; height: 80vh;"></iframe>
+            </div>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-main>
+</v-app>
+
+<jh-toast />
+<jh-mask />
+<jh-confirm-dialog />
+</div>
+</script>
+
+<div id="app">
+</div>
+{% endblock %}
+
+{% block vueScript %}
+{% include 'utility/jianghuJs/prepareDeviceIdV4.html' %}
+<script type="module">
+  new Vue({
+    el: '#app',
+    template: '#app-template',
+    vuetify: new Vuetify(),
+    data: () => ({
+      codeId: null,
+      iframeLoading: true,
+      htmlCode: localStorage.getItem('htmlCode_playground'),
+      jsCode: localStorage.getItem('jsCode_playground'),
+//       htmlCode: `
+// <v-form ref="createForm" lazy-validation>
+//   <v-row no-gutters>
+//       <span class="text-h7 font-weight-bold pa-4 pl-0">表单组件</span>
+//   </v-row>
+//   <v-divider class="jh-divider"></v-divider>
+//   <v-row>
+//       <v-col cols="12" sm="12" md="4">
+//           <span class="jh-input-label">学生名</span>
+//           <v-text-field v-model="studentName" :rules="validationRules.studentName" class="jh-v-input" dense single-line filled></v-text-field>
+//       </v-col>
+//   </v-row>
+//   <v-row class="justify-end mx-0 my-8 px-4">
+//       <v-btn color="success" small @click="doUiAction('createStudent')">保存</v-btn>
+//   </v-row>
+// </v-form>
+//       `,
+//       jsCode: `
+// new Vue({
+//   el: '#app',
+//   template: '#app-template',
+//   vuetify: new Vuetify(),
+//   data: () => ({
+//       validationRules: {
+//         studentName: [
+//             v => !!v || '学生名字是必填项',
+//             v => (v && v.length >= 2) || '学生名字至少需要2个字符',
+//         ],
+//       },
+//       studentName: '张',
+//     }),
+//     async created() {
+//     },
+//     mounted() {
+//     },
+//     methods: {
+//       async doUiAction(uiActionId, uiActionData) {
+//         switch (uiActionId) {
+//           case 'createStudent':
+//             await this.prepareCreateValidate();
+//             await this.confirmCreateItemDialog();
+//             await this.doCreateStudent();
+//             break;
+//           default:
+//             console.error("[doUiAction] uiActionId not find", { uiActionId });
+//             break;
+//         }
+//       },
+//       async prepareCreateValidate() {
+//         if (await this.$refs.createForm.validate()) {
+//           return true;
+//         }
+//         throw new Error("请完善表单信息")
+//       },
+//       async confirmCreateItemDialog() {
+//         if (await window.confirmDialog({title: "新增", content: "确定新增吗？"}) === false) {
+//           throw new Error("[confirmCreateFormDialog] 否");
+//         }
+//       },
+//       async doCreateStudent() {
+//         window.vtoast.success("保存")
+//       },
+//   }
+// })
+//       `,
+    }),
+    async created() {
+      await this.doUiAction('codeIdInit');
+      await this.doUiAction('saveCode');
+    },
+    async mounted() {
+    },
+    methods: {
+      async doUiAction(uiActionId, uiActionData) {
+        switch (uiActionId) {
+          case 'codeIdInit':
+            await this.codeIdInit();
+            break;
+          case 'saveCode':
+            await this.saveCode();
+            break;
+          case 'playgroundShare':
+            await this.playgroundShare();
+            break;
+          default:
+            console.error("[doUiAction] uiActionId not find", { uiActionId });
+            break;
+        }
+      },
+      async codeIdInit() {
+        const urlParams = new URLSearchParams(location.search);
+        this.codeId = urlParams.get('codeId') || `${window.getOsInfo().osName}_${window.getFingerprint()}`;
+      },
+      async saveCode() {
+        this.iframeLoading = true;
+        await window.jianghuAxios({
+          data: {
+            appData: {
+              pageId: 'playground',
+              actionId: 'saveCode',
+              actionData: {
+                codeId: this.codeId,
+                htmlCode: this.htmlCode,
+                jsCode: this.jsCode,
+              },
+            }
+          }
+        });
+
+        localStorage.setItem('htmlCode_playground', this.htmlCode),
+        localStorage.setItem('jsCode_playground', this.jsCode),
+        window.vtoast.success("代码更新");
+        this.iframeLoading = false;
+      },
+      async playgroundShare() {
+        const playgroundUrl = `${window.location.origin}/<$ ctx.app.config.appId $>/page/playground?codeId=${this.codeId}`
+        navigator.clipboard.writeText(playgroundUrl);
+        window.vtoast.success("分享链接复制")
+      },
+    }
+  })
+</script>
+
+<style scoped>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+</style>
+{% endblock %}

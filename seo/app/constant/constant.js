@@ -39,6 +39,7 @@ module.exports.tableEnum = Object.freeze({
   tag: "tag",
   template: "template",
   user_category_role: "user_category_role",
+  playground_code: 'playground_code',
   // ========================基础 View============================
   _view01_user: "_view01_user",
   view01_article: "view01_article",

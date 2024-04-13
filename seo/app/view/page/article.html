@@ -376,7 +376,11 @@ function addTryCode() {
       button.classList.add("try");
       button.addEventListener("click", function() {
         const code = pre.innerText;
-        window.open(`/<$ ctx.app.config.appId $>/page/test/JHPlayground`, '_blank')
+        const htmlCode = /([\s\S]*?)(?:<script[\s\S]*?<\/script>)?$/.exec(code)[1]
+        const jsCode = code.match(/<script type="module">\s*([\s\S]*?)\s*<\/script>/)[1];
+        localStorage.setItem('htmlCode_playground', htmlCode);
+        localStorage.setItem('jsCode_playground', jsCode);
+        window.open(`/<$ ctx.app.config.appId $>/page/playground`, '_blank');
         // window.vtoast.success({message: '已复制到剪贴板'});
       });
       pre.appendChild(button);
