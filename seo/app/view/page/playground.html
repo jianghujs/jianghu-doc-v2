@@ -64,8 +64,8 @@
     data: () => ({
       codeId: null,
       iframeLoading: true,
-      htmlCode: localStorage.getItem('htmlCode_playground'),
-      jsCode: localStorage.getItem('jsCode_playground'),
+      htmlCode: null,
+      jsCode: null,
 //       htmlCode: `
 // <v-form ref="createForm" lazy-validation>
 //   <v-row no-gutters>
@@ -157,7 +157,32 @@
       },
       async codeIdInit() {
         const urlParams = new URLSearchParams(location.search);
-        this.codeId = urlParams.get('codeId') || `${window.getOsInfo().osName}_${window.getFingerprint()}`;
+        const codeIdFromUrl = urlParams.get('codeId');
+        if (codeIdFromUrl) {
+          const { htmlCode, jsCode } = (await window.jianghuAxios({
+            data: {
+              appData: {
+                pageId: 'playground',
+                actionId: 'getCode',
+                actionData: {
+                  codeId: codeIdFromUrl,
+                },
+              }
+            }
+          })).data.appData.resultData;
+          this.htmlCode = htmlCode;
+          this.jsCode = jsCode;
+          this.codeId = codeIdFromUrl;
+          this.iframeLoading = false;
+        }
+
+        if (!codeIdFromUrl && localStorage.getItem('htmlCode_playground')) {
+          this.htmlCode = localStorage.getItem('htmlCode_playground'),
+          this.jsCode = localStorage.getItem('jsCode_playground'),
+          this.codeId = `${window.getOsInfo().osName}_${window.getFingerprint()}`;
+          await this.doUiAction('saveCode');
+        }
+
       },
       async saveCode() {
         this.iframeLoading = true;

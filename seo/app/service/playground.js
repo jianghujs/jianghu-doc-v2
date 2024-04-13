@@ -39,9 +39,9 @@ class ConstantUiService extends Service {
   }
 
 
-  async getCode() {
+  async getCode(actionData) {
     const { jianghuKnex } = this.app;
-    const codeId = this.ctx.query.codeId
+    const codeId = this.ctx.query.codeId || actionData?.codeId;
     const code = await jianghuKnex(tableEnum.playground_code, this.ctx).where({ codeId }).select().first();
     const { htmlCode, jsCode } = code || {};
     return { htmlCode, jsCode };
