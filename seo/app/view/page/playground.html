@@ -1,5 +1,22 @@
 {% extends 'template/jhTemplateV4.html'%}
 
+{% block htmlHead %}
+<style scoped>
+  html,body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: scroll;
+    min-width: 560px;
+  }
+  @media (max-width: 500px) {
+    .include-combobox {
+      max-width: 180px;
+    }
+  }
+</style>
+{% endblock %}
+
 {% block vueTemplate %}
 <script type="text/html" id="app-template">
 <div>
@@ -25,7 +42,7 @@
                     <span role="button" @click="doUiAction('copyIncludeList')" class="success--text">
                       <v-icon small color="success">mdi-content-copy</v-icon>复制Include
                     </span>
-                    <v-combobox v-model="includeList" :items="includeListOfJianghu" @change="doUiAction('saveCode')" class="jh-v-input" chips multiple solo>
+                    <v-combobox v-model="includeList" :items="includeListOfJianghu" @change="doUiAction('saveCode')" class="jh-v-input include-combobox" chips multiple solo dense single-line filled>
                       <template v-slot:selection="{ attrs, item, select, selected }">
                         <v-chip v-bind="attrs" :input-value="selected" close small
                           @click="select" @click:close="doUiAction('includeRemove', item)">
@@ -263,14 +280,4 @@
     }
   })
 </script>
-
-<style scoped>
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-</style>
 {% endblock %}
