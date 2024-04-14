@@ -28,7 +28,7 @@
                     <v-combobox v-model="includeList" :items="includeListOfJianghu" @change="doUiAction('saveCode')" class="jh-v-input" chips multiple solo>
                       <template v-slot:selection="{ attrs, item, select, selected }">
                         <v-chip v-bind="attrs" :input-value="selected" close small
-                          @click="select" @click:close="includeRemove(item)">
+                          @click="select" @click:close="doUiAction('includeRemove', item)">
                           <strong>{{ item }}</strong>
                         </v-chip>
                       </template>
@@ -172,14 +172,16 @@
           case 'saveCode':
             await this.saveCode();
             break;
+          case 'includeRemove':
+            await this.includeRemove(uiActionData);
+            await this.saveCode();
+            break;  
           case 'copyIncludeList':
             await this.copyIncludeList();
             break;
           case 'playgroundShare':
             await this.playgroundShare();
             break;
-
-
           default:
             console.error("[doUiAction] uiActionId not find", { uiActionId });
             break;
