@@ -19,7 +19,12 @@
                       <v-textarea v-model="htmlCode" @change="doUiAction('saveCode')" rows="10" class="jh-v-input" dense single-line filled></v-textarea>
                   </v-col>
                   <v-col cols="12" class="pt-0 pb-0">
-                    <span class="jh-input-label">Include文件列表</span>
+                    <span class="jh-input-label">
+                      Include文件列表
+                    </span>
+                    <span role="button" @click="doUiAction('copyIncludeList')" class="success--text">
+                      <v-icon small color="success">mdi-content-copy</v-icon>复制Include
+                    </span>
                     <v-combobox v-model="includeList" :items="includeListOfJianghu" @change="doUiAction('saveCode')" class="jh-v-input" chips multiple solo>
                       <template v-slot:selection="{ attrs, item, select, selected }">
                         <v-chip v-bind="attrs" :input-value="selected" close small
@@ -79,7 +84,13 @@
       htmlCode: null,
       jsCode: null,
       includeList: [],
-      includeListOfJianghu: ['common/jianghuJs/fixedTableHeightV4.html'],
+      includeListOfJianghu: [
+        'common/jianghuJs/fixedTableHeightV4.html',
+        'utility/jianghuJs/prepareDeviceIdV4.html' ,
+        'utility/jianghuJs/pagePasscodeValidation.html',
+        'component/jianghuJs/jhSceneV4.html',
+        'component/jianghuJs/jhSideMenuV4.html',
+      ],
       //       htmlCode: `
       // <v-form ref="createForm" lazy-validation>
       //   <v-row no-gutters>
@@ -161,9 +172,14 @@
           case 'saveCode':
             await this.saveCode();
             break;
+          case 'copyIncludeList':
+            await this.copyIncludeList();
+            break;
           case 'playgroundShare':
             await this.playgroundShare();
             break;
+
+
           default:
             console.error("[doUiAction] uiActionId not find", { uiActionId });
             break;
@@ -225,6 +241,16 @@
       },
       includeRemove(include) {
         this.includeList.splice(this.includeList.indexOf(include), 1);
+      },
+      async copyIncludeList() {
+        let str = '';
+        for (const includeFile of this.includeList) {
+          if (includeFile) {
+            str += '{' + '%' + includeFile + '%' + '}\n';
+          }
+        }
+        navigator.clipboard.writeText(str);
+        window.vtoast.success("Include代码复制成功")
       },
       async playgroundShare() {
         const playgroundUrl = `${window.location.origin}/<$ ctx.app.config.appId $>/page/playground?codeId=${this.codeId}`
