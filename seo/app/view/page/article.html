@@ -361,8 +361,7 @@ function addCopyCode() {
         // 复制成功的提示
         window.vtoast.success({message: '已复制到剪贴板'});
       });
-      pre.appendChild(button);
-
+      pre.parentNode.insertBefore(button, pre);
   }
 }
 
@@ -383,8 +382,7 @@ function addTryCode() {
         window.open(`/<$ ctx.app.config.appId $>/page/playground`, '_blank');
         // window.vtoast.success({message: '已复制到剪贴板'});
       });
-      pre.appendChild(button);
-
+      pre.parentNode.insertBefore(button, pre);
   }
 }
 
@@ -421,30 +419,31 @@ docsSearchBar({
       max-height: 400px;
       overflow-y: scroll;
   }
-  // pre:hover button {
-  //   display: block;
-  //   z-index: 10;
-  //   color: #bbb;
-  // }
-  pre button {
-    display: block;
-    z-index: 10;
-    color: #bbb;
+  button.try {
+    position: absolute;
+    right: 50px;
+  }
+  button.copy {
+    position: absolute;
+    right: 10px;
   }
   button.copy, button.try {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
+    display: inline-block;
+    z-index: 10;
+    color: #bbb;
     border: none;
     background: none;
-    padding: 5px;
+    padding: 7px 13px;
     cursor: pointer;
     font-size: 16px;
-    padding-right: 10px;
+    /* padding-right: 10px; */
+    transition: all 0.3s;
+    border-radius: 23px;
   }
-  button.try {
-    margin-right: 30px;
+  button.copy:hover, button.try:hover {
+    border-color: #bbbbbb; /* 将边框颜色更改为灰色 */
+    background-color: #bbbbbb1a; /* 按钮的hover背景颜色 */
+    color: #42b883; /* 按钮的hover文字颜色 */
   }
 </style>
 {% endblock %}
