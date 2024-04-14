@@ -4,7 +4,45 @@
 {% block keyword %}<$ article.articleTagList $>{% endblock %}
 
 {% block css %}
-<script type="application/ld+json">
+<style>
+  .treeview ul:first-child {
+    padding-left: 0;
+    margin-left: -6px;
+  }
+
+  pre {
+      position: relative;
+      max-height: 400px;
+      overflow-y: scroll;
+  }
+  button.try {
+    position: absolute;
+    right: 50px;
+  }
+  button.copy {
+    position: absolute;
+    right: 10px;
+  }
+  button.copy, button.try {
+    display: inline-block;
+    z-index: 10;
+    color: #bbb;
+    border: none;
+    background: none;
+    padding: 7px 13px;
+    cursor: pointer;
+    font-size: 16px;
+    /* padding-right: 10px; */
+    transition: all 0.3s;
+    border-radius: 23px;
+  }
+  button.copy:hover, button.try:hover {
+    border-color: #bbbbbb; /* 将边框颜色更改为灰色 */
+    background-color: #bbbbbb1a; /* 按钮的hover背景颜色 */
+    color: #42b883; /* 按钮的hover文字颜色 */
+  }
+</style>
+<!-- <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
@@ -25,7 +63,7 @@
   "datePublished": "<$ article.articlePublishTime $>",
   "articleBody": ""
 }
-</script>
+</script> -->
 <link rel="stylesheet" href="<$ static $>/highlight/atom-one-dark.min.css">
 <link rel="stylesheet" href="<$ static $>/mdb/css/font-awesome.min.css?v=6.0.0" />
 <link rel="stylesheet" href="<$ static $>/mdb/css/roboto-font.css?family=Roboto:300,400,500,700&display=swap" />
@@ -425,42 +463,4 @@ docsSearchBar({
 })
 </script>
 
-<style>
-  .treeview ul:first-child {
-    padding-left: 0;
-    margin-left: -6px;
-  }
-
-  pre {
-      position: relative;
-      max-height: 400px;
-      overflow-y: scroll;
-  }
-  button.try {
-    position: absolute;
-    right: 50px;
-  }
-  button.copy {
-    position: absolute;
-    right: 10px;
-  }
-  button.copy, button.try {
-    display: inline-block;
-    z-index: 10;
-    color: #bbb;
-    border: none;
-    background: none;
-    padding: 7px 13px;
-    cursor: pointer;
-    font-size: 16px;
-    /* padding-right: 10px; */
-    transition: all 0.3s;
-    border-radius: 23px;
-  }
-  button.copy:hover, button.try:hover {
-    border-color: #bbbbbb; /* 将边框颜色更改为灰色 */
-    background-color: #bbbbbb1a; /* 按钮的hover背景颜色 */
-    color: #42b883; /* 按钮的hover文字颜色 */
-  }
-</style>
 {% endblock %}
