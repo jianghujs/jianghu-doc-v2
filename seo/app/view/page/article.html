@@ -375,10 +375,19 @@ function addTryCode() {
       button.classList.add("try");
       button.addEventListener("click", function() {
         const code = pre.innerText;
-        const htmlCode = /([\s\S]*?)(?:<script[\s\S]*?<\/script>)?$/.exec(code)[1]
-        const jsCode = code.match(/<script type="module">\s*([\s\S]*?)\s*<\/script>/)[1];
+        // const htmlCode = /([\s\S]*?)(?:<script[\s\S]*?<\/script>)?$/.exec(code)[1]
+        // const jsCode = code.match(/<script type="module">\s*([\s\S]*?)\s*<\/script>/)[1];
+        const includeRegex = /{. include\s+['"]([^'"]+)['"]\s+.}/g;
+        const includeList = [];
+        let includeMatch;
+        while ((includeMatch = includeRegex.exec(code)) !== null) {
+          includeList.push(includeMatch[1]);
+        }
+        const jsCode = code.match(/<script[\s\S]*?<\/script>/)[0];
+        const htmlCode = code.replace(jsCode, '').replace(/{. include\s+['"]([^'"]+)['"]\s+.}/g, '');
         localStorage.setItem('htmlCode_playground', htmlCode);
         localStorage.setItem('jsCode_playground', jsCode);
+        localStorage.setItem('includeList_playground', includeList.join(','));
         window.open(`/<$ ctx.app.config.appId $>/page/playground`, '_blank');
         // window.vtoast.success({message: '已复制到剪贴板'});
       });

@@ -24,17 +24,18 @@ class ConstantUiService extends Service {
     const { jianghuKnex } = this.app;
     const actionData = this.ctx.request.body.appData.actionData;
     validateUtil.validate(actionDataScheme.saveCode, actionData);
-    const { codeId, htmlCode, jsCode } = actionData;
+    const { codeId, htmlCode, jsCode, includeList=[] } = actionData;
     const codeOld = await jianghuKnex(tableEnum.playground_code, this.ctx).where({ codeId }).select().first();
     if (!codeOld) {
       await jianghuKnex(tableEnum.playground_code, this.ctx).insert({
         codeId,
         htmlCode,
         jsCode,
+        includeList: includeList.join(','),
       })
     }
     if (codeOld) {
-      await jianghuKnex(tableEnum.playground_code, this.ctx).where({ codeId: codeId }).update({htmlCode, jsCode})
+      await jianghuKnex(tableEnum.playground_code, this.ctx).where({ codeId: codeId }).update({htmlCode, jsCode, includeList: includeList.join(',')})
     }
   }
 
@@ -43,8 +44,9 @@ class ConstantUiService extends Service {
     const { jianghuKnex } = this.app;
     const codeId = this.ctx.query.codeId || actionData?.codeId;
     const code = await jianghuKnex(tableEnum.playground_code, this.ctx).where({ codeId }).select().first();
-    const { htmlCode, jsCode } = code || {};
-    return { htmlCode, jsCode };
+    const { htmlCode, jsCode, includeList:includeListStr} = code || {};
+    const includeList = (includeListStr||'').trim().split(',');
+    return { htmlCode, jsCode, includeList };
     // return {
     //     htmlCode: `
     // <v-form ref="createForm" lazy-validation>

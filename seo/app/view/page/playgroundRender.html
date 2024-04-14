@@ -19,9 +19,12 @@
 {% endblock %}
 
 {% block vueScript %}
-<script type="module">
+{% for includeFile in code.includeList %}
+  {% if includeFile %}
+    {% include includeFile %}
+  {% endif %}
+{% endfor %}
 <$ code.jsCode | safe $>
-</script>
 
 <style scoped>
 </style>
