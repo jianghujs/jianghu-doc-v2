@@ -383,8 +383,16 @@ function addTryCode() {
         while ((includeMatch = includeRegex.exec(code)) !== null) {
           includeList.push(includeMatch[1]);
         }
-        const jsCode = code.match(/<script[\s\S]*?<\/script>/)[0];
+        const jsCode = code.match(/<script[\s\S]*?<\/script>/)?.[0];
         const htmlCode = code.replace(jsCode, '').replace(/{. include\s+['"]([^'"]+)['"]\s+.}/g, '');
+        if (!jsCode) {
+          window.vtoast.fail({message: 'JS代码格式不正确'});
+          return;
+        }
+        if (!jsCode && !htmlCode) {
+          window.vtoast.fail({message: '没有可执行的 JS和HTML '});
+          return;
+        }
         localStorage.setItem('htmlCode_playground', htmlCode);
         localStorage.setItem('jsCode_playground', jsCode);
         localStorage.setItem('includeList_playground', includeList.join(','));
