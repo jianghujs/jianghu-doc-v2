@@ -414,8 +414,6 @@ function addTryCode() {
       button.classList.add("try");
       button.addEventListener("click", function() {
         const code = pre.innerText;
-        // const htmlCode = /([\s\S]*?)(?:<script[\s\S]*?<\/script>)?$/.exec(code)[1]
-        // const jsCode = code.match(/<script type="module">\s*([\s\S]*?)\s*<\/script>/)[1];
         const includeRegex = /{. include\s+['"]([^'"]+)['"]\s+.}/g;
         const includeList = [];
         let includeMatch;
@@ -423,7 +421,11 @@ function addTryCode() {
           includeList.push(includeMatch[1]);
         }
         const jsCode = code.match(/<script[\s\S]*?<\/script>/)?.[0];
-        const htmlCode = code.replace(jsCode, '').replace(/{. include\s+['"]([^'"]+)['"]\s+.}/g, '');
+        const cssCode = code.match(/<style[\s\S]*?<\/style>/)?.[0];
+        const htmlCode = code
+          .replace(jsCode, '')
+          .replace(cssCode, '')
+          .replace(/{. include\s+['"]([^'"]+)['"]\s+.}/g, '');
         if (!jsCode) {
           window.vtoast.fail({message: 'JS代码格式不正确'});
           return;
@@ -433,7 +435,7 @@ function addTryCode() {
           return;
         }
         localStorage.setItem('htmlCode_playground', htmlCode);
-        localStorage.setItem('jsCode_playground', jsCode);
+        localStorage.setItem('jsCode_playground', `${jsCode}\n${cssCode}`);
         localStorage.setItem('includeList_playground', includeList.join(','));
         window.open(`/<$ ctx.app.config.appId $>/page/playground`, '_blank');
         // window.vtoast.success({message: '已复制到剪贴板'});
