@@ -20,6 +20,11 @@ const actionDataScheme = Object.freeze({
 
 class ConstantUiService extends Service {
 
+  // Tip: 这个不能删
+  async playgroundRenderPageOfBeforeHook() {
+    return { content: '这是一个页面的 beforeHook demo' };
+  }
+
   async saveCode() {
     const { jianghuKnex } = this.app;
     const actionData = this.ctx.request.body.appData.actionData;
