@@ -266,7 +266,7 @@
         let str = '';
         for (const includeFile of this.includeList) {
           if (includeFile) {
-            str += '{' + '%' + includeFile + '%' + '}\n';
+            str += "{" + `% include '${includeFile}' %`+ "}\n";
           }
         }
         navigator.clipboard.writeText(str);
