@@ -25,6 +25,25 @@ class ConstantUiService extends Service {
     return { content: '这是一个页面的 beforeHook demo' };
   }
 
+  // Tip: 这个不能删
+  async getConstantUiMap() {
+    const { jianghuKnex } = this.app;
+    const { pageId } = this.ctx.packagePage;
+    const { language } = this.app.config;
+    const constantUiList = await jianghuKnex(`_constant_ui`).whereIn('pageId', ['all', pageId]).select();
+    const constantUiMap = Object.fromEntries(
+      constantUiList.map(obj => {
+        try {
+          return [obj.constantKey, JSON.parse(obj[language] || '{}')];
+        } catch (error) {
+          this.app.logger.error('getConstantUiMap', error);
+          return [obj.constantKey, {}];
+        }
+      })
+    );
+    return constantUiMap;
+  }
+
   async saveCode() {
     const { jianghuKnex } = this.app;
     const actionData = this.ctx.request.body.appData.actionData;
