@@ -409,6 +409,9 @@ function addTryCode() {
   const elements = document.getElementsByTagName("pre");
   for (let i = 0; i < elements.length; i++) {
       const pre = elements[i];
+      if (!/<script[\s\S]*?<\/script>/.test(pre.innerText)) {
+        continue;
+      }
       const button = document.createElement("button");
       button.innerHTML = '<i class="fa fa-play" title="尝试一下"></i>';
       button.classList.add("try");
@@ -426,14 +429,6 @@ function addTryCode() {
           .replace(jsCode, '')
           .replace(cssCode, '')
           .replace(/{. include\s+['"]([^'"]+)['"]\s+.}/g, '');
-        if (!jsCode) {
-          window.vtoast.fail({message: 'JS代码格式不正确'});
-          return;
-        }
-        if (!jsCode && !htmlCode) {
-          window.vtoast.fail({message: '没有可执行的 JS和HTML '});
-          return;
-        }
         localStorage.setItem('htmlCode_playground', htmlCode);
         localStorage.setItem('jsCode_playground', `${jsCode}\n${cssCode||''}`);
         localStorage.setItem('includeList_playground', includeList.join(','));
