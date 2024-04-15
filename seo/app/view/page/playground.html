@@ -57,7 +57,7 @@
                 </v-col>
               </v-row>
           </v-col>
-          <v-col cols="8" class="pt-0">
+          <v-col cols="8" class="pa-0 ">
             <div class="d-flex justify-space-between">
               <span class="jh-input-label">
                 页面预览
@@ -68,7 +68,7 @@
                 <v-btn v-if="!iframeLoading" color="primary" text x-small @click="doUiAction('playgroundShare')">分享代码</v-btn>
               </span>
             </div>
-            <div class="pa-4" style="width: 100%; min-height: 85vh; border: 1px solid #ddd;">
+            <div class="pa-0" style="width: 100%; min-height: 85vh; border: 1px solid #ddd;">
               <iframe v-if="!iframeLoading" :src="`/<$ ctx.app.config.appId $>/page/playgroundRender?codeId=${codeId}`" frameborder="0" style="width: 100%; height: 80vh;"></iframe>
             </div>
         </v-col>
@@ -228,8 +228,9 @@
 
         if (!codeIdFromUrl && localStorage.getItem('htmlCode_playground')) {
           this.htmlCode = localStorage.getItem('htmlCode_playground'),
-            this.jsCode = localStorage.getItem('jsCode_playground'),
-            this.includeList = (localStorage.getItem('includeList_playground') || '').trim().split(',');
+          this.jsCode = localStorage.getItem('jsCode_playground'),
+          this.includeList = (localStorage.getItem('includeList_playground') || '')
+            .trim().split(',').filter(v => v);
           this.codeId = `${window.getOsInfo().osName}_${window.getFingerprint()}`;
           await this.doUiAction('saveCode');
         }
@@ -253,9 +254,9 @@
         });
 
         localStorage.setItem('htmlCode_playground', this.htmlCode),
-          localStorage.setItem('jsCode_playground', this.jsCode),
-          localStorage.setItem('includeList_playground', this.includeList.join(',')),
-          window.vtoast.success("代码更新");
+        localStorage.setItem('jsCode_playground', this.jsCode),
+        localStorage.setItem('includeList_playground', this.includeList.join(',')),
+        window.vtoast.success("代码更新");
         this.iframeLoading = false;
       },
       includeRemove(include) {

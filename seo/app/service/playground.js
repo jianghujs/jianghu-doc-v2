@@ -42,11 +42,20 @@ class ConstantUiService extends Service {
 
   async getCode(actionData) {
     const { jianghuKnex } = this.app;
-    const codeId = this.ctx.query.codeId || actionData?.codeId;
+    const ctx = this.ctx;
+    const packagePage = ctx;
+    const codeId = ctx.query.codeId || actionData?.codeId;
     const code = await jianghuKnex(tableEnum.playground_code, this.ctx).where({ codeId }).select().first();
     const { htmlCode, jsCode, includeList:includeListStr} = code || {};
     const includeList = (includeListStr||'').trim().split(',');
-    return { htmlCode, jsCode, includeList };
+    
+    // htmlCode 支持 njk 语法
+    const htmlCodeRender = await ctx.renderString(htmlCode, {
+      ...ctx.hookResult,
+      page: { passcode: packagePage.passcode }
+    });
+
+    return { htmlCode: htmlCodeRender, jsCode, includeList };
     // return {
     //     htmlCode: `
     // <v-form ref="createForm" lazy-validation>
