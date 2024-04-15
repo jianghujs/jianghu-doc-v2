@@ -435,7 +435,7 @@ function addTryCode() {
           return;
         }
         localStorage.setItem('htmlCode_playground', htmlCode);
-        localStorage.setItem('jsCode_playground', `${jsCode}\n${cssCode}`);
+        localStorage.setItem('jsCode_playground', `${jsCode}\n${cssCode||''}`);
         localStorage.setItem('includeList_playground', includeList.join(','));
         window.open(`/<$ ctx.app.config.appId $>/page/playground`, '_blank');
         // window.vtoast.success({message: '已复制到剪贴板'});
