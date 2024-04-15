@@ -33,11 +33,12 @@ class ConstantUiService extends Service {
     const constantUiList = await jianghuKnex(`_constant_ui`).whereIn('pageId', ['all', pageId]).select();
     const constantUiMap = Object.fromEntries(
       constantUiList.map(obj => {
+        const { constantKey } = obj;
         try {
-          return [obj.constantKey, JSON.parse(obj[language] || '{}')];
+          return [constantKey, JSON.parse(obj[language] || '{}')];
         } catch (error) {
-          this.app.logger.error('getConstantUiMap', error);
-          return [obj.constantKey, {}];
+          this.app.logger.error('getConstantUiMap', ` constantKey:${constantKey} `, error);
+          return [constantKey, {}];
         }
       })
     );
