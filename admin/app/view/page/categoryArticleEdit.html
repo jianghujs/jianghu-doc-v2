@@ -613,7 +613,11 @@ new Vue({
     categorySearchInput() {
       this.doUiAction('categorySearch')
     },
-    currentPublishStatus() {
+    currentPublishStatus(val, oldVal) {
+      // 判断 val 数组 是否等于 oldVal 数组
+      if (val.length === oldVal.length && val.every((v, i) => v === oldVal[i])) {
+        return;
+      }
       this.doUiAction('getCategoryArticleTree', this.currentPublishStatus)
     }
   },
@@ -915,7 +919,7 @@ new Vue({
       }
       if (!this.articleId) {
         await this.insertItem();
-        window.location.reload();
+        // window.location.reload();
         return false
       }
 
@@ -985,7 +989,7 @@ new Vue({
       } else {
         await this.insertItem();
         // Tip: 刷新页面触发创建 文章文件夹
-        window.location.reload();
+        // window.location.reload();
       }
     },
     // 保存并预览
@@ -1012,7 +1016,21 @@ new Vue({
       await window.vtoast.success("新增文章成功");
       // 按id获取新文章并跳转新 url
       await this.reopenEditByArticleId(result.data.appData.resultData.rows[0]);
-      await this.doUiAction('getCategoryArticleTree', this.currentPublishStatus)
+      // await this.doUiAction('getCategoryArticleTree', this.currentPublishStatus)
+      // treeView 内的 null articleId 更新
+      this.treeView.forEach(item => {
+        if (item.articleId === null) {
+          item.articleId = this.articleId;
+          this.activeArticle(item)
+        }
+        item.children?.forEach(child => {
+          if (child.articleId === null) {
+            child.articleId = this.articleId;
+            this.activeArticle(child)
+          }
+        })
+      });
+
       return true;
     },
     // 按id获取新文章并跳转新 url
@@ -1224,6 +1242,7 @@ new Vue({
         window.vtoast.fail('类目不存在');
       }
       this.isTreeLoading = true;
+      debugger
       const {rows} = (await window.jianghuAxios({
         data: {
           appData: {
