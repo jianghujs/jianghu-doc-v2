@@ -1242,7 +1242,6 @@ new Vue({
         window.vtoast.fail('类目不存在');
       }
       this.isTreeLoading = true;
-      debugger
       const {rows} = (await window.jianghuAxios({
         data: {
           appData: {
