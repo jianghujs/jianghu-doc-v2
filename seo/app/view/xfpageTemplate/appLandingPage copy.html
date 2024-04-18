@@ -7,6 +7,7 @@
         width: 90%;
         padding-top: 60%;
         overflow: hidden;
+        background: url('https://demo.jianghujs.org/jianghu-doc-v2-admin/upload/materialRepo/image/macbook-frame.png') no-repeat center center;
         background-size: 100% 90%;
     }
 
@@ -17,6 +18,7 @@
         left: 11.5%;
         width: 76.6%;
         height: 76%;
+        background-color: #fff;
         overflow: hidden;
     }
 
@@ -25,17 +27,6 @@
         height: 100%;
         object-fit: cover;
     }
-    
-    
-    .jianghu-introduce{
-        background-image: url(/jianghu-doc-v2-admin/upload/materialRepo/image/jianghu-landingPage/background_1.png);
-        background-size: cover;
-    }
-
-    .jianghu-use{
-        background-image: url(/jianghu-doc-v2-admin/upload/materialRepo/image/jianghu-landingPage/background_2.png);
-        background-size: cover;
-    }
 
 
 </style>
@@ -43,7 +34,7 @@
 <!-- 内容区 >>>>>>>>>>>>> -->
 <main class="ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
     <!--    应用介绍-->
-    <div class="py-16 jianghu-introduce" >
+    <div class="bg-white py-16">
         <div class="container-lg d-md-flex align-center justify-content-between h-full items-center">
             <div class="flex-1">
                 <h1 class="text-5xl font-bold"><$ xfPage.xfPageConfig.body.title | safe $></h1>
@@ -105,11 +96,11 @@
     <!--  根据不同index，不同的背景色  -->
     {% if itemIndex % 2 == 0 %}
     <div class="bg-white py-32 relative">
-        <div style="background-size: 100% 100%;background-image: url('/jianghu-doc-v2-admin/upload/materialRepo/image/Rectangle 161@2x.png')"
+        <div style="background-size: 100% 100%;background-image: url('https://demo.jianghujs.org/jianghu-doc-v2-admin/upload/materialRepo/image/Rectangle 161@2x.png')"
              class="z-0 -rotate-180 w-2/3 md:w-3/6 h-96 absolute right-0 top-60"></div>
         {% else %}
         <div class="bg-gray-100 py-32 relative">
-            <div style="background-size: 100% 100%;background-image: url('/jianghu-doc-v2-admin/upload/materialRepo/image/Rectangle 161@2x.png')"
+            <div style="background-size: 100% 100%;background-image: url('https://demo.jianghujs.org/jianghu-doc-v2-admin/upload/materialRepo/image/Rectangle 161@2x.png')"
                  class="z-0 w-2/3 md:w-3/6 h-96 absolute left-0 top-60"></div>
             {% endif %}
             <div class="container-lg relative">
@@ -164,7 +155,7 @@
                 {% endfor %}
             </div>
             {% if xfPage.xfPageConfig.body.adTitle %}
-            <div class="py-20 bg-green-600 text-white text-center jianghu-use">
+            <div class="py-20 bg-green-600 text-white text-center">
                 <h4 class="mb-4 text-2xl font-bold"><$ xfPage.xfPageConfig.body.adTitle $></h4>
                 <a href="<$ xfPage.xfPageConfig.body.adUrl $>" target="_blank">
                     <button type="button"
