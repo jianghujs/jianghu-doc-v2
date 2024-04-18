@@ -1385,7 +1385,23 @@ new Vue({
     },
     changePublicStatus(status) {
       // 筛选 treeViewBackend 
-      this.treeView = this.treeViewBackend.filter(item => status.includes(item.articlePublishStatus) || (item.children && item.children.some(child => status.includes(child.articlePublishStatus))));
+      this.treeView = this.treeViewBackend.map(item => {
+          // 如果一级元素自身的状态符合条件，则返回该元素
+          if (status.includes(item.articlePublishStatus)) {
+              return item;
+          }
+
+          // 否则，只返回符合条件的子元素
+          if (item.children) {
+              return {
+                  ...item,
+                  children: item.children.filter(child => status.includes(child.articlePublishStatus))
+              };
+          }
+
+          // 如果一级元素的状态不符合条件且没有子元素，返回null
+          return null;
+      }).filter(item => item !== null); // 过滤掉null元素
     },
   }
 })
