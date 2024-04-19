@@ -1,5 +1,7 @@
 {% set static = "/" + appId + "/public" %}
-<link rel="stylesheet" href="<$ static $>/mdbootstrap/font-awesome.6.1.1.min.css"/>
+{% set xfpageSeoResourceUrl = ctx.app.config.xfpageSeoResourceUrl %}
+
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/font-awesome.6.1.1.min.css" />
 <script src="<$ static $>/tailwindcss/tailwindcss.js"></script>
 <style>
     .laptop {
@@ -25,36 +27,120 @@
         height: 100%;
         object-fit: cover;
     }
-    
-    
-    .jianghu-introduce{
-        background-image: url(/jianghu-doc-v2-admin/upload/materialRepo/image/jianghu-landingPage/background_1.png);
+
+
+    /* 介绍 */
+    .jh-introduce {
+        background-image: url(<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-landingPage/background_1.png);
         background-size: cover;
+        background-position: bottom;
     }
 
-    .jianghu-use{
-        background-image: url(/jianghu-doc-v2-admin/upload/materialRepo/image/jianghu-landingPage/background_2.png);
-        background-size: cover;
+    /* 模块 */
+    .jh-module .jh-block-1:nth-child(odd){
+        background-color: #FFFFFF;
+    }   
+    .jh-module .jh-block-1:nth-child(even){
+        background-color: #fbfbfb;
+    }
+    .jh-module .jh-block-1:nth-child(odd) .jh-background{
+        background-size: 100% 100%;
+        background-image: url(<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-landingPage/background_4.png);
+    }   
+    .jh-module .jh-block-1:nth-child(even) .jh-background{
+        background-size: 100% 100%;
+        background-image: url(<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-landingPage/background_4.png);
     }
 
+    /* 使用 */
+    .jh-use {
+        background-image: url(<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-landingPage/background_2.png);
+        background-size: cover;
+        background-position: bottom;
+    }
 
+    /* why-choose */
+    .jh-why-choose{
+        background-image: url(<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-landingPage/background_3.png);
+        background-size: 563px;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 72px 82px;
+    }
+    .jh-why-choose .jh-p-1{
+        font-weight: 500;
+        font-size: 28px;
+        color: #333333;
+        line-height: 33px;
+        text-align: center;
+    }
+    .jh-why-choose .jh-p-2{
+        font-weight: 400;
+        font-size: 16px;
+        color: #616161;
+        line-height: 26px;
+        text-align: center;
+        padding-top: 23px;
+    }
+    .jh-why-choose .jh-block-1{
+        text-align: center;
+        margin: 72px auto 0;
+        max-width: 1200px;
+        background: #FFFFFF;
+        box-shadow: 0px 10px 12px 0px rgba(0,0,0,0.05);
+        border-radius: 8px 8px 8px 8px;
+        opacity: 0.9;
+    }
+    .jh-why-choose .jh-block-2{
+        padding: 24px 104px;
+    }
+    .jh-why-choose .jh-block-2:nth-child(1),
+    .jh-why-choose .jh-block-2:nth-child(2){
+        border-right: 1px solid #EBEBEB;
+    }
+    .jh-why-choose .jh-block-3{
+        margin-bottom: 10px;
+    }   
+    .jh-why-choose .jh-p-3{
+        font-weight: bold;
+        font-size: 44px;
+        color: #42B883;
+        line-height: 52px;
+    }
+    .jh-why-choose .jh-p-4{
+        font-weight: 500;
+        font-size: 16px;
+        color: #333333;
+        line-height: 19px;
+        margin-left: 10px;
+    }
+    .jh-why-choose .jh-p-5, 
+    .jh-why-choose .jh-p-6{
+        font-weight: 400;
+        font-size: 13px;
+        color: #666666;
+    }
 </style>
 
 <!-- 内容区 >>>>>>>>>>>>> -->
 <main class="ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
-    <!--    应用介绍-->
-    <div class="py-16 jianghu-introduce" >
+    <!-- 应用介绍 -->
+    <div class="py-16 jh-introduce">
         <div class="container-lg d-md-flex align-center justify-content-between h-full items-center">
             <div class="flex-1">
-                <h1 class="text-5xl font-bold"><$ xfPage.xfPageConfig.body.title | safe $></h1>
+                <h1 class="text-5xl font-bold">
+                    <$ xfPage.xfPageConfig.body.title | safe $>
+                </h1>
                 <div class="my-4 text-gray-500">
-                    <p><$ xfPage.xfPageConfig.body.desc | safe $></p>
+                    <p>
+                        <$ xfPage.xfPageConfig.body.desc | safe $>
+                    </p>
                 </div>
                 <div>
                     {% if xfPage.xfPageConfig.body.startBtnUrl %}
                     <a href="<$ xfPage.xfPageConfig.body.startBtnUrl $>" target="_blank">
                         <button type="button"
-                                class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 mb-2 mr-5">
+                            class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 mb-2 mr-5">
                             <$ xfPage.xfPageConfig.body.startBtnText $>
                         </button>
                     </a>
@@ -62,7 +148,7 @@
                     {% if xfPage.xfPageConfig.body.githubProjectUrl %}
                     <a href="<$ xfPage.xfPageConfig.body.githubProjectUrl $>" target="_blank">
                         <button type="button"
-                                class="bg-gray-100 hover:bg-gray-200 focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 mb-2">
+                            class="bg-gray-100 hover:bg-gray-200 focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 mb-2">
                             <i class="fab fa-github me-1"></i>
                             GitHub
                         </button>
@@ -72,25 +158,29 @@
             </div>
             <div class="flex-1 mt-10 mt-md-0">
                 <div class="rounded-t ml-md-4 img-box relative w-full h-0 overflow-hidden"
-                     style="padding-top: 65%">
-                    <img class="absolute top-0 left-0 w-full h-auto" src="<$ xfPage.xfPageConfig.body.cover $>"/>
+                    style="padding-top: 65%">
+                    <img class="absolute top-0 left-0 w-full h-auto"
+                        src="<$ xfpageSeoResourceUrl $><$ xfPage.xfPageConfig.body.cover $>" />
                 </div>
 
             </div>
         </div>
         {% if xfPage.xfPageConfig.body.list %}
         <div class="container-lg d-md-flex align-center justify-content-between h-full items-center">
-            <div class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center flex-row-reverse">
+            <div
+                class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center flex-row-reverse">
                 <div class="flex-1 d-flex justify-content-end">
                     <div class="grid md:grid-cols-3 gap-4">
                         {% for it in xfPage.xfPageConfig.body.list %}
                         {% set itIndex = loop.index %}
                         <div class="card p-3">
                             <h3 class="text-md font-bold d-flex align-center items-center">
-                                <img src="<$ it.icon $>" class="w-6 h-6 mr-2"/>
+                                <img src="<$ it.icon $>" class="w-6 h-6 mr-2" />
                                 <$ it.title $>
                             </h3>
-                            <p class="mt-2 text-gray-500 text-sm"><$ it.content $></p>
+                            <p class="mt-2 text-gray-500 text-sm">
+                                <$ it.content $>
+                            </p>
                         </div>
                         {% endfor %}
                     </div>
@@ -99,83 +189,152 @@
         </div>
         {% endif %}
     </div>
-    <!--    模块介绍-->
-    {% for item in xfPage.xfPageConfig.features %}
-    {% set itemIndex = loop.index %}
-    <!--  根据不同index，不同的背景色  -->
-    {% if itemIndex % 2 == 0 %}
-    <div class="bg-white py-32 relative">
-        <div style="background-size: 100% 100%;background-image: url('/jianghu-doc-v2-admin/upload/materialRepo/image/Rectangle 161@2x.png')"
-             class="z-0 -rotate-180 w-2/3 md:w-3/6 h-96 absolute right-0 top-60"></div>
-        {% else %}
-        <div class="bg-gray-100 py-32 relative">
-            <div style="background-size: 100% 100%;background-image: url('/jianghu-doc-v2-admin/upload/materialRepo/image/Rectangle 161@2x.png')"
-                 class="z-0 w-2/3 md:w-3/6 h-96 absolute left-0 top-60"></div>
-            {% endif %}
-            <div class="container-lg relative">
-                {% if itemIndex % 2 == 0 %}
 
+    <!-- 模块 -->
+    <div class="jh-module">
+        {% for item in xfPage.xfPageConfig.features %}
+        {% set itemIndex = loop.index %}
+        <!--  根据不同index，不同的背景色  -->
+        {% if itemIndex % 2 == 0 %}
+        <div class="jh-block-1 py-32 relative">
+            <div class="jh-background z-0 -rotate-180 w-2/3 md:w-3/6 h-96 absolute right-0 top-60"></div>
+            <div class="container-lg relative">
                 <div class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center flex-row-reverse">
                     <div class="flex-1 d-flex justify-content-end">
+                        {% if item.isNotInComputer %}
+                        <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
+                            class="laptop-image">
                         {% else %}
-
-
-                        <div class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center">
-                            <div class="flex-1">
-                                {% endif %}
-                                <!--                                <div class="rounded-t ml-md-4 img-box relative w-full h-0 overflow-hidden"-->
-                                <!--                                     style="padding-top: 50%;">-->
-
-                                <!--                                    <img class="absolute top-0 left-0 w-5/6 h-auto" src="<$ item.cover $>"/>-->
-                                <!--                                </div>-->
-                                {% if item.isNotInComputer %}
-                                <img src="<$ item.cover $>" alt="<$ item.category $>" class="laptop-image">
-                                {% else %}
-                                <div class="laptop mx-auto md:mx-0">
-                                    <div class="laptop-screen">
-                                        <img src="<$ item.cover $>" alt="<$ item.category $>" class="laptop-image">
-                                    </div>
-                                </div>
-                                {% endif %}
-                            </div>
-                            <div class="flex-1 mt-10 mt-md-0 text-base text-gray-500">
-                                <h2 class="text-2xl font-bold text-black">
-                                    <div>
-                                        <$ item.category | safe $>
-                                    </div>
-                                </h2>
-                                <p class="mb-4 mt-3"><$ item.desc | safe $></p>
+                        <div class="laptop mx-auto md:mx-0">
+                            <div class="laptop-screen">
+                                <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
+                                    class="laptop-image">
                             </div>
                         </div>
-                        <div class="grid md:grid-cols-3 gap-4">
-                            {% for it in item.list %}
-                            {% set itIndex = loop.index %}
-                            <div class="card p-3">
-                                <h3 class="text-md font-bold d-flex align-center items-center">
-                                    <img src="<$ it.icon $>" class="w-6 h-6 mr-2"/>
-                                    <$ it.title $>
-                                </h3>
-                                <p class="mt-2 text-gray-500 text-sm"><$ it.content $></p>
+                        {% endif %}
+                    </div>
+                    <div class="flex-1 mt-10 mt-md-0 text-base text-gray-500">
+                        <h2 class="text-2xl font-bold text-black">
+                            <div>
+                                <$ item.category | safe $>
                             </div>
-                            {% endfor %}
-                        </div>
+                        </h2>
+                        <p class="mb-4 mt-3">
+                            <$ item.desc | safe $>
+                        </p>
                     </div>
                 </div>
-                {% endfor %}
+                <div class="grid md:grid-cols-3 gap-4">
+                    {% for it in item.list %}
+                    {% set itIndex = loop.index %}
+                    <div class="card p-3">
+                        <h3 class="text-md font-bold d-flex align-center items-center">
+                            <img src="<$ it.icon $>" class="w-6 h-6 mr-2" />
+                            <$ it.title $>
+                        </h3>
+                        <p class="mt-2 text-gray-500 text-sm">
+                            <$ it.content $>
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-            {% if xfPage.xfPageConfig.body.adTitle %}
-            <div class="py-20 bg-green-600 text-white text-center jianghu-use">
-                <h4 class="mb-4 text-2xl font-bold"><$ xfPage.xfPageConfig.body.adTitle $></h4>
-                <a href="<$ xfPage.xfPageConfig.body.adUrl $>" target="_blank">
-                    <button type="button"
-                            class="text-green-600 bg-white hover:bg-green-200 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-                        立即使用
-                    </button>
-                </a>
+        </div> 
+        {% else %}
+        <div class="jh-block-1 py-32 relative">
+            <div class="jh-background z-0 w-2/3 md:w-3/6 h-96 absolute left-0 top-60"></div>
+            <div class="container-lg relative">
+                <div class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center">
+                    <div class="flex-1">
+                        {% if item.isNotInComputer %}
+                        <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
+                            class="laptop-image">
+                        {% else %}
+                        <div class="laptop mx-auto md:mx-0">
+                            <div class="laptop-screen">
+                                <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
+                                    class="laptop-image">
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex-1 mt-10 mt-md-0 text-base text-gray-500">
+                        <h2 class="text-2xl font-bold text-black">
+                            <div>
+                                <$ item.category | safe $>
+                            </div>
+                        </h2>
+                        <p class="mb-4 mt-3">
+                            <$ item.desc | safe $>
+                        </p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-4">
+                    {% for it in item.list %}
+                    {% set itIndex = loop.index %}
+                    <div class="card p-3">
+                        <h3 class="text-md font-bold d-flex align-center items-center">
+                            <img src="<$ it.icon $>" class="w-6 h-6 mr-2" />
+                            <$ it.title $>
+                        </h3>
+                        <p class="mt-2 text-gray-500 text-sm">
+                            <$ it.content $>
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-            {% endif %}
+        </div>   
+        {% endif %}
+        {% endfor %}
+    </div>
 
+    <!-- 使用 -->
+    {% if xfPage.xfPageConfig.body.adTitle %}
+    <div class="py-20 bg-green-600 text-white text-center jh-use">
+        <h4 class="mb-4 text-2xl font-bold">
+            <$ xfPage.xfPageConfig.body.adTitle $>
+        </h4>
+        <a href="<$ xfPage.xfPageConfig.body.adUrl $>" target="_blank">
+            <button type="button"
+                class="text-green-600 bg-white hover:bg-green-200 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                立即使用
+            </button>
+        </a>
+    </div>
+    {% endif %}
 
+    <!-- why choose -->
+    <div class="jh-why-choose">
+        <div class="jh-p-1">为什么选择江湖</div>
+        <div class="jh-p-2">江湖是目前国内开源领域的开拓者，秉承简单实用的软件开发理念，致力于企业的数字化转型</div>
+        <div class="jh-block-1 row">
+            <div class="jh-block-2 col-md">
+                <div class="jh-block-3 d-flex align-items-center justify-content-center">
+                    <span class="jh-p-3">10</span>
+                    <span class="jh-p-4">大平台</span>
+                </div>
+                <div class="jh-p-5">CRM/人资管理/财务管理/ERP等 </div>
+                <div class="jh-p-6">满足企业管理需求</div>
+            </div>
+            <div class="jh-block-2 col-md">
+                <div class="jh-block-3 d-flex align-items-center justify-content-center">
+                    <span class="jh-p-3">0</span>
+                    <span class="jh-p-4">费用</span>
+                </div>
+                <div class="jh-p-5">三项产品任选两项 </div>
+                <div class="jh-p-6">永久免费使用</div>
+            </div>
+            <div class="jh-block-2 col-md">
+                <div class="jh-block-3 d-flex align-items-center justify-content-center">
+                    <span class="jh-p-3">20+</span>
+                    <span class="jh-p-4">应用</span>
+                </div>
+                <div class="jh-p-5">全方位的帮助您的企业</div>
+                <div class="jh-p-6">实现信息化管理</div>
+            </div>
+        </div>
+    </div>
 </main>
 {% include 'template/footer.html' %}
 
