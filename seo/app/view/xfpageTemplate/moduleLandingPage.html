@@ -49,13 +49,19 @@
         background-position: bottom;
         background-repeat: no-repeat;
     }
+    .jh-module-first-block {
+        background-image: url(<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/devPlatform/bg_block01.png);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
 </style>
 
 <!-- 内容区 >>>>>>>>>>>>> -->
 <main class="ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
     <!-- 应用介绍 -->
-    <div class="py-16 jh-introduce">
-        <div class="container-lg d-md-flex align-center justify-content-between h-full items-center">
+    <div class="pb-16 jh-introduce">
+        <div class="pt-16 jh-module-first-block h-full">
+            <div class="container-lg d-md-flex align-center justify-content-between items-center">
             <div class="flex-1">
                 <h1 class="text-5xl font-bold">
                     <$ xfPage.xfPageConfig.body.title | safe $>
@@ -86,27 +92,26 @@
                 </div>
             </div>
             <div class="flex-1 mt-10 mt-md-0">
-                <div class="rounded-t ml-md-4 img-box relative w-full h-0 overflow-hidden"
+                <div class="rounded-t ml-md-4 img-box relative h-0 overflow-hidden"
                     style="padding-top: 65%">
-                    <img class="absolute top-0 left-0 w-full h-auto"
+                    <img class="absolute top-0 left-0 h-auto"
                         src="<$ xfpageSeoResourceUrl $><$ xfPage.xfPageConfig.body.cover $>" />
                 </div>
 
             </div>
+            </div>
         </div>
         {% if xfPage.xfPageConfig.body.list %}
-        <div class="container-lg d-md-flex align-center justify-content-between h-full items-center">
+        <div class="container-lg mt-4 d-md-flex align-center justify-content-between h-full items-center">
             <div
                 class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center flex-row-reverse">
                 <div class="flex-1 d-flex justify-content-end">
-                    <div class="grid md:grid-cols-3 gap-4">
+                    <div class="grid md:grid-cols-4 gap-4">
                         {% for it in xfPage.xfPageConfig.body.list %}
                         {% set itIndex = loop.index %}
                         <div class="card p-3">
-                            <h3 class="text-md font-bold d-flex align-center items-center">
-                                <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-6 h-6 mr-2" />
-                                <$ it.title $>
-                            </h3>
+                            <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-14 h-14" />
+                            <div class="mt-3 font-medium"><$ it.title $></div>
                             <p class="mt-2 text-gray-500 text-sm">
                                 <$ it.content $>
                             </p>
