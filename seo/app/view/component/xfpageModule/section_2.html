@@ -1,0 +1,54 @@
+<style>
+    /* 模块 2 */
+    .jh-xfpage-section-2 {
+        background-image: url(<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-panel/background-2.png);
+        background-size: 100% 85%;
+        background-position: -500px 64px;
+        background-repeat: no-repeat;
+    }
+</style>
+
+<!-- 模块 2 -->
+<div class="jh-xfpage-section-2 py-16">
+    <div class="container-lg d-md-flex align-center justify-content-between h-full">
+        <div class="flex-1 mt-10 pe-16 text-white">
+            <div class="fs-3 font-bold">
+                <$ xfPage.xfPageConfig.section_2.block_1 | safe $>
+            </div>
+            <div class="my-4 border-top border-white border-2"></div>
+            <div>
+                <$ xfPage.xfPageConfig.section_2.block_2 | safe $>
+            </div>
+            <div class="mt-12">
+                {% for it in xfPage.xfPageConfig.section_2.block_3 %}
+                {% set itIndex = loop.index %}
+                <div class="mb-4">
+                    <h3 class="text-md font-bold d-flex align-center items-center">
+                        <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-6 h-6 mr-2" />
+                        <$ it.title $>
+                    </h3>
+                    <p class="mt-2 text-sm">
+                        <$ it.content $>
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="flex-1 mt-10 card" style="background-color: rgba(255, 255, 255, 0.95);">
+            <div class="grid md:grid-cols-2 gap-4 pb-4">
+                {% for it in xfPage.xfPageConfig.section_2.block_4 %}
+                {% set itIndex = loop.index %}
+                <div class="p-4 pb-0">
+                    <h3 class="text-md font-bold d-flex align-center items-center">
+                        <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-6 h-6 mr-2" />
+                        <$ it.title $>
+                    </h3>
+                    <p class="mt-2 text-gray-500 text-sm">
+                        <$ it.content $>
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

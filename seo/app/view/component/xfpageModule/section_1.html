@@ -1,0 +1,81 @@
+<style>
+    /* 模块 1 */
+    .jh-xfpage-section-1 {
+        background-image: url(<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-panel/background-1.png);
+        background-size: cover;
+        background-position: bottom;
+        background-repeat: no-repeat;
+    }
+    .jh-xfpage-section-1 .jh-text-1,
+    .jh-xfpage-section-1 .jh-text-2{
+        font-weight: 800;
+        font-size: 48px;
+        color: #333333;
+        line-height: 59px;
+    }
+    .jh-xfpage-section-1 .jh-text-2{
+        color: #42B883;
+    }
+    .jh-xfpage-section-1 .jh-text-3{
+        font-weight: 500;
+        font-size: 24px;
+        color: #3F3F3F;
+        line-height: 48px;
+        margin-top: 4px;
+    }
+    .jh-xfpage-section-1 .jh-text-4{
+        font-weight: 500;
+        font-size: 18px;
+        color: #3F3F3F;
+        line-height: 32px;
+        margin-top: 13px;
+    }
+    @media (max-width: 600px)  {
+        
+    }
+</style>
+
+<!-- 模块 1 -->
+<div class="jh-xfpage-section-1">
+    <div class="container-lg d-md-flex align-center justify-content-between h-full items-center">
+        <div class="flex-1">
+            <h1 class="text-5xl font-bold">
+                <span class="jh-text-1"><$ xfPage.xfPageConfig.section_1.block_1.text_1 | safe $></span><span class="jh-text-2"><$ xfPage.xfPageConfig.section_1.block_1.text_2 | safe $></span>
+            </h1>
+            <div class="jh-text-3">
+                <$ xfPage.xfPageConfig.section_1.block_2 | safe $>
+            </div>
+            <div class="jh-text-4">
+                <p><$ xfPage.xfPageConfig.section_1.block_3.text_1 | safe $></p>
+                <p><$ xfPage.xfPageConfig.section_1.block_3.text_2 | safe $></p>
+                <p><$ xfPage.xfPageConfig.section_1.block_3.text_3 | safe $></p>
+            </div>
+            <div class="mt-3">
+                {% if xfPage.xfPageConfig.section_1.startBtnUrl %}
+                <a href="<$ xfPage.xfPageConfig.section_1.startBtnUrl $>" target="_blank">
+                    <button type="button"
+                        class="text-white bg-green-600 hover:bg-green-800 font-medium rounded-lg text-sm px-4 py-2 mb-2 mr-2">
+                        <$ xfPage.xfPageConfig.section_1.startBtnText $>
+                    </button>
+                </a>
+                {% endif %}
+                {% if xfPage.xfPageConfig.section_1.githubProjectUrl %}
+                <a href="<$ xfPage.xfPageConfig.section_1.githubProjectUrl $>" target="_blank">
+                    <button type="button"
+                        class="text-dark bg-gray-200 bg-gradient font-medium rounded-lg text-sm px-4 py-2 mb-2">
+                        <i class="fab fa-github me-1"></i>
+                        GitHub
+                    </button>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="flex-1 mt-10 mt-md-0">
+            <div class="rounded-t ml-md-4 img-box relative w-full h-0 overflow-hidden"
+                style="padding-top: 65%">
+                <img class="absolute top-0 left-0 w-full h-auto"
+                    src="<$ xfpageSeoResourceUrl $><$ xfPage.xfPageConfig.section_1.cover $>" />
+            </div>
+        </div>
+    </div>
+</div>
