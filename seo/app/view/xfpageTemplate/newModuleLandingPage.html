@@ -3,19 +3,9 @@
 
 <link rel="stylesheet" href="<$ static $>/mdbootstrap/font-awesome.6.1.1.min.css" />
 <script src="<$ static $>/tailwindcss/tailwindcss.js"></script>
-<style>
-    /* 使用 */
-    .jh-use {
-        background-image: url(<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-landingPage/background_2.png);
-        background-size: cover;
-        background-position: bottom;
-        background-repeat: no-repeat;
-    }
-</style>
 
 <!-- 内容区 >>>>>>>>>>>>> -->
 <main class="ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
-
     <!-- section_1 -->
     {% if xfPage.xfPageConfig.section_1 %}
     {% include 'component/xfpageModule/section_1.html' %}
@@ -31,28 +21,15 @@
     {% include 'component/xfpageModule/section_3.html' %}
     {% endif %}
  
-
     <!-- 使用 -->
     {% if xfPage.xfPageConfig.body.adTitle %}
-    <div class="py-20 bg-green-600 text-white text-center jh-use">
-        <h4 class="mb-4 text-2xl font-bold">
-            <$ xfPage.xfPageConfig.body.adTitle $>
-        </h4>
-        <a href="<$ xfPage.xfPageConfig.body.adUrl $>" target="_blank">
-            <button type="button"
-                class="text-green-600 bg-white hover:bg-green-200 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-                立即使用
-            </button>
-        </a>
-    </div>
+    {% include 'component/xfpageModule/use.html' %}
     {% endif %}
 
     <!-- why choose -->
-    {% include 'component/whyChoose.html' %}
+    {% include 'component/xfpageModule/whyChoose.html' %}
 </main>
 {% include 'component/footer.html' %}
 
 
 <script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.mdb.min.js"></script>
-<style>
-</style>
