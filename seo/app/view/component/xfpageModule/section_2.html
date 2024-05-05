@@ -6,11 +6,17 @@
         background-position: -500px 64px;
         background-repeat: no-repeat;
     }
+    @media (max-width: 1200px)  {
+        .jh-xfpage-section-2 {
+            background-position: top;
+            background-size: cover;
+        }
+    }
 </style>
 
 <!-- 模块 2 -->
 <div class="jh-xfpage-section-2 py-16">
-    <div class="container-lg d-md-flex align-center justify-content-between h-full">
+    <div class="container-lg d-lg-flex align-center justify-content-between h-full">
         <div class="flex-1 mt-10 pe-16 text-white">
             <div class="fs-3 font-bold">
                 <$ xfPage.xfPageConfig.section_2.block_1 | safe $>
