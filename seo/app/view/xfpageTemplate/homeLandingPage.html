@@ -35,10 +35,11 @@
     }
 
     /* 模块 */
-    .jh-module .jh-block-1:nth-child(odd){
+    .jh-module .jh-block-1:nth-child(odd) {
         background-color: #FFFFFF;
-    }   
-    .jh-module .jh-block-1:nth-child(even){
+    }
+
+    .jh-module .jh-block-1:nth-child(even) {
         background-color: #fbfbfb;
     }
 
@@ -49,15 +50,17 @@
         background-position: bottom;
         background-repeat: no-repeat;
     }
+
     .bg-home-block {
         background-image: url(//cn.jianghujs.org/jianghu-doc-v2-admin/upload/materialRepo/image/bg-home-block.png);
         background-size: cover;
         background-position: bottom;
         background-repeat: no-repeat;
     }
+
     .web-title {
-        background: linear-gradient(to right, #64b38e, #588df0);  
-        -webkit-background-clip: text;  
+        background: linear-gradient(to right, #64b38e, #588df0);
+        -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 </style>
@@ -127,7 +130,11 @@
         {% for item in xfPage.xfPageConfig.features %}
         {% set itemIndex = loop.index %}
         <!--  根据不同index，不同的背景色  -->
-        {% if itemIndex % 2 == 0 %}
+        {% if item.isTemplateV3 %}
+        <div class="jh-block-1 py-32 relative">
+            12123
+        </div>
+        {% elif itemIndex % 2 == 0 %}
         <div class="jh-block-1 py-32 relative">
             <div class="jh-background z-0 -rotate-180 w-2/3 md:w-3/6 h-96 absolute right-0 top-60"></div>
             <div class="container-lg relative">
@@ -169,7 +176,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         {% else %}
         <div class="jh-block-1 py-32 relative">
             <div class="jh-background z-0 w-2/3 md:w-3/6 h-96 absolute left-0 top-60"></div>
@@ -199,18 +206,20 @@
                         </p>
 
                         <ul>
-                        {% for it in item.list %}
-                        {% set itIndex = loop.index %}
-                        <li class="mb-3 flex">
-                            <img src="<$ it.icon $>" class="w-4 h-4 mr-2 mt-1" />
-                            <span class="text-gray-500 text-sm"><$ it.content $></span>
-                        </li>
-                        {% endfor %}
+                            {% for it in item.list %}
+                            {% set itIndex = loop.index %}
+                            <li class="mb-3 flex">
+                                <img src="<$ it.icon $>" class="w-4 h-4 mr-2 mt-1" />
+                                <span class="text-gray-500 text-sm">
+                                    <$ it.content $>
+                                </span>
+                            </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>   
+        </div>
         {% endif %}
         {% endfor %}
     </div>
