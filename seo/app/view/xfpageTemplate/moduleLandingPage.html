@@ -35,10 +35,11 @@
     }
 
     /* 模块 */
-    .jh-module .jh-block-1:nth-child(odd){
+    .jh-module .jh-block-1:nth-child(odd) {
         background-color: #FFFFFF;
-    }   
-    .jh-module .jh-block-1:nth-child(even){
+    }
+
+    .jh-module .jh-block-1:nth-child(even) {
         background-color: #fbfbfb;
     }
 
@@ -49,6 +50,7 @@
         background-position: bottom;
         background-repeat: no-repeat;
     }
+
     .jh-module-first-block {
         background-image: url(<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/devPlatform/bg_block01.png);
         background-size: 100% 100%;
@@ -62,43 +64,43 @@
     <div class="jh-introduce">
         <div class="py-8 jh-module-first-block h-full">
             <div class="container-lg d-md-flex align-center justify-content-between items-center">
-            <div class="flex-1">
-                <h1 class="text-5xl font-bold">
-                    <$ xfPage.xfPageConfig.body.title | safe $>
-                </h1>
-                <div class="my-4 text-gray-500">
-                    <p>
-                        <$ xfPage.xfPageConfig.body.desc | safe $>
-                    </p>
+                <div class="flex-1">
+                    <h1 class="text-5xl font-bold">
+                        <$ xfPage.xfPageConfig.body.title | safe $>
+                    </h1>
+                    <div class="my-4 text-gray-500">
+                        <p>
+                            <$ xfPage.xfPageConfig.body.desc | safe $>
+                        </p>
+                    </div>
+                    <div>
+                        {% if xfPage.xfPageConfig.body.startBtnUrl %}
+                        <a href="<$ xfPage.xfPageConfig.body.startBtnUrl $>" target="_blank">
+                            <button type="button"
+                                class="text-white bg-green-600 hover:bg-green-800 font-medium rounded-lg text-sm px-4 py-2 mb-2 mr-5">
+                                <$ xfPage.xfPageConfig.body.startBtnText $>
+                            </button>
+                        </a>
+                        {% endif %}
+                        {% if xfPage.xfPageConfig.body.githubProjectUrl %}
+                        <a href="<$ xfPage.xfPageConfig.body.githubProjectUrl $>" target="_blank">
+                            <button type="button"
+                                class="text-white bg-dark bg-gradient font-medium rounded-lg text-sm px-4 py-2 mb-2">
+                                <i class="fab fa-github me-1"></i>
+                                GitHub
+                            </button>
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
-                <div>
-                    {% if xfPage.xfPageConfig.body.startBtnUrl %}
-                    <a href="<$ xfPage.xfPageConfig.body.startBtnUrl $>" target="_blank">
-                        <button type="button"
-                            class="text-white bg-green-600 hover:bg-green-800 font-medium rounded-lg text-sm px-4 py-2 mb-2 mr-5">
-                            <$ xfPage.xfPageConfig.body.startBtnText $>
-                        </button>
-                    </a>
-                    {% endif %}
-                    {% if xfPage.xfPageConfig.body.githubProjectUrl %}
-                    <a href="<$ xfPage.xfPageConfig.body.githubProjectUrl $>" target="_blank">
-                        <button type="button"
-                            class="text-white bg-dark bg-gradient font-medium rounded-lg text-sm px-4 py-2 mb-2">
-                            <i class="fab fa-github me-1"></i>
-                            GitHub
-                        </button>
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="flex-1 mt-10 mt-md-0">
-                <div class="rounded-t ml-md-4 img-box relative h-0 overflow-hidden"
-                    style="padding-top: 65%">
-                    <img class="absolute top-0 left-0 h-auto"
-                        src="<$ xfpageSeoResourceUrl $><$ xfPage.xfPageConfig.body.cover $>" />
-                </div>
+                <div class="flex-1 mt-10 mt-md-0">
+                    <div class="rounded-t ml-md-4 img-box relative h-0 overflow-hidden"
+                        style="padding-top: 65%">
+                        <img class="absolute top-0 left-0 h-auto"
+                            src="<$ xfpageSeoResourceUrl $><$ xfPage.xfPageConfig.body.cover $>" />
+                    </div>
 
-            </div>
+                </div>
             </div>
         </div>
         {% if xfPage.xfPageConfig.body.list %}
@@ -117,8 +119,12 @@
         {% for item in xfPage.xfPageConfig.features %}
         {% set itemIndex = loop.index %}
         <!--  根据不同index，不同的背景色  -->
-        {% if itemIndex % 2 == 0 %}
-        
+        {% if item.isTemplateV3 %}
+        <div class="jh-block-1 py-32 relative">
+            12123
+        </div>
+        {% elif itemIndex % 2 == 0 %}
+
         <div class="jh-block-1 py-32 relative">
             <div class="jh-background z-0 -rotate-180 w-2/3 md:w-3/6 h-96 absolute right-0 top-60"></div>
             <div class="container-lg relative">
@@ -149,9 +155,9 @@
                 </div>
                 {% set listCardData = item.list %}
                 {% include 'component/xfpageStyleModule/listCard2.html' %}
-                
+
             </div>
-        </div> 
+        </div>
         {% else %}
         <div class="jh-block-1 py-32 relative">
             <div class="jh-background z-0 w-2/3 md:w-3/6 h-96 absolute left-0 top-60"></div>
@@ -184,7 +190,7 @@
                 {% set listCardData = item.list %}
                 {% include 'component/xfpageStyleModule/listCard2.html' %}
             </div>
-        </div>   
+        </div>
         {% endif %}
         {% endfor %}
     </div>
