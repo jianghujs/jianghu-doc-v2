@@ -120,8 +120,12 @@
         {% set itemIndex = loop.index %}
         <!--  根据不同index，不同的背景色  -->
         {% if item.isTemplateV3 %}
-        <div class="jh-block-1 py-32 relative">
+        <div class="jh-block-1 py-20 relative">
+            {% if item.bg %}
+            <div class="z-0 absolute inset-0 bg-auto bg-repeat h-[550px] bg-zinc-100" style="background-image: url('<$ xfpageSeoResourceUrl $><$ item.bg $>');"></div>
+            {% else %}
             <div class="jh-background z-0 -rotate-180 w-2/3 md:w-3/6 h-96 absolute right-0 top-60"></div>
+            {% endif %}
             <div class="container-lg relative">
                 <div class="relative pb-10 h-full">
                     {% if item.uiIndex == 1 %}
@@ -156,81 +160,133 @@
                     </div>
 
                     {% elif item.uiIndex == 2 %}
-                    123
+                    <div class="flex justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">
+                                <div>
+                                    <$ item.category | safe $>
+                                </div>
+                            </h2>
+                            <p class="mt-3 text-gray-500">
+                                <$ item.subtitle | safe $>
+                            </p>
+                            {% for it in item.list %}
+                            {% set itIndex = loop.index %}
+                            {% if itIndex < 4 %}
+                                <div class="py-3 <$ it.style $>">
+                                <h3 class="text-md font-bold d-flex align-center items-center">
+                                    <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-9 h-9 mr-2" />
+                                    <$ it.title $>
+                                </h3>
+                                {% if item.content != "" %}
+                                <p class="mt-2 text-gray-500 text-sm ml-11 text-left">
+                                    <$ it.content $>
+                                </p>
+                                {% endif %}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="relative flex-1 flex">
+                        <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Rectangle 320.png" class="absolute z-0 right-10 w-[604px] h-[388px]" alt="">
+                        <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Rectangle 321.png" class="absolute z-1 right-0 top-10 w-[580px] h-[318px]" alt="">
+                        <div class="mt-3 text-gray-500 absolute z-2 right-10 top-10 max-w-[520px]">
+                            <$ item.desc | safe $>
+                        </div>
+                        <div class="mt-3 absolute z-2 right-10 bottom-5 max-w-[520px]">
+                            <div class="grid md:grid-cols-2 gap-2">
+                                {% for it in item.list %}
+                                {% set itIndex = loop.index %}
+                                {% if itIndex > 4 %}
+                                <div class="card p-2">
+                                    <div class="mt-2 font-medium text-sm">
+                                        <$ it.title $>
+                                    </div>
+                                    <p class="mt-1 text-gray-500 text-xs">
+                                        <$ it.content $>
+                                    </p>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    </div>
+    {% elif itemIndex % 2 == 0 %}
+
+    <div class="jh-block-1 py-32 relative">
+        <div class="jh-background z-0 -rotate-180 w-2/3 md:w-3/6 h-96 absolute right-0 top-60"></div>
+        <div class="container-lg relative">
+            <div class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center flex-row-reverse">
+                <div class="flex-1 d-flex justify-content-end">
+                    {% if item.isNotInComputer %}
+                    <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
+                        class="laptop-image">
+                    {% else %}
+                    <div class="laptop mx-auto md:mx-0">
+                        <div class="laptop-screen">
+                            <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
+                                class="laptop-image">
+                        </div>
+                    </div>
                     {% endif %}
                 </div>
-            </div>
-        </div>
-        {% elif itemIndex % 2 == 0 %}
-
-        <div class="jh-block-1 py-32 relative">
-            <div class="jh-background z-0 -rotate-180 w-2/3 md:w-3/6 h-96 absolute right-0 top-60"></div>
-            <div class="container-lg relative">
-                <div class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center flex-row-reverse">
-                    <div class="flex-1 d-flex justify-content-end">
-                        {% if item.isNotInComputer %}
-                        <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
-                            class="laptop-image">
-                        {% else %}
-                        <div class="laptop mx-auto md:mx-0">
-                            <div class="laptop-screen">
-                                <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
-                                    class="laptop-image">
-                            </div>
+                <div class="flex-1 mt-10 mt-md-0 text-base text-gray-500">
+                    <h2 class="text-2xl font-bold text-black">
+                        <div>
+                            <$ item.category | safe $>
                         </div>
-                        {% endif %}
-                    </div>
-                    <div class="flex-1 mt-10 mt-md-0 text-base text-gray-500">
-                        <h2 class="text-2xl font-bold text-black">
-                            <div>
-                                <$ item.category | safe $>
-                            </div>
-                        </h2>
-                        <p class="mt-3">
-                            <$ item.desc | safe $>
-                        </p>
-                    </div>
+                    </h2>
+                    <p class="mt-3">
+                        <$ item.desc | safe $>
+                    </p>
                 </div>
-                {% set listCardData = item.list %}
-                {% include 'component/xfpageStyleModule/listCard2.html' %}
+            </div>
+            {% set listCardData = item.list %}
+            {% include 'component/xfpageStyleModule/listCard2.html' %}
 
-            </div>
         </div>
-        {% else %}
-        <div class="jh-block-1 py-32 relative">
-            <div class="jh-background z-0 w-2/3 md:w-3/6 h-96 absolute left-0 top-60"></div>
-            <div class="container-lg relative">
-                <div class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center">
-                    <div class="flex-1">
-                        {% if item.isNotInComputer %}
-                        <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
-                            class="laptop-image">
-                        {% else %}
-                        <div class="laptop mx-auto md:mx-0">
-                            <div class="laptop-screen">
-                                <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
-                                    class="laptop-image">
-                            </div>
+    </div>
+    {% else %}
+    <div class="jh-block-1 py-32 relative">
+        <div class="jh-background z-0 w-2/3 md:w-3/6 h-96 absolute left-0 top-60"></div>
+        <div class="container-lg relative">
+            <div class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center">
+                <div class="flex-1">
+                    {% if item.isNotInComputer %}
+                    <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
+                        class="laptop-image">
+                    {% else %}
+                    <div class="laptop mx-auto md:mx-0">
+                        <div class="laptop-screen">
+                            <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
+                                class="laptop-image">
                         </div>
-                        {% endif %}
                     </div>
-                    <div class="flex-1 mt-10 mt-md-0 text-base text-gray-500">
-                        <h2 class="text-2xl font-bold text-black">
-                            <div>
-                                <$ item.category | safe $>
-                            </div>
-                        </h2>
-                        <p class="mt-3">
-                            <$ item.desc | safe $>
-                        </p>
-                    </div>
+                    {% endif %}
                 </div>
-                {% set listCardData = item.list %}
-                {% include 'component/xfpageStyleModule/listCard2.html' %}
+                <div class="flex-1 mt-10 mt-md-0 text-base text-gray-500">
+                    <h2 class="text-2xl font-bold text-black">
+                        <div>
+                            <$ item.category | safe $>
+                        </div>
+                    </h2>
+                    <p class="mt-3">
+                        <$ item.desc | safe $>
+                    </p>
+                </div>
             </div>
+            {% set listCardData = item.list %}
+            {% include 'component/xfpageStyleModule/listCard2.html' %}
         </div>
-        {% endif %}
-        {% endfor %}
+    </div>
+    {% endif %}
+    {% endfor %}
     </div>
 
     <!-- 使用 -->
