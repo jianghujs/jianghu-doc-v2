@@ -50,7 +50,7 @@
     {% endif %}
     <div class="bg-white">
         <div class="container-lg pb-4">
-            <div class="py-4 mb-md-0 d-sm-flex justify-content-between text-base font-medium text-center">
+            <!-- <div class="py-4 mb-md-0 d-sm-flex justify-content-between text-base font-medium text-center">
                 <ul class="m-0 p-0 app-tab flex flex-wrap flex-1">
                     {% for item in xfPage.xfPageConfig.appCategoryList %}
                     <li class="app-tab-item me-2 px-2">
@@ -58,7 +58,6 @@
                     </li>
                     {% endfor %}
                 </ul>
-
                 <div class="flex items-center max-w-sm mx-auto">
                     <label for="simple-search" class="sr-only">Search</label>
                     <div class="relative w-full">
@@ -76,11 +75,13 @@
                         <span class="sr-only">Search</span>
                     </button>
                 </div>
-
-            </div>
+            </div> -->
+            {% for appCategory in xfPage.xfPageConfig.appCategoryList %}
+            <div class="jh-text-3 font-bold"><$ appCategory.title $></div>
+            <p class="text-sm h-12"><$ appCategory.desc $></p>
             <div class="grid md:grid-cols-4 gap-4">
                 <div class="card-empty d-none text-center text-gray-500 text-sm col-span-4">暂无数据</div>
-                {% for item in xfPage.xfPageConfig.appList %}
+                {% for item in appCategory.appList %}
                 <a href="<$ item.url $>"
                     class="card rounded relative overflow-hidden hover:-translate-y-2 transition-all hover:shadow-md">
                     <div class="item-labels">
@@ -95,25 +96,20 @@
                             <p class="app-type d-none"><$ item.type $></p>
                             <div class="rounded-t ml-4 img-box relative w-full h-0 overflow-hidden"
                                     style="padding-top: 50%">
-                                <img class="absolute top-0 left-0 w-full h-auto" src="<$ item.cover $>"
+                                <img class="absolute top-0 left-0 w-full h-auto" src="<$ xfpageSeoResourceUrl $><$ item.cover $>"
                                         alt="<$ item.title $>"/>
                             </div>
                         </div>
                     </div>
                     <div class="p-4">
                         <p class="text-gray-600 text-sm h-12"><$ item.desc $></p>
-                        <div class="d-flex flex-wrap tag-list">
-                            {% for tag in item.tags %}
-                            <div class="mb-2 bg-gray-100 text-gray-500 mr-2 px-2 py-1 rounded text-xs">
-                                <$ tag $>
-                            </div>
-                            {% endfor %}
-                        </div>
                     </div>
                 </a>
-
                 {% endfor %}
             </div>
+            {% endfor %}
+
+
         </div>
     </div>
 </main>
