@@ -42,6 +42,53 @@
     a:hover {
         color: green;
     }
+    .appCategory-title{
+        font-weight: 600;
+        font-size: 28px;
+        color: #333333;
+        line-height: 33px;
+        padding-top: 50px;
+        margin-bottom: 10px;
+    }
+    .appCategory-desc{
+        font-weight: 400;
+        font-size: 15px;
+        color: #666666;
+        line-height: 24px;
+        margin-bottom: 20px;
+    }
+    .appCard {
+        width: 282px;
+        height: 285px;
+        background: #FFFFFF;
+        box-shadow: 0px 10px 12px 0px rgba(0,0,0,0.05);
+        border-radius: 8px 8px 8px 8px;
+        border: 4px solid #42B883;
+    }
+    .appCard-title {
+        display: inline-block; 
+        height: 41px; 
+        background: #383838; 
+        border-radius: 8px 0px 24px 0px; 
+        padding: 8px 20px 8px 12px;
+        position: absolute;
+        z-index: 100;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 23px;
+        color: #FFFFFF;
+    }
+    .appCard-desc {
+        background: #42B883;
+        height: 72px;
+    }
+    .appCard-desc p {
+        font-weight: 400;
+        font-size: 13px;
+        color: #FFFFFF;
+        line-height: 17px;
+        padding: 10px 16px 0px 16px;
+    }
 </style>
 <main id="main" class="ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
     <!-- section_1 -->
@@ -77,33 +124,34 @@
                 </div>
             </div> -->
             {% for appCategory in xfPage.xfPageConfig.appCategoryList %}
-            <div class="jh-text-3 font-bold"><$ appCategory.title $></div>
-            <p class="text-sm h-12"><$ appCategory.desc $></p>
+            <div class="appCategory-title"><$ appCategory.title $></div>
+            <div class="appCategory-desc"><$ appCategory.desc $></div>
             <div class="grid md:grid-cols-4 gap-4">
                 <div class="card-empty d-none text-center text-gray-500 text-sm col-span-4">暂无数据</div>
                 {% for item in appCategory.appList %}
-                <a href="<$ item.url $>"
-                    class="card rounded relative overflow-hidden hover:-translate-y-2 transition-all hover:shadow-md">
-                    <div class="item-labels">
-                        {% if item.isHot %}
-                        <div class="label red">热门</div>
-                        {% endif %}
-                    </div>
 
-                    <div class="bg-blue-100">
+                <a href="<$ item.url $>" class="relative hover:-translate-y-2 transition-all">
+                    <div class="appCard-title">
+                        <$ item.title $>
+                    </div>
+                    <div class="appCard card overflow-hidden">
+                        <div class="item-labels">
+                            {% if item.isHot %}
+                            <div class="label red">热门</div>
+                            {% endif %}
+                        </div>
                         <div>
-                            <p class="px-4 py-3 mb-0 font-bold text-base text-black"><$ item.title $></p>
-                            <p class="app-type d-none"><$ item.type $></p>
-                            <div class="rounded-t ml-4 img-box relative w-full h-0 overflow-hidden"
-                                    style="padding-top: 50%">
-                                <img class="absolute top-0 left-0 w-full h-auto" src="<$ xfpageSeoResourceUrl $><$ item.cover $>"
+                            <div style="height: 48px;"></div>
+                            <div class="rounded-t pb-4 img-box relative w-full h-0 overflow-hidden" style="padding-top: 50%">
+                                <img class="absolute top-0 left-0 w-full h-auto pl-5 pr-5" src="<$ xfpageSeoResourceUrl $><$ item.cover $>"
                                         alt="<$ item.title $>"/>
                             </div>
                         </div>
+                        <div class="appCard-desc">
+                            <p><$ item.desc $></p>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <p class="text-gray-600 text-sm h-12"><$ item.desc $></p>
-                    </div>
+
                 </a>
                 {% endfor %}
             </div>
