@@ -104,47 +104,11 @@
 <main class="ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
     <!-- 应用介绍 -->
     <div class="jh-introduce">
-        <div class="py-8 jh-module-first-block h-full">
-            <div class="container-lg d-md-flex align-center justify-content-between items-center">
-                <div class="flex-1">
-                    <h1 class="text-5xl font-bold" style="font-family: 'AlibabaPuHuiTiHeavy'">
-                        <$ xfPage.xfPageConfig.body.title | safe $>
-                    </h1>
-                    <div class="my-4 text-gray-500">
-                        <p>
-                            <$ xfPage.xfPageConfig.body.desc | safe $>
-                        </p>
-                    </div>
-                    <div>
-                        {% if xfPage.xfPageConfig.body.startBtnUrl %}
-                        <a href="<$ xfPage.xfPageConfig.body.startBtnUrl $>" target="_blank">
-                            <button type="button"
-                                class="text-white bg-green-600 hover:bg-green-800 font-medium rounded-lg text-sm px-4 py-2 mb-2 mr-5">
-                                <$ xfPage.xfPageConfig.body.startBtnText $>
-                            </button>
-                        </a>
-                        {% endif %}
-                        {% if xfPage.xfPageConfig.body.githubProjectUrl %}
-                        <a href="<$ xfPage.xfPageConfig.body.githubProjectUrl $>" target="_blank">
-                            <button type="button"
-                                class="text-white bg-dark bg-gradient font-medium rounded-lg text-sm px-4 py-2 mb-2">
-                                <i class="fab fa-github me-1"></i>
-                                GitHub
-                            </button>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="flex-1 mt-10 mt-md-0">
-                    <div class="rounded-t ml-md-4 img-box relative h-0 overflow-hidden"
-                        style="padding-top: 65%">
-                        <img class="absolute top-0 left-0 h-auto"
-                            src="<$ xfpageSeoResourceUrl $><$ xfPage.xfPageConfig.body.cover $>" />
-                    </div>
+        <!-- section_1 -->
+        {% if xfPage.xfPageConfig.section_1 %}
+        {% include 'component/xfpageModule/section_1.html' %}
+        {% endif %}
 
-                </div>
-            </div>
-        </div>
         {% if xfPage.xfPageConfig.body.list %}
         {% set listCardData = xfPage.xfPageConfig.body.list %}
 
