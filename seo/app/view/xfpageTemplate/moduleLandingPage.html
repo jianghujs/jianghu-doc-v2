@@ -462,10 +462,10 @@
                             <$ item.desc | safe $>
                         </p>
                     </div>
-                    <div class="grid md:grid-cols-3 gap-7 pt-6">
+                    <div class="grid md:grid-cols-3 gap-12 pt-6">
                         {% for it in item.list %}
                         {% set itIndex = loop.index %}
-                        <div class="card" style="border-radius: 8px 8px 8px 8px;">
+                        <div class="card hover:-translate-y-2 transition-all" style="border-radius: 8px 8px 8px 8px;">
                             <div class="p-3 pb-1">
                                 <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-6 h-6 mr-2 d-inline" />
                                 <span class="mt-2 font-medium text-sm">
