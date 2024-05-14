@@ -221,7 +221,7 @@
         </div>
         {% elif item.isTemplateV3 %}
         <!-- 首页的布局 -->
-        <div class="jh-block-1 py-10 relative">
+        <div class="jh-block-1 py-2 relative">
             {% if item.bg %}
             <div class="z-0 absolute inset-0 bg-auto bg-repeat h-full bg-zinc-100" style="background-image: url('<$ xfpageSeoResourceUrl $><$ item.bg $>');"></div>
             {% endif %}
@@ -462,12 +462,12 @@
                             <$ item.desc | safe $>
                         </p>
                     </div>
-                    <div class="grid md:grid-cols-3 gap-3 pt-4">
+                    <div class="grid md:grid-cols-3 gap-7 pt-6">
                         {% for it in item.list %}
                         {% set itIndex = loop.index %}
-                        <div class="card">
+                        <div class="card" style="border-radius: 8px 8px 8px 8px;">
                             <div class="p-3 pb-1">
-                                <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Frame 336@2x.png" class="w-6 h-6 mr-2 d-inline" />
+                                <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-6 h-6 mr-2 d-inline" />
                                 <span class="mt-2 font-medium text-sm">
                                     <$ it.title $>
                                 </span>
@@ -475,7 +475,7 @@
                             <p class="mt-1 text-gray-500 text-xs px-3 pb-2">
                                 <$ it.content $>
                             </p>
-                            <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-full h-[225px] object-cover" />
+                            <img src="<$ xfpageSeoResourceUrl $><$ it.cover $>" style="border-radius: 0 0 8px 8px;" class="w-full h-[225px] object-cover" />
                         </div>
                         {% endfor %}
                     </div>
