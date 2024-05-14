@@ -20,7 +20,7 @@ module.exports = (appInfo) => {
 
   return {
     appId,
-    appTitle: "JIANGHU",
+    appTitle: "江湖数字化平台",
     meilisearch: {
       host: 'https://meilisearch.openjianghu.org',
       apiKey: 'Iy4kJeGu643c54a953fdc6a5d0cbf752a228a8fc58cb1a00ddaf1634fe4e82f07475718e',
