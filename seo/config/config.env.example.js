@@ -7,6 +7,7 @@ module.exports = appInfo => {
 
   return {
     adminUrl: `http://127.0.0.1:7368/jianghu-doc-v2-admin`,
+    xfpageSeoResourceUrl: "", // 开发用，正式环境请留空
     language: 'zh',
     meilisearch: {
       host: 'https://meilisearch.openjianghu.org',
