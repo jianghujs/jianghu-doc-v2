@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /jianghu-doc-v2-admin/
+Allow: /doc/
+Sitemap: https://www.openjianghu.org/sitemap.xml

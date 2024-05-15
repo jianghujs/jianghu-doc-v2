@@ -1,0 +1,60 @@
+{
+    "logo": "/logo.svg",
+    "title": "江湖数字化平台",
+    "menuList": [
+        {
+            "categoryName": "首页",
+            "path": "/doc/index",
+            "xfArticleId": "5736",
+            "isLogin": false
+        },
+        {
+            "categoryName": "开发平台",
+            "path": "/doc/jianghujs",
+            "xfArticleId": "5737",
+            "isLogin": false
+        },
+        {
+            "categoryName": "应用",
+            "path": "/doc/app",
+            "xfArticleId": "5738",
+            "isLogin": false
+        },
+        {
+            "categoryName": "运维",
+            "path": "/doc/panel",
+            "xfArticleId": "5739",
+            "isLogin": false
+        },
+        {
+            "categoryName": "软件开发理念",
+            "path": "/doc/concept",
+            "xfArticleId": "5740",
+            "isLogin": false
+        },
+        {
+            "categoryName": "数字化方法论",
+            "path": "/doc/digital",
+            "xfArticleId": "5741",
+            "isLogin": false
+        },
+        {
+            "categoryName": "研发",
+            "path": "/doc/r&d",
+            "xfArticleId": "5742",
+            "isLogin": false
+        },
+        {
+            "categoryName": "行业案例",
+            "path": "/doc/p&e",
+            "xfArticleId": "5743",
+            "isLogin": false
+        }
+    ],
+    "userAction": {
+        "isOpen": true,
+        "admin": true,
+        "password": true,
+        "logout": true
+    }
+}
