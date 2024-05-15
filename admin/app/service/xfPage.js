@@ -173,6 +173,7 @@ class xfPageService extends Service {
 
   async autoCreateItem({appTitle, appType, appDesc, copyAppId}) {
     const { jianghuKnex } = this.app;
+    const { docAppId } = this.app.config;
     const constantUi = await jianghuKnex('seo_ui')
       .where({ constantKey: 'submenu' })
       .first();
@@ -211,7 +212,7 @@ class xfPageService extends Service {
         type: appType,
         tags: [],
         cover: "https://demo.jianghujs.org/jianghu-doc-v2-admin/upload/materialRepo/image/app演示图.PNG",
-        "url": "/jianghu-doc-v2-seo/page/xfArticle/" + xfPageId,
+        "url": `/${docAppId}/page/xfArticle/` + xfPageId,
       });
       await trx('xf_page')
         .where({ xfPageId: 5738 })
@@ -231,7 +232,7 @@ class xfPageService extends Service {
           // 添加 category
           await this.createCategory(trx, { categoryId: categoryMaxId, categoryName: appTitle + '介绍', categoryGroup: '应用_' + appTitle });
           await trx('xf_page').insert({ ...xfPageInsertData, categoryId: categoryMaxId });
-          item.path = "/jianghu-doc-v2-seo/page/xfArticle/" + xfPageId;
+          item.path = `/${docAppId}/page/xfArticle/` + xfPageId;
           categoryMaxId++;
         }
         if ((item.categoryName || '').includes('培训')) {
@@ -244,7 +245,7 @@ class xfPageService extends Service {
           // 创建 category
           await this.createCategory(trx, { categoryId: categoryMaxId, categoryName, categoryGroup: '应用_' + appTitle });
 
-          item.path = "/jianghu-doc-v2-seo/page/article/" + articleMaxId;
+          item.path = `/${docAppId}/page/article/` + articleMaxId;
           // 创建 article
           const content = `
           [jh-article-query]
@@ -297,7 +298,7 @@ class xfPageService extends Service {
           // 创建 category
           await this.createCategory(trx, { categoryId: categoryMaxId, categoryName, categoryGroup: '应用_' + appTitle });
 
-          item.path = "/jianghu-doc-v2-seo/page/article/" + articleMaxId;
+          item.path = `/${docAppId}/page/article/` + articleMaxId;
           for (const art of articleList) {
             // 创建 article
             await this.createArticle(trx, { ...art, categoryId: categoryMaxId, articleId: articleMaxId });
