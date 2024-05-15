@@ -143,11 +143,12 @@
                         </div>
                     </h2>
                 </div>
+                
                 <div class="grid md:grid-cols-2 gap-2 mt-10">
                     {% for it in item.list %}
                     {% set itIndex = loop.index %}
                     <div class="p-4 pt-2 bg-green-100">
-                        <div class="mt-2 font-medium text-lg	">
+                        <div class="mt-2 font-medium text-lg">
                             <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-5 h-5 inline -mt-1" />
                             <$ it.title $>
                         </div>
@@ -278,10 +279,12 @@
                                 class="absolute z-0 right-10 w-[604px] h-[388px]" alt="">
                             <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Rectangle 321.png"
                                 class="absolute z-1 right-0 top-10 w-[580px] h-[338px]" alt="">
-                            <div class="mt-3 text-gray-500 absolute z-2 right-10 top-10 max-w-[520px]">
-                                <$ item.desc | safe $>
-                            </div>
-                            <div class="mt-3 absolute z-2 right-10 bottom-5 max-w-[520px]">
+                            
+                            <div class="mt-3 absolute z-2 right-10 -bottom-2 max-w-[520px]">
+                                <div class="my-3 text-gray-500">
+                                    <$ item.desc | safe $>
+                                </div>
+
                                 <div class="grid md:grid-cols-2 gap-2">
                                     {% for it in range(4, item.list.length) %}
                                     {% set itIndex = loop.index %}
@@ -383,7 +386,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="md:absolute md:left-0 md:-ml-24 md:pl-24 rounded-r-2xl shadow-xl shadow-blue-950/5 md:block translate-y-[80px] z-1  md:w-4/5 backdrop-blur-md bg-white/30"
+                        <div class="md:absolute md:left-0 md:-ml-36 md:pl-32 rounded-r-2xl shadow-xl shadow-blue-950/5 md:block translate-y-[80px] z-1  md:w-4/5 backdrop-blur-md bg-white/30"
                             style="border: 1px solid rgba(66, 184, 131, 0.1)!important;">
                                 <div class="grid md:grid-cols-3 gap-3 p-2">
                                     {% for it in item.list %}
