@@ -24,7 +24,9 @@
     "autod-egg": "^1.1.0",
     "dotenv": "16.3.1",
     "egg-bin": "^4.11.0",
-    "egg-mock": "^3.21.0"
+    "egg-mock": "^3.21.0",
+    "pretty-data": "^0.40.0",
+    "sitemap": "^7.1.1"
   },
   "engines": {
     "node": ">=10.0.0"
@@ -34,20 +36,12 @@
     "stop": "egg-scripts stop --title=jianghu_doc_seo_v2",
     "dev": "egg-bin dev --port=7367",
     "restart": "npm run stop && npm run start",
-
     "start:en": "egg-scripts start --daemon  --port=7377 --title=en_jianghu_doc_seo_v2 --workers=6",
     "stop:en": "egg-scripts stop --title=en_jianghu_doc_seo_v2",
     "dev:en": "egg-bin dev --port=7377",
     "restart:en": "npm run stop:en && npm run start:en",
-
     "debug": "egg-bin debug",
-    "test": "npm run lint -- --fix && npm run test-local",
-    "test-local": "egg-bin test",
-    "cov": "egg-bin cov",
-    "lint": "eslint .",
-    "ci": "npm run lint && npm run cov",
-    "autod": "autod",
-
+    "generateSitemap": "node ./seoForSearch/generateSitemap",
     "meilisearchUtil:getKeys": "node ./meilisearchScript/meilisearchUtil getKeys",
     "meilisearchUtil:createKey": "node ./meilisearchScript/meilisearchUtil createKey",
     "meilisearchUtil:deleteKey": "node ./meilisearchScript/meilisearchUtil deleteKey",
