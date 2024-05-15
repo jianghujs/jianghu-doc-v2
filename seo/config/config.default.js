@@ -14,7 +14,7 @@ const jianghuPath = path.join(jianghuPathTemp, "../");
 
 module.exports = (appInfo) => {
   assert(appInfo);
-  const appId = "jianghu-doc-v2-seo";
+  const appId = "doc";
   const uploadDir = path.join(appInfo.baseDir, "upload");
   const downloadBasePath = `/${appId}/upload`;
 

@@ -37,6 +37,7 @@ class ArticleService extends Service {
     // 文章数据
     const article = await jianghuKnex(tableEnum.view01_article)
       .whereIn('articlePublishStatus', [ 'public', 'login'])
+      .whereIn('categoryPublishStatus', [ 'public', 'login'])
       .where({ articleId })
       .first();
 
@@ -57,7 +58,7 @@ class ArticleService extends Service {
       }
     }
 
-    if (article.articlePublishStatus === 'login' && !userStatusIsActive) {
+    if ((article.articlePublishStatus === 'login' || article.categoryPublishStatus === 'login') && !userStatusIsActive) {
       article.articleContent = "## 无权限访问，请登录后查看";
       article.articleContentForSeo = "<h2>无权限访问，请登录后查看</h2>";
     }
