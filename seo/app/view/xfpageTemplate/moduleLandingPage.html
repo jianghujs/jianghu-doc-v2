@@ -3,30 +3,9 @@
 
 <link rel="stylesheet" href="<$ static $>/mdbootstrap/font-awesome.6.1.1.min.css" />
 <script src="<$ static $>/tailwindcss/tailwindcss.js"></script>
-<script>
-    // 有个模块，需要根据屏幕宽度，动态设置宽度
-    function computedWidth() {
-        var div1 = document.getElementById("autoWidth1");
-        var container_lg = document.querySelector(".container-lg")
-        var div2 = document.getElementById("autoWidth2");
-        if (!div1) {
-            console.log("not found");
-            requestAnimationFrame(computedWidth);
-        } else {
-            var container_lg_w = container_lg.offsetWidth;
-            var widthFull = window.innerWidth;
-            var spaceWidth = (widthFull - container_lg_w) / 2;
-            var width3_5 = widthFull / 5 * 3;
-            var width2_5 = widthFull / 5 * 2;
-            div1.style.width = width2_5 - spaceWidth - 30 + "px";
-            div2.style.width = width3_5 - spaceWidth - 30 + "px";
-            console.log("widthFull", width2_5 - spaceWidth - + "px");
-        }
-    }
-    if (window.innerWidth > 768) {
-        computedWidth();
-    }
-</script>
+
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/font-awesome.6.1.1.min.css" />
+
 <style>
     .laptop {
         position: relative;
@@ -142,12 +121,13 @@
                     <div class="p-2">
                         <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-11 h-11 m-auto md:block hidden" />
                         <div class="mt-2 font-medium text-sm text-center">
-                            <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-8 h-8 m-auto md:hidden inline" />
+                            <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>"
+                                class="w-8 h-8 m-auto md:hidden inline" />
                             <span class="md:text-baseline text-xl">
                                 <$ it.title $>
                             </span>
                         </div>
-                        <p class="mt-1 text-gray-500 md:text-xs text-center">
+                        <p class="mt-1 text-gray-500 md:text-sm text-center">
                             <$ it.content $>
                         </p>
                     </div>
@@ -178,7 +158,8 @@
                             <div class="flex-1 pr-4">
                                 {% for it2 in it.list %}
                                 <div class="text-sm font-semibold pt-2 text-gray-500 flex items-start">
-                                    <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/app/Frame 278.svg" class="w-4 h-4" />
+                                    <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/app/Frame 278.svg"
+                                        class="w-4 h-4" />
                                     <span class="flex-1 pl-2">
                                         <$ it2 | safe $>
                                     </span>
@@ -205,7 +186,8 @@
                             <div class="flex-1 pr-4">
                                 {% for it2 in it.list %}
                                 <div class="text-sm font-semibold pt-2 text-gray-500 flex items-start">
-                                    <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/app/Frame 278.svg" class="w-4 h-4" />
+                                    <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/app/Frame 278.svg"
+                                        class="w-4 h-4" />
                                     <span class="flex-1 pl-2">
                                         <$ it2 | safe $>
                                     </span>
@@ -221,59 +203,59 @@
         </div>
         {% elif item.isTemplateV3 %}
         <!-- 首页的布局 -->
-        <div class="jh-block-1 py-2 relative">
+        <div class="jh-block-1 relative">
             {% if item.bg %}
-            <div class="z-0 absolute inset-0 bg-auto bg-repeat h-full bg-zinc-100" style="background-image: url('<$ xfpageSeoResourceUrl $><$ item.bg $>');"></div>
+            <div class="z-0 absolute inset-0 bg-auto bg-repeat h-full bg-zinc-100"
+                style="background-image: url('<$ xfpageSeoResourceUrl $><$ item.bg $>');"></div>
             {% endif %}
-            {% if item.uiIndex == 5 %}
-            <div class="absolute right-0 w-2/4 rounded-s-lg h-64 hidden md:block" style="background-color: #42B883;"></div>
-            <div class="rounded-2xl shadow-xl shadow-blue-950/5 hidden md:block translate-y-[80px] z-1 absolute left-0 w-3/5 h-[470px] backdrop-blur-md bg-white/30"
-                style="border: 1px solid rgba(66, 184, 131, 0.1)!important;">
-            </div>
-            {% endif %}
+
             <div class="container-lg relative">
-                <div class="relative pb-10 h-full">
+                <div class="relative h-full py-10">
                     {% if item.uiIndex == 1 %}
-                    <div class="mt-10 mt-md-0 text-base text-gray-500 text-center">
-                        <h2 class="text-2xl font-bold text-black">
-                            <div>
-                                <$ item.category | safe $>
+                    <div class="pb-10">
+                        <div class="mt-md-0 text-base text-gray-500 text-center">
+                            <h2 class="text-2xl font-bold text-black">
+                                <div>
+                                    <$ item.category | safe $>
+                                </div>
+                            </h2>
+                            <div class="mt-3 md:text-md text-sm text-gray-600">
+                                <div><$ item.desc | safe $></div>
                             </div>
-                        </h2>
-                        <p class="mt-3">
-                            <$ item.desc | safe $>
-                        </p>
-                    </div>
-                    <div class="text-center mt-10 relative mdStyle">
-                        <img class="d-inline" src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>" class="laptop-image">
-                        {% for it in item.list %}
-                        {% set itIndex = loop.index %}
-                        <div class="p-3 <$ it.style $>">
-                            <h3 class="text-md font-bold d-flex align-center items-center">
-                                <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="<$ it.iconSize $> mr-2" />
-                                {% if item.title != "" %}<$ it.title $>{% endif %}
-                            </h3>
-                            {% if item.content != "" %}
-                            <p class="mt-2 text-gray-500 text-sm ml-8 text-left">
-                                <$ it.content $>
-                            </p>
-                            {% endif %}
                         </div>
-                        {% endfor %}
+                        <div class="text-center relative mdStyle">
+                            <img class="d-inline" src="<$ xfpageSeoResourceUrl $><$ item.cover $>"
+                                alt="<$ item.category $>" class="laptop-image">
+                            {% for it in item.list %}
+                            {% set itIndex = loop.index %}
+                            <div class="p-3 <$ it.style $>">
+                                <h3 class="text-md font-bold d-flex align-center items-center">
+                                    <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="<$ it.iconSize $> mr-2" />
+                                    {% if item.title != "" %}<$ it.title $>{% endif %}
+                                </h3>
+                                {% if item.content != "" %}
+                                <p class="mt-2 text-gray-500 text-sm ml-8 text-left">
+                                    <$ it.content $>
+                                </p>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
 
                     {% elif item.uiIndex == 2 %}
-                    <div class="flex justify-between">
+                    <div class="flex justify-between pb-3">
                         <div>
                             <h2 class="text-2xl font-bold text-black">
                                 <div>
                                     <$ item.category | safe $>
                                 </div>
                             </h2>
-                            <p class="mt-3 text-gray-500">
+                            <p class="mt-3 md:text-md text-sm text-gray-600">
                                 <$ item.subtitle | safe $>
                             </p>
-                            <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/app/1.png" class="md:hidden block w-[80vw] my-4 mx-auto" alt="">
+                            <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/app/1.png"
+                                class="md:hidden block w-[80vw] my-4 mx-auto" alt="">
                             <div class="mdStyle2">
                                 {% for it in item.list %}
                                 {% set itIndex = loop.index %}
@@ -292,8 +274,10 @@
                             </div>
                         </div>
                         <div class="relative flex-1 flex md:block hidden">
-                            <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Rectangle 320.png" class="absolute z-0 right-10 w-[604px] h-[388px]" alt="">
-                            <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Rectangle 321.png" class="absolute z-1 right-0 top-10 w-[580px] h-[338px]" alt="">
+                            <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Rectangle 320.png"
+                                class="absolute z-0 right-10 w-[604px] h-[388px]" alt="">
+                            <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Rectangle 321.png"
+                                class="absolute z-1 right-0 top-10 w-[580px] h-[338px]" alt="">
                             <div class="mt-3 text-gray-500 absolute z-2 right-10 top-10 max-w-[520px]">
                                 <$ item.desc | safe $>
                             </div>
@@ -305,7 +289,7 @@
                                         <div class="mt-2 font-medium text-sm">
                                             <$ item.list[it].title $>
                                         </div>
-                                        <p class="mt-1 text-gray-500 text-xs">
+                                        <p class="mt-1 text-gray-500 text-sm">
                                             <$ item.list[it].content $>
                                         </p>
                                     </div>
@@ -317,14 +301,14 @@
                     {% elif item.uiIndex == 3 %}
                     <div class="flex flex-md-row flex-col justify-md-between">
                         <div class="flex-1 mt-0 text-base text-gray-500">
-                            <h2 class="text-2xl font-bold text-black md:pt-12">
+                            <h2 class="text-2xl font-bold text-black">
                                 <div>
                                     <$ item.category | safe $>
                                 </div>
                             </h2>
-                            <p class="mt-3">
-                                <$ item.desc | safe $>
-                            </p>
+                            <div class="mt-3 md:text-md text-sm text-gray-600">
+                                <div><$ item.desc | safe $></div>
+                            </div>
                         </div>
                         {% if item.isNotInComputer %}
                         <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
@@ -338,17 +322,18 @@
                         </div>
                         {% endif %}
                     </div>
-                    <div class="rounded-2xl shadow-xl shadow-blue-950/5 -mt-[80px] z-1 relative" style="border: 1px solid rgba(66, 184, 131, 0.1)!important;">
-                        <div class="size-full md:h-72 backdrop-blur-xl bg-white/30 rounded-2xl">
+                    <div class="rounded-2xl shadow-xl shadow-blue-950/5 -mt-[80px] z-1 relative"
+                        style="border: 1px solid rgba(66, 184, 131, 0.1)!important;">
+                        <div class="size-full backdrop-blur-xl bg-white/30 rounded-2xl">
                             <div class="grid md:grid-cols-4 gap-4 p-2">
                                 {% for it in item.list %}
                                 {% set itIndex = loop.index %}
                                 <div class="p-2">
                                     <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-9 h-9 mr-2" />
-                                    <div class="mt-2 font-medium text-sm">
+                                    <div class="mt-2 font-medium text-md">
                                         <$ it.title $>
                                     </div>
-                                    <p class="mt-1 text-gray-500 text-xs">
+                                    <p class="mt-1 text-gray-500 text-sm">
                                         <$ it.content $>
                                     </p>
                                 </div>
@@ -357,60 +342,69 @@
                         </div>
                     </div>
                     {% elif item.uiIndex == 4 %}
-                    <div class="mt-10 mt-md-0 text-base text-gray-500 text-center">
+                    <div class="mt-md-0 text-base text-gray-500 text-center">
                         <h2 class="text-2xl font-bold text-black">
                             <div>
                                 <$ item.category | safe $>
                             </div>
                         </h2>
-                        <p class="mt-3">
-                            <$ item.desc | safe $>
-                        </p>
+                        <div class="mt-3 md:text-md text-sm text-gray-600">
+                            <div><$ item.desc | safe $></div>
+                        </div>
                     </div>
-                    <div class="grid md:grid-cols-3 gap-3 p-2">
+                    <div class="grid md:grid-cols-3 gap-5 p-2">
                         {% for it in item.list %}
                         <div class="flex flex-col items-stretch">
                             <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-[330px] h-[180px] m-auto" />
-                            <div class="mt-2 font-medium md:text-sm text-center">
+                            <div class="mt-2 font-medium text-md text-center">
                                 <$ it.title $>
                             </div>
-                            <p class="mt-1 text-gray-500 md:text-xs text-center">
+                            <p class="mt-1 text-gray-500 text-sm text-center h-10">
                                 <$ it.content $>
                             </p>
                         </div>
                         {% endfor %}
                     </div>
                     {% elif item.uiIndex == 5 %}
-                    <div class="md:absolute right-0 top-6" id="autoWidth1">
-                        <h2 class="text-2xl font-bold md:text-white">
-                            <div>
-                                <$ item.category | safe $>
-                            </div>
-                        </h2>
-                        <p class="mt-3 md:text-white">
-                            <$ item.desc | safe $>
-                        </p>
-                    </div>
-                    <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
-                        class="laptop-image h-72 md:absolute bottom-0 right-10 md:hidden block md:w-[302px] h-auto">
-                    <div class="md:pt-24" id="autoWidth2">
-                        <div class="grid md:grid-cols-3 gap-3 p-2">
-                            {% for it in item.list %}
-                            {% set itIndex = loop.index %}
-                            <div class="p-2">
-                                <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-9 h-9 mr-2" />
-                                <div class="mt-2 font-medium text-sm">
-                                    <$ it.title $>
+
+                    <div class="relative md:h-[650px]">
+                        <div class="md:absolute md:right-0 md:-mr-48 w-full md:w-3/5  rounded-s-lg h-64 md:block"
+                            style="background-color: #42B883;">
+                            <div class="md:pl-48 md:pt-10 pl-4 pt-4 text-white">
+                                <h2 class="text-2xl font-bold ">
+                                    <div>
+                                        <$ item.category | safe $>
+                                    </div>
+                                </h2>
+                                <div class="mt-3 md:text-md text-sm text-white">
+                                    <div>
+                                        <$ item.desc | safe $>
+                                    </div>
                                 </div>
-                                <p class="mt-1 text-gray-500 text-xs">
-                                    <$ it.content $>
-                                </p>
                             </div>
-                            {% endfor %}
                         </div>
+                        <div class="md:absolute md:left-0 md:-ml-24 md:pl-24 rounded-r-2xl shadow-xl shadow-blue-950/5 md:block translate-y-[80px] z-1  md:w-4/5 backdrop-blur-md bg-white/30"
+                            style="border: 1px solid rgba(66, 184, 131, 0.1)!important;">
+                                <div class="grid md:grid-cols-3 gap-3 p-2">
+                                    {% for it in item.list %}
+                                    {% set itIndex = loop.index %}
+                                    <div class="p-2">
+                                        <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-9 h-9 mr-2" />
+                                        <div class="mt-2 font-medium text-sm">
+                                            <$ it.title $>
+                                        </div>
+                                        <p class="mt-1 text-gray-500 text-sm">
+                                            <$ it.content $>
+                                        </p>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                        </div>
+
+                        <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
+                            class="laptop-image h-72 md:mt-0 mt-32 md:absolute bottom-20 right-0 block md:w-[302px] h-auto">
+
                     </div>
-                    <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
-                        class="laptop-image h-72 md:absolute bottom-0 right-10 md:block hidden md:w-[302px] h-auto">
                     {% elif item.uiIndex == 6 %}
                     <div class="flex">
                         <div class=" w-3/12 md:block hidden">
@@ -428,9 +422,11 @@
                                     <$ item.category | safe $>
                                 </div>
                             </h2>
-                            <p class="text-sm text-gray-500">
+                            <div class="mt-3 md:text-md text-sm text-gray-600">
+                            <div>
                                 <$ item.desc | safe $>
-                            </p>
+                            </div>
+                            </div>
                             <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
                                 class="w-auto h-md-[360px] h-sm-auto md:hidden">
                             <div class="grid md:grid-cols-3 gap-3 pt-4">
@@ -438,12 +434,13 @@
                                 {% set itIndex = loop.index %}
                                 <div class="card p-3">
                                     <div>
-                                        <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-9 h-9 mr-2 d-inline" />
+                                        <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>"
+                                            class="w-9 h-9 mr-2 d-inline" />
                                         <span class="mt-2 font-medium text-sm">
                                             <$ it.title $>
                                         </span>
                                     </div>
-                                    <p class="mt-1 text-gray-500 text-xs">
+                                    <p class="mt-1 text-gray-500 text-sm">
                                         <$ it.content $>
                                     </p>
                                 </div>
@@ -452,7 +449,7 @@
                         </div>
                     </div>
                     {% elif item.uiIndex == 7 %}
-                    <div class="flex-1 mt-10 mt-md-0 text-base text-gray-500">
+                    <div class="flex-1 mt-md-0 text-base text-gray-500">
                         <h2 class="text-2xl font-bold text-black">
                             <div>
                                 <$ item.category | safe $>
@@ -472,10 +469,11 @@
                                     <$ it.title $>
                                 </span>
                             </div>
-                            <p class="mt-1 text-gray-500 text-xs px-3 pb-2">
+                            <p class="mt-1 text-gray-500 text-sm px-3 pb-2">
                                 <$ it.content $>
                             </p>
-                            <img src="<$ xfpageSeoResourceUrl $><$ it.cover $>" style="border-radius: 0 0 8px 8px;" class="w-full h-[225px] object-cover" />
+                            <img src="<$ xfpageSeoResourceUrl $><$ it.cover $>" style="border-radius: 0 0 8px 8px;"
+                                class="w-full h-[225px] object-cover" />
                         </div>
                         {% endfor %}
                     </div>
@@ -485,11 +483,11 @@
         </div>
     </div>
     {% elif itemIndex % 2 == 0 %}
-
     <div class="jh-block-1 py-32 relative">
         <div class="jh-background z-0 -rotate-180 w-2/3 md:w-3/6 h-96 absolute right-0 top-60"></div>
         <div class="container-lg relative">
-            <div class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center flex-row-reverse">
+            <div
+                class="relative pb-10 d-md-flex align-center justify-content-between h-full items-center flex-row-reverse">
                 <div class="flex-1 d-flex justify-content-end">
                     {% if item.isNotInComputer %}
                     <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
@@ -503,15 +501,17 @@
                     </div>
                     {% endif %}
                 </div>
-                <div class="flex-1 mt-10 mt-md-0 text-base text-gray-500">
+                <div class="flex-1 mt-md-0 text-base text-gray-500">
                     <h2 class="text-2xl font-bold text-black">
                         <div>
                             <$ item.category | safe $>
                         </div>
                     </h2>
-                    <p class="mt-3">
+                    <div class="mt-3 md:text-md text-sm text-gray-600">
+                    <div>
                         <$ item.desc | safe $>
-                    </p>
+                    </dkv>
+                    </div>
                 </div>
             </div>
             {% set listCardData = item.list %}
