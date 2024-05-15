@@ -1,0 +1,478 @@
+{
+    "开发平台": [
+        {
+            "categoryName": "介绍",
+            "path": "/doc/jianghujs",
+            "isLogin": false
+        },
+        {
+            "categoryName": "培训",
+            "path": "/doc/page/article/10001",
+            "isLogin": false
+        },
+        {
+            "categoryName": "文档",
+            "path": "/doc/page/article/11101",
+            "isLogin": false
+        },
+        {
+            "categoryName": "资源",
+            "path": "/doc/page/xfArticle/5746",
+            "isLogin": false
+        }
+    ],
+    "研发": [
+        {
+            "categoryName": "介绍",
+            "path": "/doc/r&d",
+            "isLogin": false
+        },
+        {
+            "categoryName": "AI",
+            "path": "/doc/page/article/11909",
+            "isLogin": false
+        },
+        {
+            "categoryName": "NLP",
+            "path": "/doc/page/article/11910",
+            "isLogin": false
+        },
+        {
+            "categoryName": "流媒体",
+            "path": "/doc/page/article/12305",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖Doc": [
+        {
+            "categoryName": "江湖Doc介绍",
+            "path": "/doc/page/xfArticle/5749",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖Doc培训",
+            "path": "/doc/page/article/11892",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖Doc文档",
+            "path": "/doc/page/article/12086",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖CRM": [
+        {
+            "categoryName": "江湖CRM介绍",
+            "path": "/doc/page/xfArticle/5777",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖CRM培训",
+            "path": "/doc/page/article/12270",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖CRM文档",
+            "path": "/doc/page/article/12271",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖ERP": [
+        {
+            "categoryName": "江湖ERP介绍",
+            "path": "/doc/page/xfArticle/5748",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖ERP培训",
+            "path": "/doc/page/article/11023",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖ERP文档",
+            "path": "/doc/page/article/11024",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖财务": [
+        {
+            "categoryName": "江湖财务介绍",
+            "path": "/doc/page/xfArticle/5745",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖财务培训",
+            "path": "/doc/page/article/11025",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖财务文档",
+            "path": "/doc/page/article/11026",
+            "isLogin": false
+        }
+    ],
+    "运维": [
+        {
+            "categoryName": "介绍",
+            "path": "/doc/panel",
+            "isLogin": false
+        },
+        {
+            "categoryName": "培训",
+            "path": "/doc/page/article/10003",
+            "isLogin": false
+        },
+        {
+            "categoryName": "文档",
+            "path": "/doc/page/article/10004",
+            "isLogin": false
+        }
+    ],
+    "软件开发理念": [
+        {
+            "categoryName": "介绍",
+            "path": "/doc/concept",
+            "isLogin": false
+        },
+        {
+            "categoryName": "培训",
+            "path": "/doc/page/article/12046",
+            "isLogin": false
+        }
+    ],
+    "数字化方法论": [
+        {
+            "categoryName": "介绍",
+            "path": "/doc/digital",
+            "isLogin": false
+        },
+        {
+            "categoryName": "培训",
+            "path": "/doc/page/article/12010",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖人资": [
+        {
+            "categoryName": "江湖人资介绍",
+            "path": "/doc/page/xfArticle/5758",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖人资培训",
+            "path": "/doc/page/article/11932",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖人资文档",
+            "path": "/doc/page/article/11935",
+            "isLogin": false
+        }
+    ],
+    "行业案例_智慧校园": [
+        {
+            "categoryName": "智慧校园介绍",
+            "path": "/doc/page/xfArticle/5761",
+            "isLogin": false
+        },
+        {
+            "categoryName": "智慧校园培训",
+            "path": "/doc/page/article/11957",
+            "isLogin": false
+        },
+        {
+            "categoryName": "智慧校园文档",
+            "path": "/doc/page/article/11940",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖测试02": [
+        {
+            "categoryName": "江湖测试02介绍",
+            "path": "/doc/page/xfArticle/5760",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖测试02培训",
+            "path": "/doc/page/article/11941",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖测试02文档",
+            "path": "/doc/page/article/11944",
+            "isLogin": false
+        }
+    ],
+    "行业案例_服务业": [
+        {
+            "categoryName": "服务业介绍",
+            "path": "/doc/page/xfArticle/5766",
+            "isLogin": false
+        },
+        {
+            "categoryName": "服务业培训",
+            "path": "/doc/page/article/11994",
+            "isLogin": false
+        },
+        {
+            "categoryName": "服务业文档",
+            "path": "/doc/page/article/11997",
+            "isLogin": false
+        }
+    ],
+    "应用_测试应用01": [
+        {
+            "categoryName": "测试应用01介绍",
+            "path": "/doc/page/xfArticle/5762",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖ERP培训",
+            "path": "/doc/page/article/11023",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖ERP文档",
+            "path": "/doc/page/article/11024",
+            "isLogin": false
+        }
+    ],
+    "应用_测试应用02": [
+        {
+            "categoryName": "测试应用02介绍",
+            "path": "/doc/page/xfArticle/5763",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖财务培训",
+            "path": "/doc/page/article/11025",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖财务文档",
+            "path": "/doc/page/article/11026",
+            "isLogin": false
+        }
+    ],
+    "应用_测试应用03": [
+        {
+            "categoryName": "测试应用03介绍",
+            "path": "/doc/page/xfArticle/5764",
+            "isLogin": false
+        },
+        {
+            "categoryName": "测试应用03培训",
+            "path": "/doc/page/article/11972",
+            "isLogin": false
+        },
+        {
+            "categoryName": "测试应用03文档",
+            "path": "/doc/page/article/11975",
+            "isLogin": false
+        }
+    ],
+    "应用_测试应用04": [
+        {
+            "categoryName": "测试应用04介绍",
+            "path": "/doc/page/xfArticle/5765",
+            "isLogin": false
+        },
+        {
+            "categoryName": "测试应用04培训",
+            "path": "/doc/page/article/11983",
+            "isLogin": false
+        },
+        {
+            "categoryName": "测试应用04文档",
+            "path": "/doc/page/article/11986",
+            "isLogin": false
+        }
+    ],
+    "应用_jianghu知识付费": [
+        {
+            "categoryName": "jianghu知识付费介绍",
+            "path": "/doc/page/xfArticle/5767",
+            "isLogin": false
+        },
+        {
+            "categoryName": "jianghu知识付费培训",
+            "path": "/doc/page/article/12118",
+            "isLogin": false
+        },
+        {
+            "categoryName": "jianghu知识付费文档",
+            "path": "/doc/page/article/12121",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖知识付费": [
+        {
+            "categoryName": "江湖知识付费介绍",
+            "path": "/doc/page/xfArticle/5768",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖知识付费培训",
+            "path": "/doc/page/article/12118",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖知识付费文档",
+            "path": "/doc/page/article/12121",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖在线教学": [
+        {
+            "categoryName": "江湖在线教学介绍",
+            "path": "/doc/page/xfArticle/5769",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖在线教学培训",
+            "path": "/doc/page/article/12144",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖在线教学文档",
+            "path": "/doc/page/article/12147",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖测试001": [
+        {
+            "categoryName": "江湖测试001介绍",
+            "path": "/doc/page/xfArticle/5770",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖测试001培训",
+            "path": "/doc/page/article/12157",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖测试001文档",
+            "path": "/doc/page/article/12158",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖客服": [
+        {
+            "categoryName": "江湖客服介绍",
+            "path": "/doc/page/xfArticle/5771",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖客服培训",
+            "path": "/doc/page/article/12157",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖客服文档",
+            "path": "/doc/page/article/12158",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖网站流量分析": [
+        {
+            "categoryName": "江湖网站流量分析介绍",
+            "path": "/doc/page/xfArticle/5772",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖网站流量分析培训",
+            "path": "/doc/page/article/12167",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖网站流量分析文档",
+            "path": "/doc/page/article/12168",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖审计": [
+        {
+            "categoryName": "江湖审计介绍",
+            "path": "/doc/page/xfArticle/5773",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖审计培训",
+            "path": "/doc/page/article/12213",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖审计文档",
+            "path": "/doc/page/article/12214",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖OA": [
+        {
+            "categoryName": "江湖OA介绍",
+            "path": "/doc/page/xfArticle/5774",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖OA培训",
+            "path": "/doc/page/article/12228",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖OA文档",
+            "path": "/doc/page/article/12229",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖PM": [
+        {
+            "categoryName": "江湖PM介绍",
+            "path": "/doc/page/xfArticle/5775",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖PM培训",
+            "path": "/doc/page/article/12247",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖PM文档",
+            "path": "/doc/page/article/12248",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖BI": [
+        {
+            "categoryName": "江湖BI介绍",
+            "path": "/doc/page/xfArticle/5776",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖BI培训",
+            "path": "/doc/page/article/12260",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖BI文档",
+            "path": "/doc/page/article/12261",
+            "isLogin": false
+        }
+    ],
+    "应用_江湖浏览器": [
+        {
+            "categoryName": "江湖浏览器介绍",
+            "path": "/doc/page/xfArticle/5778",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖浏览器培训",
+            "path": "/doc/page/article/12294",
+            "isLogin": false
+        },
+        {
+            "categoryName": "江湖浏览器文档",
+            "path": "/doc/page/article/12295",
+            "isLogin": false
+        }
+    ]
+}
