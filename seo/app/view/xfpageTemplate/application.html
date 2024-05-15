@@ -59,8 +59,6 @@
         margin-bottom: 20px;
     }
     .appCard {
-        width: 282px;
-        height: 285px;
         background: #FFFFFF;
         box-shadow: 0px 10px 12px 0px rgba(0,0,0,0.05);
         border-radius: 8px 8px 8px 8px;
@@ -128,8 +126,8 @@
             {% for appCategory in xfPage.xfPageConfig.appCategoryList %}
             <div class="appCategory-title"><$ appCategory.title $></div>
             <div class="appCategory-desc"><$ appCategory.desc $></div>
+            <div class="card-empty d-none text-center text-gray-500 text-sm col-span-4">暂无数据</div>
             <div class="grid md:grid-cols-4 gap-4">
-                <div class="card-empty d-none text-center text-gray-500 text-sm col-span-4">暂无数据</div>
                 {% for item in appCategory.appList %}
 
                 <a href="<$ item.url $>" class="relative hover:-translate-y-2 transition-all">
@@ -145,7 +143,7 @@
                         <div>
                             <div style="height: 48px;"></div>
                             <div class="rounded-t pb-4 img-box relative w-full h-0 overflow-hidden" style="padding-top: 50%">
-                                <img class="absolute top-0 left-0 w-full h-auto pl-5 pr-5" src="<$ xfpageSeoResourceUrl $><$ item.cover $>"
+                                <img class="absolute top-0 left-0 w-full h-auto" src="<$ xfpageSeoResourceUrl $><$ item.cover $>"
                                         alt="<$ item.title $>"/>
                             </div>
                         </div>
