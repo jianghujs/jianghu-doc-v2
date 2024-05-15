@@ -10,7 +10,6 @@
   "dependencies": {
     "@jianghujs/jianghu": "5.1.15",
     "dayjs": "1.11.0",
-    "dotenv": "^16.3.1",
     "egg": "^2.15.1",
     "egg-core": "4.23.0",
     "egg-scripts": "^2.11.0",
@@ -20,6 +19,9 @@
     "md5-node": "^1.0.1"
   },
   "devDependencies": {
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "dotenv": "16.3.1",
     "egg-bin": "^4.11.0",
     "egg-mock": "^3.21.0"
   },
