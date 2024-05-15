@@ -202,7 +202,7 @@
                   <li class="sidenav-item">
                     <a class="sidenav-link p-0 {% if article and node.articleId == article.articleId %}jianghu-active{% endif %}" href="<$ pageUrl $>/article/<$ node.articleId $>"">
                       <span class="font-monospace"><$ node.articleTitleMap.prefix $></span><$ node.articleTitleMap.text $>
-                      {% if node.articlePublishStatus == 'login' and not userId %}
+                      {% if (node.articlePublishStatus == 'login' or node.categoryPublishStatus === 'login') and not userId %}
                       <i class="far fa-solid fa-lock" aria-hidden="true"></i>
                       {% endif %}
                     </a>
