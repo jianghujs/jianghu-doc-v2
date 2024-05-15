@@ -19,9 +19,9 @@ const connection = {
     const knex = require('knex')({ client: 'mysql', connection})
     // An array with your links
     const links = [
-        { url: '/',               changefreq: 'daily', priority: 0.8, lastmod: dayjs().format(),  },
-        { url: '/doc/index',      changefreq: 'daily', priority: 0.8, lastmod: dayjs().format(),  },
-        { url: '/doc/jianghujs',  changefreq: 'daily', priority: 0.8, lastmod: dayjs().format(),  },
+        { url: '/',               changefreq: 'daily', priority: 1, lastmod: dayjs().format(),  },
+        { url: '/doc/index',      changefreq: 'daily', priority: 1, lastmod: dayjs().format(),  },
+        { url: '/doc/jianghujs',  changefreq: 'daily', priority: 1, lastmod: dayjs().format(),  },
         { url: '/doc/app',        changefreq: 'daily', priority: 0.8, lastmod: dayjs().format(),  },
         { url: '/doc/panel',      changefreq: 'daily', priority: 0.8, lastmod: dayjs().format(),  },
         { url: '/doc/concept',    changefreq: 'daily', priority: 0.8, lastmod: dayjs().format(),  },
@@ -39,11 +39,13 @@ const connection = {
     }
     const articleList = await knex('view01_article').where({ articlePublishStatus: 'public', categoryPublishStatus: 'public' }).select();
     articleList.forEach(article => {
-        links.push({ url: `/doc/page/article/${article.articleId}`, changefreq: 'daily', priority: 0.4, lastmod: dayjs().format(),  })
+        links.push({ url: `/doc/page/article/${article.articleId}`, changefreq: 'daily', 
+            priority: 0.4, lastmod: dayjs().format(),  })
     })
     const stream = new SitemapStream( { hostname: 'https://www.openjianghu.org' } )
     const data = await streamToPromise(Readable.from(links).pipe(stream));
     fs.writeFileSync('./seoForSearch/sitemap.xml', pd.xml(data.toString()));
+    console.log(links.map(link => link.url).join('\n'));
     console.log('Sitemap generate finished!')
 })();
 
