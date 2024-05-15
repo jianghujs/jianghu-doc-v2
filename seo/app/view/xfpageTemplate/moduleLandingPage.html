@@ -99,10 +99,8 @@
         {% if xfPage.xfPageConfig.section_1 %}
         {% include 'component/xfpageModule/section_1.html' %}
         {% endif %}
-
         {% if xfPage.xfPageConfig.body.list %}
         {% set listCardData = xfPage.xfPageConfig.body.list %}
-
         {% if xfPage.xfPageConfig.body.listStyle == "listCard2" %}
         {% include 'component/xfpageStyleModule/listCard2.html' %}
         {% else %}
@@ -215,7 +213,7 @@
             {% endif %}
         </div>
         {% elif item.isTemplateV3 %}
-        <!-- 首页的布局 -->
+        <!-- <$ item.category $> -->
         <div class="jh-block-1 relative">
             {% if item.bg %}
             <div class="z-0 absolute inset-0 bg-auto bg-repeat h-full bg-zinc-100"
@@ -233,7 +231,7 @@
                                         <$ item.category | safe $>
                                     </div>
                                 </h2>
-                                <div class="mt-3 md:text-md text-sm text-gray-600">
+                                <div class="mt-3 md:text-md text-[15px] text-gray-600">
                                     <div>
                                         <$ item.desc | safe $>
                                     </div>
@@ -269,7 +267,7 @@
                                         <$ item.category | safe $>
                                     </div>
                                 </h2>
-                                <p class="mt-3 md:text-md text-sm text-gray-600">
+                                <p class="mt-3 md:text-md text-[15px] text-gray-600">
                                     <$ item.subtitle | safe $>
                                 </p>
                                 <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/app/1.png"
@@ -295,7 +293,7 @@
                                 <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Rectangle 320.png"
                                     class="absolute z-0 right-10 w-[604px] h-[388px]" alt="">
                                 <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Rectangle 321.png"
-                                    class="absolute z-1 right-0 top-10 w-[580px] h-[338px]" alt="">
+                                    class="absolute z-1 right-0 top-10 w-[580px] h-[350px]" alt="">
                         
                                 <div class="mt-3 absolute z-2 right-10 -bottom-2 max-w-[520px]">
                                     <div class="my-3 text-gray-500">
@@ -328,7 +326,7 @@
                                         <$ item.category | safe $>
                                     </div>
                                 </h2>
-                                <div class="mt-3 md:text-md text-sm text-gray-600">
+                                <div class="mt-3 md:text-md text-[15px] text-gray-600">
                                     <div>
                                         <$ item.desc | safe $>
                                     </div>
@@ -372,7 +370,7 @@
                                     <$ item.category | safe $>
                                 </div>
                             </h2>
-                            <div class="mt-3 md:text-md text-sm text-gray-600">
+                            <div class="mt-3 md:text-md text-[15px] text-gray-600">
                                 <div>
                                     <$ item.desc | safe $>
                                 </div>
@@ -393,9 +391,8 @@
                         </div>
                     </div>
                     {% elif item.uiIndex == 5 %}
-
                     <div class="relative md:h-[650px]">
-                        <div class="md:absolute md:right-0 md:pl-32 pb-4 w-full md:w-3/5  rounded-s-lg md:block"
+                        <div class="md:absolute md:right-0 md:pr-32 md:pl-32 pb-4 md:pb-10 w-full md:w-3/5  rounded-s-lg"
                             style="background-color: #42B883;">
                             <div class="md:pl-48 md:pt-10 pl-4 pt-4 text-white">
                                 <h2 class="text-2xl font-bold ">
@@ -410,7 +407,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="md:absolute md:left-0 md:pl-4 rounded-r-2xl shadow-xl shadow-blue-950/5 md:block translate-y-[80px] z-1  md:w-3/5 backdrop-blur-md bg-white/30"
+                        <div class="md:absolute md:left-0 md:pl-32 rounded-r-2xl shadow-xl shadow-blue-950/5 translate-y-[80px] z-1  md:w-3/5 backdrop-blur-md bg-white/30"
                             style="border: 1px solid rgba(66, 184, 131, 0.1)!important;">
                             <div class="grid md:grid-cols-3 gap-3 p-2">
                                 {% for it in item.list %}
@@ -427,10 +424,8 @@
                                 {% endfor %}
                             </div>
                         </div>
-                    
                         <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
-                            class="laptop-image h-72 md:mt-0 mt-32 md:absolute bottom-10 right-10 block md:w-[302px] h-auto">
-                    
+                            class="laptop-image h-72 md:mt-0 mt-32 md:absolute bottom-10 right-32 block md:w-[302px] h-auto">
                     </div>
                     {% elif item.uiIndex == 6 %}
                     <div class="flex container-lg">
@@ -449,7 +444,7 @@
                                     <$ item.category | safe $>
                                 </div>
                             </h2>
-                            <div class="mt-3 md:text-md text-sm text-gray-600">
+                            <div class="mt-3 md:text-md text-[15px] text-gray-600">
                                 <div>
                                     <$ item.desc | safe $>
                                 </div>
@@ -483,9 +478,11 @@
                                     <$ item.category | safe $>
                                 </div>
                             </h2>
-                            <p class="mt-3">
-                                <$ item.desc | safe $>
-                            </p>
+                            <div class="mt-3 md:text-md text-[15px] text-gray-600">
+                                <div>
+                                    <$ item.desc | safe $>
+                                </div>
+                            </div>
                         </div>
                         <div class="grid md:grid-cols-3 gap-12 pt-6">
                             {% for it in item.list %}
@@ -536,7 +533,7 @@
                             <$ item.category | safe $>
                         </div>
                     </h2>
-                    <div class="mt-3 md:text-md text-sm text-gray-600">
+                    <div class="mt-3 md:text-md text-[15px] text-gray-600">
                         <div>
                             <$ item.desc | safe $>
                                 </dkv>
