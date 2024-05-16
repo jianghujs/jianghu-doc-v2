@@ -18,7 +18,7 @@ module.exports = appInfo => {
     // static: {
     //   maxAge: 14 * 24 * 60 * 60 * 1000, // 2 weeks in milliseconds
     //   buffer: true,
-    //   preload: true,
+    //   preload: false,
     //   maxFiles: 0,
     // },
     logger: {
