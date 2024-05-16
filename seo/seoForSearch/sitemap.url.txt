@@ -1,4 +1,3 @@
-https://www.openjianghu.org
 https://www.openjianghu.org/doc/index
 https://www.openjianghu.org/doc/jianghujs
 https://www.openjianghu.org/doc/app

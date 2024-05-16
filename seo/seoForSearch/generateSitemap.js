@@ -19,9 +19,8 @@ const connection = {
     const knex = require('knex')({ client: 'mysql', connection})
     // An array with your links
     const links = [
-        { url: '/',               changefreq: 'daily', priority: 1, lastmod: dayjs().format(),  },
         { url: '/doc/index',      changefreq: 'daily', priority: 1, lastmod: dayjs().format(),  },
-        { url: '/doc/jianghujs',  changefreq: 'daily', priority: 1, lastmod: dayjs().format(),  },
+        { url: '/doc/jianghujs',  changefreq: 'daily', priority: 0.9, lastmod: dayjs().format(),  },
         { url: '/doc/app',        changefreq: 'daily', priority: 0.8, lastmod: dayjs().format(),  },
         { url: '/doc/panel',      changefreq: 'daily', priority: 0.8, lastmod: dayjs().format(),  },
         { url: '/doc/concept',    changefreq: 'daily', priority: 0.8, lastmod: dayjs().format(),  },

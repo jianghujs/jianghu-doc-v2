@@ -1,4 +1,7 @@
 {% set static = "/" + appId + "/public" %}
+{% if xfPage.xfPageConfig.head %}
+<$ xfPage.xfPageConfig.head $>
+{% endif %}
 <link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.min.css"/>
 <link rel="stylesheet" href="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.all.min.css"/>
 <script src="<$ static $>/tailwindcss/tailwindcss.js"></script>
