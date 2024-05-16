@@ -1,0 +1,42 @@
+<style>
+
+</style>
+{% set item = xfPage.xfPageConfig.section_11 %}
+
+<!-- 模块 11 -->
+<div class="relative md:h-[700px] py-10 mb-20">
+    <div class="md:absolute md:right-0 md:pl-24 xl:pl-32 2xl:pl-72  md:pr-24 xl:pr-32 2xl:pr-72 pb-4 md:pb-10 w-full md:w-3/5  rounded-s-lg"
+        style="background-color: #42B883;">
+        <div class="md:pl-48 md:pt-10 pl-4 pt-4 text-white">
+            <h2 class="text-2xl font-bold ">
+                <div>
+                    <$ item.category | safe $>
+                </div>
+            </h2>
+            <div class="mt-3 md:text-md text-sm text-white">
+                <div>
+                    <$ item.desc | safe $>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="md:absolute md:left-0 md:pl-24 xl:pl-32 2xl:pl-72 rounded-r-2xl shadow-xl shadow-blue-950/5 translate-y-[80px] z-1  md:w-3/5 backdrop-blur-md bg-white/30"
+        style="border: 1px solid rgba(66, 184, 131, 0.1)!important;">
+        <div class="grid md:grid-cols-3 gap-3 p-2">
+            {% for it in item.list %}
+            {% set itIndex = loop.index %}
+            <div class="p-2">
+                <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-9 h-9 mr-2" />
+                <div class="mt-2 font-medium text-sm">
+                    <$ it.title $>
+                </div>
+                <p class="mt-1 text-gray-500 text-sm">
+                    <$ it.content $>
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <img src="<$ xfpageSeoResourceUrl $><$ item.cover $>" alt="<$ item.category $>"
+        class="laptop-image h-72 md:mt-0 mt-32 md:absolute bottom-10 md:right-24 xl:right-32 2xl:right-72 block md:w-[302px] h-auto">
+</div>

@@ -1,0 +1,64 @@
+<style>
+
+</style>
+{% set item = xfPage.xfPageConfig.section_8 %}
+
+<!-- 模块 8 -->
+<div class="container-lg py-10 relative">
+    <div class="flex justify-between pb-3">
+        <div>
+            <h2 class="text-2xl font-bold text-black">
+                <div>
+                    <$ item.category | safe $>
+                </div>
+            </h2>
+            <p class="mt-3 md:text-md text-[15px] text-gray-600">
+                <$ item.subtitle | safe $>
+            </p>
+            <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/app/1.png"
+                class="md:hidden block w-[80vw] my-4 mx-auto" alt="">
+            <div class="mdStyle2">
+                {% for it in item.list %}
+                {% set itIndex = loop.index %}
+                <div class="py-3 <$ it.style $>">
+                    <h3 class="text-md font-bold d-flex align-center items-center">
+                        <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-9 h-9 mr-2" />
+                        <$ it.title $>
+                    </h3>
+                    {% if item.content != "" %}
+                    <p class="mt-2 text-gray-500 text-sm ml-11 text-left">
+                        <$ it.content $>
+                    </p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="relative flex-1 flex md:block hidden">
+            <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Rectangle 320.png"
+                class="absolute z-0 right-10 w-[604px] h-[388px]" alt="">
+            <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/jianghu-doc/home/Rectangle 321.png"
+                class="absolute z-1 right-0 top-10 w-[580px] h-[350px]" alt="">
+
+            <div class="mt-3 absolute z-2 right-10 -bottom-2 max-w-[520px]">
+                <div class="my-3 text-gray-500">
+                    <$ item.desc | safe $>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-2">
+                    {% for it in range(4, item.list.length) %}
+                    {% set itIndex = loop.index %}
+                    <div class="card p-2">
+                        <div class="mt-2 font-medium text-sm">
+                            <$ item.list[it].title $>
+                        </div>
+                        <p class="mt-1 text-gray-500 text-sm">
+                            <$ item.list[it].content $>
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

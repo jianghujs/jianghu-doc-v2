@@ -1,0 +1,10 @@
+<div class="sm:hidden block grid py-4 px-2 grid-cols-2 gap-3 text-black text-sm font-medium">
+    {% for menu in xfPage.xfPageConfig.menus %}
+    <a href="<$ menu.url $>" class="hover:text-green-500 p-2 px-3 flex align-center border rounded-lg">
+        <img src="<$ xfpageSeoResourceUrl $><$ menu.icon $>" class="w-5 h-5 mr-3">
+        <div>
+            <$ menu.title $>
+        </div>
+    </a>
+    {% endfor %}
+</div>
