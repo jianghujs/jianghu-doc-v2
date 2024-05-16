@@ -15,12 +15,12 @@ module.exports = appInfo => {
       allIndexUid: 'demo_jianghujs_org_all',
       publicIndexUid: 'demo_jianghujs_org_public',
     },
-    static: {
-      maxAge: 0,
-      buffer: false,
-      preload: false,
-      maxFiles: 0,
-    },
+    // static: {
+    //   maxAge: 14 * 24 * 60 * 60 * 1000, // 2 weeks in milliseconds
+    //   buffer: true,
+    //   preload: true,
+    //   maxFiles: 0,
+    // },
     logger: {
       outputJSON: true,
       consoleLevel: "DEBUG",
