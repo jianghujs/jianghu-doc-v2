@@ -1,5 +1,12 @@
 {% extends 'template/template.html' %}
 
+{% block css %}
+  {% if xfPage.xfPageConfig.head %}
+  <$ xfPage.xfPageConfig.head | safe $>
+  {% endif %}
+{% endblock %}
+
+
 {% block title %}<$ xfPage.xfPageTitle $>{% endblock %}
 {% block keyword %}<$ xfPage.xfPageTagList $>{% endblock %}
 {% block description %}<$ xfPage.xfPageDescription $>{% endblock %}
