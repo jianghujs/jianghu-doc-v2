@@ -96,16 +96,6 @@ module.exports = (appInfo) => {
 
     middleware: [ ...middleware, 'webPackage', 'webUserInfo', 'webAuthorization' ],
     ...middlewareMatch,
-    // 覆盖 downloadUserInfo，适配 /upload/ 开头的路由
-    downloadUserInfo: {
-      match(ctx) {
-        // url 格式符合 /appId/upload
-        return (ctx.request.method === 'GET' || ctx.request.method === 'HEAD')
-          && (
-            ctx.request.path.startsWith(`/${ctx.app.config.appId}/upload/`)
-            || ctx.request.path.startsWith(`/upload/`));
-      },
-    },
     onerror: {
       html(error, ctx) {
         const appId = ctx.app.config.appId
