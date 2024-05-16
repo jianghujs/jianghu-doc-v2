@@ -1,0 +1,120 @@
+[
+  {
+    "title": "营销类应用",
+    "desc": "专注于帮助企业推广品牌和产品，包括社交媒体管理、广告投放和市场调研等功能。",
+    "appList": [
+      {
+        "title": "江湖BI",
+        "type": "生产应用",
+        "desc": "帮助企业从海量数据中获取洞察，支持决策制定和业务优化。",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5776"
+      },
+      {
+        "title": "江湖CRM",
+        "desc": "帮助企业与客户之间关系的战略性方法和工具。",
+        "type": "生产应用",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5777"
+      }
+    ]
+  },
+  {
+    "title": "销售类应用",
+    "desc": "旨在促进销售过程，涵盖在线商店建设、订单管理和客户关系管理等功能。",
+    "appList": [
+      {
+        "title": "江湖财务",
+        "isHot": true,
+        "desc": "帮助企业管理财务流程，提升财务管理效率和透明度。",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5745"
+      },
+      {
+        "title": "江湖ERP",
+        "desc": "帮助企业进行采购、销售、库存和财务的管理。",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5748"
+      }
+    ]
+  },
+  {
+    "title": "管理类应用",
+    "desc": "用于企业内部运营管理，包括项目管理、员工考勤和财务报表等功能。",
+    "appList": [
+      {
+        "title": "智慧校园",
+        "desc": "---",
+        "url": "/doc/page/xfArticle/5761"
+      },
+      {
+        "title": "江湖Doc",
+        "desc": "帮助企业管理文档资料并提高工作效率。",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5749"
+      },
+      {
+        "title": "江湖人资",
+        "desc": "帮助企业优化人力资源管理和提升员工满意度。",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5758"
+      },
+      {
+        "title": "江湖知识付费",
+        "type": "生产应用",
+        "desc": "专业内容付费系统，音频、视频、图文、直播、专栏等多种课程内容形式",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5768"
+      },
+      {
+        "title": "江湖在线教学",
+        "type": "生产应用",
+        "desc": "上传课程，在线考试，智能批改，一站式教育解决方案等你体验",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5769"
+      },
+      {
+        "title": "江湖客服",
+        "type": "生产应用",
+        "desc": "为每家企业提供获客、销售和服务支持的智能客服平台，开箱即用",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5771"
+      },
+      {
+        "title": "江湖网站流量分析",
+        "type": "生产应用",
+        "desc": "使企业可以轻松收集、分析和理解您的网络数据",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5772"
+      },
+      {
+        "title": "江湖审计",
+        "type": "办公应用",
+        "desc": "帮助企业内部或外部审计过程管理，提高审计效率和质量。",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5773"
+      },
+      {
+        "title": "江湖OA",
+        "type": "生产应用",
+        "desc": "帮助企业提高办公效率和沟通协作能力。",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5774"
+      },
+      {
+        "title": "江湖PM",
+        "type": "生产应用",
+        "desc": "帮助企业提高项目管理效率和项目交付质量。",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5775"
+      },
+      {
+        "title": "江湖浏览器",
+        "type": "生产应用",
+        "desc": "兼容性高、开发简单，一次开发可提供App、Web多端功能",
+        "cover": "/upload/materialRepo/image/jianghu-app/app-image.png",
+        "url": "/doc/page/xfArticle/5778"
+      }
+    ]
+  }
+]

@@ -1,5 +1,7 @@
 <style>
-
+    a:hover {
+        color: #42b883;
+    }
 </style>
 {% set item = xfPage.xfPageConfig.section_13 %}
 
@@ -20,7 +22,7 @@
     <div class="grid md:grid-cols-3 gap-4 pt-6">
         {% for it in item.list %}
         {% set itIndex = loop.index %}
-        <div class="card hover:-translate-y-2 transition-all" style="border-radius: 8px 8px 8px 8px;">
+        <a href="<$ it.url $>" class="card hover:-translate-y-2 transition-all" style="border-radius: 8px 8px 8px 8px;">
             <div class="p-3 pb-1">
                 <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-6 h-6 mr-2 d-inline" />
                 <span class="mt-2 font-medium text-sm">
@@ -32,7 +34,7 @@
             </p>
             <img src="<$ xfpageSeoResourceUrl $><$ it.cover $>" style="border-radius: 0 0 8px 8px;"
                 class="w-full h-[225px] object-cover" />
-        </div>
+        </a>
         {% endfor %}
     </div>
 </div>
