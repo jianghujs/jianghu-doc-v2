@@ -8,8 +8,7 @@
 </style>
 <!-- 内容区 >>>>>>>>>>>>> -->
 <main class="ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
-    
-    {% for i in range(1, 13) %}
+    {% for i in range(1, 15) %}
         {% set section = 'section_' + i %}
         {% if xfPage.xfPageConfig[section] %}
         {% include 'component/xfpageModule/' + section + '.html' %}
