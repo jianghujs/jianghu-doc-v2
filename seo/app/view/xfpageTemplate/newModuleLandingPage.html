@@ -9,35 +9,15 @@
 
 <!-- 内容区 >>>>>>>>>>>>> -->
 <main class="ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
-    <!-- section_1 -->
-    {% if xfPage.xfPageConfig.section_1 %}
-    {% include 'component/xfpageModule/section_1.html' %}
-    {% endif %}
+    
+    {% for i in range(1, 12) %}
+        {% set section = 'section_' + i %}
 
-    <!-- section_2 -->
-    {% if xfPage.xfPageConfig.section_2 %}
-    {% include 'component/xfpageModule/section_2.html' %}
-    {% endif %}
+        {% if xfPage.xfPageConfig[section] %}
+        {% include 'component/xfpageModule/' + section + '.html' %}
+        {% endif %}
+    {% endfor %}
 
-    <!-- section_3 -->
-    {% if xfPage.xfPageConfig.section_3 %}
-    {% include 'component/xfpageModule/section_3.html' %}
-    {% endif %}
-
-    <!-- section_4 -->
-    {% if xfPage.xfPageConfig.section_4 %}
-    {% include 'component/xfpageModule/section_4.html' %}
-    {% endif %}
-
-    <!-- section_5 -->
-    {% if xfPage.xfPageConfig.section_5 %}
-    {% include 'component/xfpageModule/section_5.html' %}
-    {% endif %}
-
-    <!-- section_6 -->
-    {% if xfPage.xfPageConfig.section_6 %}
-    {% include 'component/xfpageModule/section_6.html' %}
-    {% endif %}
  
     <!-- 使用 -->
     {% if xfPage.xfPageConfig.use %}
