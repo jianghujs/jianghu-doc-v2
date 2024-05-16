@@ -37,11 +37,13 @@
 
     /* 模块 */
     .jh-module .jh-block-1:nth-child(odd) {
-        background-color: #FFFFFF;
+        background-color: #fbfbfb;
+
     }
 
     .jh-module .jh-block-1:nth-child(even) {
-        background-color: #fbfbfb;
+        background-color: #FFFFFF;
+
     }
 
     /* 使用 */
@@ -91,8 +93,10 @@
         {% set section = 'section_' + i %}
 
         {% if xfPage.xfPageConfig[section] %}
+        <div class="jh-block-1">
 
         {% include 'component/xfpageModule/' + section + '.html' %}
+        </div>
 
         {% if xfPage.xfPageConfig[section].listStyle == "listCard1" %}
         {% set listCardData = xfPage.xfPageConfig[section].list %}
