@@ -1,0 +1,121 @@
+{
+  "section_1": {
+    "block_1": {
+      "text_1": "江湖",
+      "text_2": "<span class='text-[#42B883]'>BI</span>"
+    },
+    "block_2": "",
+    "block_3": {
+      "text_1": "人人可用的大数据分析工具",
+      "text_2": "智能 BI 及数据可视化工具"
+    },
+    "cover": "/upload/materialRepo/image/jianghu-bi-test/illustration-1.png",
+    "startBtnText": "快速体验",
+    "startBtnUrl": "https://demo.jianghujs.org/jianghu-bi/page/workbench",
+    "githubProjectUrl": "https://github.com/jianghujs/jianghu-bi",
+    "backgroundUrl": "/upload/materialRepo/image/jianghu-bi-test/background-1.png"
+  },
+  "section_4": {
+    "title": "<h2 class='text-3xl'>常见痛点</h2>",
+    "list": [
+      {
+        "title": "数据分散，难以整合",
+        "content": "企业数据分散在不同系统和部门，难以形成统一视角进行分析",
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/1.png"
+      },
+      {
+        "title": "数据分析门槛高",
+        "content": "传统数据分析需要专业技能，普通用户难以操作",
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/2.png"
+      },
+      {
+        "title": "决策支持不足",
+        "content": "企业在做决策时缺乏数据支持，难以做出科学决策",
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/3.png"
+      },
+      {
+        "title": "报告制作繁琐",
+        "content": "传统报告制作耗时耗力，且难以实时更新数据",
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/4.png"
+      }
+    ]
+  },
+  "section_16": {
+    "category": "<h2 class='text-3xl'>比传统数据分析，再提效50%</h2>",
+    "desc": "<p class='mt-2 text-sm'>通过实时反馈、深度分析、数据解释和分享协作</p><p class='mt-2 text-sm'>我们的数据分析工具能帮您比传统方法提升50%的效率</p>",
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/5.png",
+        "title": "数据编辑",
+        "content": "实时反馈、校验数据处理结果，一次厘清业务脉络"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/6.png",
+        "title": "深度分析",
+        "content": "分析再复杂，也能找到立马能用的函数"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/7.png",
+        "title": "数据解释",
+        "content": "点击疑问数据，查看相关性分析和时序分析"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/8.png",
+        "title": "分享协作",
+        "content": "快速重组一个主题报表，省去重复处理数据做图表"
+      }
+    ]
+  },
+  "section_17": {
+    "category": "<h2 class='text-3xl'>数据分析，一气呵成</h2>",
+    "subtitle": "<p>数据准备可连接多种数据源，数据处理无需SQL，数据可视化后轻松</p><p class='mt-2'>分享协作，让数据分析变得更加高效简洁</p>",
+    "cover": "/upload/materialRepo/image/jianghu-bi-test/illustration-2.png",
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/13.png",
+        "title": "数据准备",
+        "content": "可连接多种数据源，一键接入数据库表或导入Excel"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/13.png",
+        "title": "数据处理",
+        "content": "可视化编辑数据，过滤合并计算，完全不需要SQL"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/13.png",
+        "title": "分享协作",
+        "content": "可多人协同编辑仪表板，复用他人报表，一键分享发布"
+      }
+    ]
+  },
+  "section_18": {
+    "category": "<h2 class='text-3xl'>每个人都能分析数据提升业务</h2>",
+    "desc": "<p class='mt-2 text-sm'>通赋能全员，以数据驱动业务增长</p>",
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/9.png",
+        "title": "销售人员",
+        "content": "销售部门人员可通过IT人员制作的业务包轻松完成销售主题的探索分析，轻松掌握企业销售目标、销售活动等数据。在管理和实现企业销售目标的过程中做到数据在手，心中不慌。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/10.png",
+        "title": "管理人员",
+        "content": "构建的企业管理驾驶舱，可以让管理层和领导充分了解公司运营概况，随时随地获取企业关键数据信息，真正做到了然于心、谋定而动。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/11.png",
+        "title": "财务人员",
+        "content": "财务分析往往是企业运营中重要的一环，当财务人员通过固定报表发现净利润下降，可立刻拉出各个业务、机构、产品等结构进行分析。实现智能化的财务运营。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/12.png",
+        "title": "数据分析师",
+        "content": "具备了高效的数据处理、精细的数据权限管控、智能的数据分析等特性，可以帮助专业的数据分析师提升工作效率。"
+      }
+    ]
+  },
+  "use": {
+    "title": "使用江湖BI，让您的数据管理更便捷、更高效、更智能",
+    "url": "https://github.com/jianghujs/jianghu-bi"
+  }
+}
