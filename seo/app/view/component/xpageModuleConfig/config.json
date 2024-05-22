@@ -114,6 +114,73 @@
       }
     ]
   },
+  "section_50": {
+    "title": "<h2 class='text-3xl'>常见痛点的策略与解决</h2>",
+    "subtitle": "<span>提供有效策略，轻松应对各种挑战</span>",
+    "list": [
+      {
+        "title": "数据整合与信息共享",
+        "content": "企业内部各部门间信息孤岛现象，数据无法实时共享，导致决策层无法获得准确、全面的运营数据。",
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/Group 427318815.svg"
+      },
+      {
+        "title": "流程优化与管理效率",
+        "content": "企业内部业务流程繁琐，审批、采购、生产、销售等环节缺乏有效衔接，影响管理效率。",
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/Group 427318816.svg"
+      },
+      {
+        "title": "成本控制与预算管理",
+        "content": "企业难以实时监控成本变化，预算管理困难，容易导致成本超支。",
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/Group 427318814.svg"
+      },
+      {
+        "title": "供应链管理与协同",
+        "content": "供应链管理复杂，与供应商、客户的协同困难，影响响应速度和服务质量。",
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/Group 427318817.svg"
+      }
+    ]
+  },
+  "section_51": {
+    "category": "<h2 class='text-3xl'>采购业务场景全覆盖</h2>",
+    "desc": "<p class='mt-2 text-sm'>供应商、采购订货、采购退货、采购订单管理、 开启关联审批，以销定购，合理预估市场。</p>",
+    "cover": "/upload/materialRepo/image/jianghu-erp/app/Group 427318824.svg",
+    "list": [
+      {
+        "title": "供应商360°全景画像",
+        "content": "系统记录勾画供应商全景画像，立体呈现供应商信息，随时查看账单、历史采购记录等功能， 提高采购工作的节奏与效率。"
+      },
+      {
+        "title": "采购订单管理，避免重复采购",
+        "content": "对采购订单和退货订单的高级筛选，避免重复采购与无用采购，对采购计划有效管理，提高公司资金使用效率。"
+      },
+      {
+        "title": "自定义采购审批流",
+        "content": "采购可开启自定义审批流程，设计多级审批促进采购信息的透明度。 同时采购信息随时共享和查阅的能力充分发挥了系统的监督作用，强化监督效果。"
+      }
+    ]
+  },
+  "section_52": {
+    "category": "<h2 class='text-3xl'>销售全链条追踪管理</h2>",
+    "desc": "<p class='mt-2'>提供销售业务端到端的完整解决方案，支撑企业业务财务一体化</p>",
+    "cover": "/upload/materialRepo/image/jianghu-erp/app/Group 427318825.svg",
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/bags-shopping 1.svg",
+        "title": "详细记录销售场景",
+        "content": "录入名称、关联客户、销售金额、数量、付款方式、关联产品、下单/交货时间等业务相关字段内容，更详细的记录销售场景。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/角色管理.svg",
+        "title": "客户信息管理",
+        "content": "销售订单关联一键关联客户信息，自动填充联系人、电话与地址，提高建单效率与准确度。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/侧边导航效能策略设置.svg",
+        "title": "规范销售订单全流程",
+        "content": "帮助企业建立标准化的销售订单管理制度，规范全体业务人员的销售管理行为，使销售管理合规合矩，有规可依。"
+      }
+    ]
+  },
   "use": {
     "title": "使用江湖BI，让您的数据管理更便捷、更高效、更智能",
     "url": "https://github.com/jianghujs/jianghu-bi"
