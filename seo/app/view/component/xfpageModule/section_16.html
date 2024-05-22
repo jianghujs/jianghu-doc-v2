@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="grid md:grid-cols-4 gap-5 p-2 mt-[59px]">
+    <div class="grid md:grid-cols-<$ item.list.length $> gap-5 p-2 mt-[59px]">
         {% for it in item.list %}
         <div class="flex flex-col items-stretch bg-white p-12">
             <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-[43px] h-[43px] m-auto" />
