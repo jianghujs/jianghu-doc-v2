@@ -1,0 +1,29 @@
+{% set static = "/" + appId + "/public" %}
+{% set xfpageSeoResourceUrl = ctx.app.config.xfpageSeoResourceUrl %}
+<link rel="stylesheet" href="<$ static $>/mdbootstrap/font-awesome.6.1.1.min.css" />
+<script src="<$ static $>/tailwindcss/tailwindcss.js"></script>
+<script src="<$ static $>/tailwindcss/tailwindcss.config.js"></script>
+<style>
+
+</style>
+<!-- 内容区 >>>>>>>>>>>>> -->
+<main class="ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
+  {% for i in range(1, 20) %}
+  {% set section = 'section_' + i %}
+  {% if xfPage.xfPageConfig[section] %}
+  {% include 'component/xfpageModule/' + section + '.html' %}
+  {% endif %}
+  {% endfor %}
+
+  <!-- 使用 -->
+  {% if xfPage.xfPageConfig.use %}
+  {% include 'component/xfpageModule/use.html' %}
+  {% endif %}
+
+  <!-- why choose -->
+  {% include 'component/xfpageModule/whyChoose.html' %}
+</main>
+{% include 'component/footer.html' %}
+
+
+<script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.mdb.min.js"></script>
