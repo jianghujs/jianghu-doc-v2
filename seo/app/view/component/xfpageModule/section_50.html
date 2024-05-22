@@ -18,7 +18,7 @@
     {% for it in section.list %}
     {% set itIndex = loop.index %}
     <div class="py-10 flex {% if itIndex % 2 == 0 %}ml-16{% else %}mr-16{% endif %} {% if itIndex > 2 %}border-t{% endif %}">
-      <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-28 w-28	mr-4 md:block hidden"/>
+      <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-28 h-28	mr-4 md:block hidden"/>
       <div class="mt-2 font-medium text-sm flex-1 flex flex-column justify-content-between">
         <span class="md:text-baseline text-xl">
           <$ it.title $>
