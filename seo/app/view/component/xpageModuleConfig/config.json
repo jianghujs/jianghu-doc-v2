@@ -252,6 +252,33 @@
       }
     ]
   },
+  "section_55": {
+    "category": "<h2 class='text-3xl'>全面解决方案</h2>",
+    "desc": "<p class='mt-2 text-sm'>针对各种行业的属性与痛点，量身定制通用的解决方案</p>",
+    "cover": "/upload/materialRepo/image/jianghu-junshi/app/Group 346.svg",
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Frame 281.svg",
+        "title": "App端性能监控",
+        "content": "App性能与崩溃，提升应用质量"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Frame 280.svg",
+        "title": "H5/Web监控",
+        "content": "监测请求情况与用户感知类性能指标"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Frame 282.svg",
+        "title": "小程序端性能监控",
+        "content": "小程序端性能监控"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Frame 283.svg",
+        "title": "应用性能监控",
+        "content": "监控应用性能，提升应用质量"
+      }
+    ]
+  },
   "use": {
     "title": "使用江湖BI，让您的数据管理更便捷、更高效、更智能",
     "url": "https://github.com/jianghujs/jianghu-bi"
