@@ -181,6 +181,28 @@
       }
     ]
   },
+  "section_53": {
+    "category": "<h2 class='text-3xl'>财务精准管理</h2>",
+    "cover": "/upload/materialRepo/image/jianghu-erp/app/Group 427318827.svg",
+    "desc": "采购回款、采购付款可关联采购订单与销售退货单，自动生成编号、填充供应商以及付款金额。 支持配置审批流程，自定义字段等操作。",
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/新建消息.svg",
+        "title": "上传附件，改善票据存储环境",
+        "content": "回款单、退货单、单据等均可通过附件的方式上传电子票据，解决保存纸质单据的繁琐工作，企业重要付款回款信息全部在线保存。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/Frame 248.svg",
+        "title": "开启审核，透明信息",
+        "content": "有关财务信息的有效性和透明性，通过配置审批流程，让多级上级审批，保证数据的准确与透明。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/首页.svg",
+        "title": "多场景配置",
+        "content": "我负责的款项、下属负责的款项、即将到期的款项、款项类型、金额、时间等等均可通过高级筛选功能配置查看场景。"
+      }
+    ]
+  },
   "use": {
     "title": "使用江湖BI，让您的数据管理更便捷、更高效、更智能",
     "url": "https://github.com/jianghujs/jianghu-bi"
