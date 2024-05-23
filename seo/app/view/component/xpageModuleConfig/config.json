@@ -141,6 +141,7 @@
     ]
   },
   "section_51": {
+    "isImageOnRight": false,  
     "category": "<h2 class='text-3xl'>采购业务场景全覆盖</h2>",
     "desc": "<p class='mt-2 text-sm'>供应商、采购订货、采购退货、采购订单管理、 开启关联审批，以销定购，合理预估市场。</p>",
     "cover": "/upload/materialRepo/image/jianghu-erp/app/Group 427318824.svg",

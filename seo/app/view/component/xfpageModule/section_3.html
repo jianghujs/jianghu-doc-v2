@@ -1,3 +1,4 @@
+{% set section = value %}
 <style>
     .jh-xfpage-section-3 .jh-block-1{
         width: 35%;
@@ -14,7 +15,7 @@
 </style>
 
 <!-- 模块 3 -->
-{% for item in xfPage.xfPageConfig.section_3 %}
+{% for item in section %}
 {% set itemIndex = loop.index %}
 <!--  根据不同index，左右对换  -->
 {% if itemIndex % 2 == 0 %}
