@@ -13,9 +13,11 @@
         </div>
       </h2>
     </div>
-    <div class="relative md:pb-10 d-md-flex align-center justify-content-between items-center px-20">
-      <div class="flex-1">
+    <div class="relative md:pb-10 d-md-flex align-center justify-content-between items-center px-20 {% if section.isImageOnRight %}flex-row-reverse{% endif %}">
+      <div>
         <img src="<$ xfpageSeoResourceUrl $><$ section.cover $>" alt="">
+      </div>
+      <div class="flex-1">
       </div>
       <div class="md:w-96 mb-8 mt-20 text-base text-gray-500">
         <h2 class="text-2xl font-bold text-black">
@@ -28,7 +30,7 @@
         </p>
       </div>
     </div>
-    <div class="grid md:grid-cols-3 card rounded-3xl">
+    <div class="grid md:grid-cols-{% if section.gridCount %}<$ section.gridCount $>{% else %}3{% endif %} card rounded-3xl">
       {% for it in section.list %}
       {% set itIndex = loop.index %}
       <div class="p-6 border-b border-r border-gray-100">
