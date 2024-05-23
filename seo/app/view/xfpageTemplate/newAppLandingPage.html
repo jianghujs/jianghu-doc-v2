@@ -78,6 +78,11 @@
       {% endfor %}
   </div>
 
+  <!-- 使用 -->
+  {% if xfPage.xfPageConfig.use %}
+  {% include 'component/xfpageModule/use.html' %}
+  {% endif %}
+
   <!-- why choose -->
   {% include 'component/xfpageModule/whyChoose.html' %}
 
