@@ -181,6 +181,76 @@
       }
     ]
   },
+  "section_53": {
+    "category": "<h2 class='text-3xl'>财务精准管理</h2>",
+    "cover": "/upload/materialRepo/image/jianghu-erp/app/Group 427318827.svg",
+    "desc": "采购回款、采购付款可关联采购订单与销售退货单，自动生成编号、填充供应商以及付款金额。 支持配置审批流程，自定义字段等操作。",
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/新建消息.svg",
+        "title": "上传附件，改善票据存储环境",
+        "content": "回款单、退货单、单据等均可通过附件的方式上传电子票据，解决保存纸质单据的繁琐工作，企业重要付款回款信息全部在线保存。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/Frame 248.svg",
+        "title": "开启审核，透明信息",
+        "content": "有关财务信息的有效性和透明性，通过配置审批流程，让多级上级审批，保证数据的准确与透明。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-erp/icon/首页.svg",
+        "title": "多场景配置",
+        "content": "我负责的款项、下属负责的款项、即将到期的款项、款项类型、金额、时间等等均可通过高级筛选功能配置查看场景。"
+      }
+    ]
+  },
+  "section_54": {
+    "category": "<h2 class='text-3xl'>功能介绍</h2>",
+    "title": "一站式数据分析平台",
+    "desc": "满足企业市场、运营、产品、分析师等不同部门的 数据分析需求",
+    "cover": "/upload/materialRepo/image/jianghu-junshi/app/Group 338.svg",
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Group 358.svg",
+        "title": "用户分析",
+        "content": "基础数据，侧重用户关注的内容"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Group 359.svg",
+        "title": "用户画像",
+        "content": "人群分析，侧重用户的群体划分"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Group 356.svg",
+        "title": "用户体验",
+        "content": "体验分析，侧重前端的用户体验"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Group 355.svg",
+        "title": "深入业务场景分析",
+        "content": "满足企业市场、运营、产品、分析师等不同部门的数据分析需求"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Group 351.svg",
+        "title": "提取广告价值",
+        "content": "链接用户广告行为与应用行为，从数据中提取价值，深度洞察用户"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Group 353.svg",
+        "title": "业务增长",
+        "content": "精准定位获客渠道，挖掘用户价值，优化用户体验，提升留存转化"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Group 354.svg",
+        "title": "全面数据收集",
+        "content": "全面数据收集，真实还原用户行为轨迹，了解产品真实使用情况"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Group 352.svg",
+        "title": "应用性能监控",
+        "content": "监控应用性能，提升应用质量"
+      }
+    ]
+  },
   "use": {
     "title": "使用江湖BI，让您的数据管理更便捷、更高效、更智能",
     "url": "https://github.com/jianghujs/jianghu-bi"
