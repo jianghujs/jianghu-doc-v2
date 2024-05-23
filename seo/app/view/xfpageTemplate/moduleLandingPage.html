@@ -87,13 +87,17 @@
     {% endif %}
 
     <div class="jh-module">
-        {% for i in range(1, 20) %}
-        {% set section = 'section_' + i %}
+        {% for section, value in xfPage.xfPageConfig %}
 
-        {% if xfPage.xfPageConfig[section] %}
+        {% if section.includes('section_') and xfPage.xfPageConfig[section] %}
         <div class="jh-block-1">
-        {% include 'component/xfpageModule/' + section + '.html' %}
+          {% if xfPage.xfPageConfig[section].xfpageModule %}
+          {% include 'component/xfpageModule/' + xfPage.xfPageConfig[section].xfpageModule + '.html' %}
+          {% else %}
+          {% include 'component/xfpageModule/' + section + '.html' %}
+          {% endif %}
         </div>
+  
 
         {% if xfPage.xfPageConfig[section].listStyle == "listCard1" %}
         {% set listCardData = xfPage.xfPageConfig[section].list %}
@@ -105,11 +109,6 @@
         {% endif %}
         {% endfor %}
     </div>
-
-    <!-- 使用 -->
-    {% if xfPage.xfPageConfig.use %}
-    {% include 'component/xfpageModule/use.html' %}
-    {% endif %}
 
     <!-- why choose -->
     {% include 'component/xfpageModule/whyChoose.html' %}

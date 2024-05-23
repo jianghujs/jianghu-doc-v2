@@ -58,7 +58,7 @@
   <div class="jh-module">
       {% for section, value in xfPage.xfPageConfig %}
 
-      {% if xfPage.xfPageConfig[section] %}
+      {% if section.includes('section_') and xfPage.xfPageConfig[section] %}
       <div class="jh-block-1">
         {% if xfPage.xfPageConfig[section].xfpageModule %}
         {% include 'component/xfpageModule/' + xfPage.xfPageConfig[section].xfpageModule + '.html' %}
