@@ -21,22 +21,26 @@
       {
         "title": "数据分散，难以整合",
         "content": "企业数据分散在不同系统和部门，难以形成统一视角进行分析",
-        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/1.png"
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/1.png",
+        "iconSize": "80"
       },
       {
         "title": "数据分析门槛高",
         "content": "传统数据分析需要专业技能，普通用户难以操作",
-        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/2.png"
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/2.png",
+        "iconSize": "80"
       },
       {
         "title": "决策支持不足",
         "content": "企业在做决策时缺乏数据支持，难以做出科学决策",
-        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/3.png"
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/3.png",
+        "iconSize": "80"
       },
       {
         "title": "报告制作繁琐",
         "content": "传统报告制作耗时耗力，且难以实时更新数据",
-        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/4.png"
+        "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/4.png",
+        "iconSize": "80"
       }
     ]
   },
@@ -46,21 +50,25 @@
     "list": [
       {
         "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/5.png",
+        "iconSize": "80",
         "title": "数据编辑",
         "content": "实时反馈、校验数据处理结果，一次厘清业务脉络"
       },
       {
         "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/6.png",
+        "iconSize": "80",
         "title": "深度分析",
         "content": "分析再复杂，也能找到立马能用的函数"
       },
       {
         "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/7.png",
+        "iconSize": "80",
         "title": "数据解释",
         "content": "点击疑问数据，查看相关性分析和时序分析"
       },
       {
         "icon": "/upload/materialRepo/image/jianghu-bi-test/icon/8.png",
+        "iconSize": "80",
         "title": "分享协作",
         "content": "快速重组一个主题报表，省去重复处理数据做图表"
       }
@@ -141,7 +149,7 @@
     ]
   },
   "section_51": {
-    "isImageOnRight": false,  
+    "isImageOnRight": true,
     "category": "<h2 class='text-3xl'>采购业务场景全覆盖</h2>",
     "desc": "<p class='mt-2 text-sm'>供应商、采购订货、采购退货、采购订单管理、 开启关联审批，以销定购，合理预估市场。</p>",
     "cover": "/upload/materialRepo/image/jianghu-erp/app/Group 427318824.svg",
@@ -276,6 +284,33 @@
         "icon": "/upload/materialRepo/image/jianghu-junshi/icon/Frame 283.svg",
         "title": "应用性能监控",
         "content": "监控应用性能，提升应用质量"
+      }
+    ]
+  },
+  "section_56": {
+    "category": "江湖知识付费管理系统",
+    "desc": "一体化的移动办公，提升企业运转效率",
+    "backgroundUrl": "/upload/materialRepo/image/jianghu-doc/finace/Frame243.png",
+    "list": [
+      {
+        "title": "用户管理",
+        "icon": "/upload/materialRepo/image/jianghu-jufeng/icon/Group 2.svg",
+        "content": "根据用户平台使用数据分析，实现用户画像精准管理。"
+      },
+      {
+        "title": "课程管理",
+        "icon": "/upload/materialRepo/image/jianghu-jufeng/icon/Group 2(1).svg",
+        "content": "课程形式多样，具有收藏、搜索、推荐等多种课程操作功能。"
+      },
+      {
+        "title": "讲师管理",
+        "icon": "/upload/materialRepo/image/jianghu-jufeng/icon/Group 427318868.svg",
+        "content": "具备讲师入驻申请功能，打造讲师个人品牌形象，提高知识变现价值。"
+      },
+      {
+        "title": "数据分析",
+        "icon": "/upload/materialRepo/image/jianghu-jufeng/icon/Group 427318868(1).svg",
+        "content": "对用户、讲师、课程等内进行数据记录，为决策提供参考依据。"
       }
     ]
   },
