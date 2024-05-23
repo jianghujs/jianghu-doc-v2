@@ -1,7 +1,7 @@
 <style>
 
 </style>
-{% set item = xfPage.xfPageConfig.section_16 %}
+{% set item = value %}
 
 <!-- 模块 16 -->
 <div class="container-lg py-16 relative">
@@ -25,7 +25,7 @@
                 <$ it.title $>
             </div>
             <p class="mt-3 text-gray-500 text-sm text-center h-10 leading-relaxed">
-                <$ it.content $>
+                <$ it.content  | safe $>
             </p>
         </div>
         {% endfor %}

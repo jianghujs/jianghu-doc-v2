@@ -1,0 +1,54 @@
+{
+  "section_16_1": {
+    "xfpageModule": "section_16",
+    "category": "<h2 class='text-3xl'>常见痛点的策略与解决</h2>",
+    "desc": "<p class='mt-2 text-sm'>提供有效策略，轻松应对各种挑战</p>",
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-crm-test/icon/1.png",
+        "title": "客户信息管理混乱",
+        "content": "客户信息分散，缺乏统一管理和维护，导致服务效率低下。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-crm-test/icon/2.png",
+        "title": "跟进与销售机会错失",
+        "content": "销售线索和机会难以追踪，容易错失潜在客户。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-crm-test/icon/3.png",
+        "title": "服务响应慢，客户满意度低",
+        "content": "客户问题响应不及时，影响客户满意度和忠诚度。"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-crm-test/icon/4.png",
+        "title": "缺乏数据支持的决策",
+        "content": "没有足够的数据支持来制定销售策略和客户服务计划。"
+      }
+    ]
+  },
+  "section_16_2": {
+    "xfpageModule": "section_16",
+    "category": "<h2 class='text-3xl'>精准商机管理</h2>",
+    "desc": "<p class='mt-2 text-sm'>规范销售过程，快速定位关键干系人，通过销售漏斗与作战地图精准把握商机。</p>",
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-crm-test/icon/12.png",
+        "title": "销售过程规范化",
+        "content": "<p>定义销售标准动作：明确销售过程中的关键步骤和活动。</p><p>销售过程规范：确保销售团队遵循一致的销售流程。</p>"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-crm-test/icon/13.png",
+        "title": "关键干系人定位",
+        "content": "<p>干系人关系视图：构建全面的干系人网络视图。</p><p>关键决策人定位：快速识别并接触关键决策者。</p>"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-crm-test/icon/14.png",
+        "title": "销售预测与商机管理",
+        "content": "<p>销售漏斗分析：追踪商机在不同阶段的转化率。</p><p>商机作战地图：为销售团队提供战略性的销售路径。</p>"
+      }
+    ]
+  }
+}
+
+
+

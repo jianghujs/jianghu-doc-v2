@@ -60,7 +60,11 @@
 
       {% if xfPage.xfPageConfig[section] %}
       <div class="jh-block-1">
-      {% include 'component/xfpageModule/' + section + '.html' %}
+        {% if xfPage.xfPageConfig[section].xfpageModule %}
+        {% include 'component/xfpageModule/' + xfPage.xfPageConfig[section].xfpageModule + '.html' %}
+        {% else %}
+        {% include 'component/xfpageModule/' + section + '.html' %}
+        {% endif %}
       </div>
 
       {% if xfPage.xfPageConfig[section].listStyle == "listCard1" %}
