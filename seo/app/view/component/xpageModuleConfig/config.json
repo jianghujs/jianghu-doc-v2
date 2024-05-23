@@ -291,6 +291,8 @@
     "category": "江湖知识付费管理系统",
     "desc": "一体化的移动办公，提升企业运转效率",
     "backgroundUrl": "/upload/materialRepo/image/jianghu-doc/finace/Frame243.png",
+    "backgroundSize": "[length:100vw_265px] / [length:100%_100%] / cover",
+    "dense": false,
     "list": [
       {
         "title": "用户管理",
