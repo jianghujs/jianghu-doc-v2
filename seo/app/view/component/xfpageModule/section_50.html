@@ -14,10 +14,10 @@
       </div>
     </h2>
   </div>
-  <div class="grid md:grid-cols-2 gap-1 mt-10">
+  <div class="md:grid md:grid-cols-2 gap-1 mt-10">
     {% for it in section.list %}
     {% set itIndex = loop.index %}
-    <div class="py-10 flex {% if itIndex % 2 == 0 %}ml-16{% else %}mr-16{% endif %} {% if itIndex > 2 %}border-t{% endif %}">
+    <div class="md:py-10 py-4 text-center md:text-left flex {% if itIndex % 2 == 0 %}md:ml-16{% else %}md:mr-16{% endif %} {% if itIndex > 2 %}md:border-t{% endif %}">
       <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-28 h-28	mr-4 md:block hidden"/>
       <div class="mt-2 font-medium text-sm flex-1 flex flex-column justify-content-between">
         <span class="md:text-baseline text-xl">
@@ -30,5 +30,5 @@
     </div>
     {% endfor %}
   </div>
-  <div class="border-l w-px absolute left-2/4 top-36 bottom-10"></div>
+  <div class="border-l w-px absolute left-2/4 top-36 bottom-10 hidden md:block"></div>
 </div>
