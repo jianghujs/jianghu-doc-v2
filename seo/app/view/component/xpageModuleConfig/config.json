@@ -316,6 +316,81 @@
       }
     ]
   },
+  "section_57": {
+    "title": "云端 Office",
+    "desc": "全新一代云端 Office，面向未来的办公软件",
+    "cover": "/upload/materialRepo/image/jianghu-doc-test/illustration-2.png",
+    "list": [
+      {
+        "title": "分类", 
+        "list": [
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/5.png",
+            "content": "分类排序"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/6.png",
+            "content": "分类分组"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/7.png",
+            "content": "分类状态"
+          }
+        ]
+      },
+      {
+        "title": "文章", 
+        "list": [
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/8.png",
+            "content": "文章编辑器"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/9.png",
+            "content": "历史版本"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/10.png",
+            "content": "发布状态"
+          }
+        ]
+      },
+      {
+        "title": "素材", 
+        "list": [
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/11.png",
+            "content": "自定义文件夹"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/12.png",
+            "content": "上传文件"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/13.png",
+            "content": "文件信息"
+          }
+        ]
+      },
+      {
+        "title": "自定义页面", 
+        "list": [
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/14.png",
+            "content": "页面模板"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/15.png",
+            "content": "版本控制"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/16.png",
+            "content": "json配置"
+          }
+        ]
+      }
+    ]
+  },
   "use": {
     "title": "使用江湖BI，让您的数据管理更便捷、更高效、更智能",
     "url": "https://github.com/jianghujs/jianghu-bi"
