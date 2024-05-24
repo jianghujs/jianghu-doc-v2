@@ -122,6 +122,58 @@
       }
     ]
   },
+  "section_19": {
+    "category": "<h2 class='text-3xl'>什么是软件开发？</h2>",
+    "desc": "<p class='mt-2'>软件开发是指可交付软件的设计、记录、编程、测试和持续的日常维护。这些步骤经过组合即形成工作流程管道。管道包含一系列的步骤，遵循这些步骤可实现高质量的可交付软件。该管道称为软件开发生命周期。</p><p class='mt-2'>尽管有许多细微差别，但软件开发生命周期通常包括一些通用要素，如下所述。</p>",
+    "subtitle": "<h2 class='text-xl'>软件开发生命周期的步骤</h2>",
+    "cover": "/upload/materialRepo/image/jianghu-concept-test/illustration-2.png",
+    "coverWidth": 280,
+    "listRowLength": 3,
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-concept-test/icon/1.png",
+        "iconSize": "48",
+        "title": "发现",
+        "content": "设想、设计项目并确定项目优先级。诸如敏捷之类的方法有助于指导项目的工作流程。",
+        "backgroundColor": "#F8FCFB"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-concept-test/icon/2.png",
+        "iconSize": "48",
+        "title": "规划",
+        "content": "确定利益相关者，制定预算，并申请基础设施。概念阶段的设计文档被分解为可行的任务",
+        "backgroundColor": "#F8FCFB"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-concept-test/icon/3.png",
+        "iconSize": "48",
+        "title": "构建和测试",
+        "content": "开发团队致力于构建符合要求和反馈的生产可用软件。CI/CD 管道可用于确保高效的开发人员体验。",
+        "backgroundColor": "#F8FCFB"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-concept-test/icon/4.png",
+        "iconSize": "48",
+        "title": "部署",
+        "content": "代码完成编写、测试和合并时，即会进入交付阶段。借助 Bitbuckets CI/CD 管道，点击一个按钮即可完成部署。",
+        "backgroundColor": "#F8FCFB"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-concept-test/icon/5.png",
+        "iconSize": "48",
+        "title": "运维",
+        "content": "活跃的软件项目离不开支持和维护。我们提供强大的工具来捕获客户、支持请求，对其进行分类并予以解决。",
+        "backgroundColor": "#F8FCFB"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-concept-test/icon/6.png",
+        "iconSize": "48",
+        "title": "观察",
+        "content": "代指开发和运营部门响应计划外事件并恢复服务，在此过程中利用可靠的方法来确定事件优先顺序并快速加以解决。",
+        "backgroundColor": "#F8FCFB"
+      }
+    ]
+  },
   "section_50": {
     "title": "<h2 class='text-3xl'>常见痛点的策略与解决</h2>",
     "subtitle": "<span>提供有效策略，轻松应对各种挑战</span>",

@@ -19,7 +19,7 @@
     </div>
     <div class="grid md:grid-cols-2 gap-5 p-2 mt-[59px]">
         {% for it in item.list %}
-        <div class="flex items-center bg-white p-12">
+        <div class="flex items-center p-12 bg-[{% if it.backgroundColor %}<$ it.backgroundColor $>{% else %}white{% endif %}]">
             <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-[63px] h-[63px] m-auto" />
             <div class="ml-7">
                 <div class="font-medium text-md">
