@@ -17,6 +17,8 @@
   },
   "section_4": {
     "title": "<h2 class='text-3xl'>常见痛点</h2>",
+    "desc": "<p class='mt-2 text-sm'>以广泛的应用场景、敏捷高效的应用构建能力和极低的运维成本，帮助企业构建统一化、高扩展性与复用率应用</p><p class='mt-2 text-sm'>平台，助力企业降本增效</p>",
+    "backgroundUrl": "/upload/materialRepo/image/jianghu-devPlatform/background-2.png",
     "list": [
       {
         "title": "数据分散，难以整合",
@@ -171,6 +173,109 @@
         "title": "观察",
         "content": "代指开发和运营部门响应计划外事件并恢复服务，在此过程中利用可靠的方法来确定事件优先顺序并快速加以解决。",
         "backgroundColor": "#F8FCFB"
+      }
+    ]
+  },
+  "section_20": {
+    "category": "<h2 class='text-3xl'>基于启效云平台开发应用效率值</h2>",
+    "desc": "<p class='mt-2 text-sm'>从开发-运维-后期迭代升级三个维度降低成本并提高效率</p>",
+    "backgroundUrl": "/upload/materialRepo/image/jianghu-devPlatform/background-2.png",
+    "listRowLength": 3,
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-devPlatform/icon/13.png",
+        "title": "降低整体开发成本",
+        "content": "70%",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-devPlatform/icon/13.png",
+        "title": "降低代码泄露及窃取风险",
+        "content": "90%",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-devPlatform/icon/13.png",
+        "title": "平均缩短应用制作周期",
+        "content": "85%",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-devPlatform/icon/13.png",
+        "title": "降低系统集成对接成",
+        "content": "80%",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-devPlatform/icon/13.png",
+        "title": "降低后期运维成本",
+        "content": "78%",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-devPlatform/icon/13.png",
+        "title": "降低后期迭代开发升级成本",
+        "content": "85%",
+        "iconSize": "36"
+      }
+    ]
+  },
+  "section_21": {
+    "category": "<h2 class='text-3xl'>人人都能上手的服务器运维管理工具</h2>",
+    "desc": "",
+    "list": [
+      {
+        "title": "简单聪明的可视化操作", 
+        "backgroundUrl": "/upload/materialRepo/image/jianghu-panel/icon/14.png",
+        "backgroundColor": "#D9F1E7",
+        "list": [
+          {
+            "icon": "/upload/materialRepo/image/jianghu-panel/icon/17.png",
+            "content": "简洁友好的交互体验，2分钟安装好面板"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-panel/icon/17.png",
+            "content": "一键安装LNMP/LAMP网站环境"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-panel/icon/17.png",
+            "content": "以网站管理为核心，提供资源监控、文件管理、软件安装等运维常用功能模块"
+          }
+        ]
+      },
+      {
+        "title": "轻松成为运维高手", 
+        "backgroundUrl": "/upload/materialRepo/image/jianghu-panel/icon/15.png",
+        "backgroundColor": "#FFF6E2",
+        "list": [
+          {
+            "icon": "/upload/materialRepo/image/jianghu-panel/icon/18.png",
+            "content": "江湖面板将常用的Linux命令"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-panel/icon/18.png",
+            "content": "封装成一个个功能模块，例如创建网站，绑定域名，反向代理，Tomcat配置等等"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-panel/icon/18.png",
+            "content": "在面板上点击几下就可以完成配置"
+          }
+        ]
+      },
+      {
+        "title": "安全看得见", 
+        "backgroundUrl": "/upload/materialRepo/image/jianghu-panel/icon/16.png",
+        "backgroundColor": "#D8E6FF",
+        "list": [
+          {
+            "icon": "/upload/materialRepo/image/jianghu-panel/icon/19.png",
+            "content": "一键检查服务器常见16项安全风险"
+          },
+          {
+            "icon": "/upload/materialRepo/image/jianghu-panel/icon/19.png",
+            "content": "例如防火墙，默认端口是否修改等，输出结果，并给出解决方案。"
+          }
+        ]
       }
     ]
   },
