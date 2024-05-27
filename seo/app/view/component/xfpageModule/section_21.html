@@ -22,13 +22,13 @@
                 </div>
             </div>
         </div>
-        <div class="mt-10">
+        <div class="mt-[100px]">
             {% for it in sectionData.list %}
-            <div class="mt-10 {% if loop.index != 2 %}pl-[164px]{% endif %}">
+            <div class="mt-7 {% if loop.index != 2 %}pl-[164px]{% endif %}">
                 <div class="relative">
-                    <div class="relative {% if loop.index != 3 %}right-[-250px]{% else %}left-[280px]{% endif %} inline-block bg-[<$ it.backgroundColor $>] py-3 {% if loop.index != 3 %}pl-[100px] pr-10{% else %}pl-10 pr-[100px]{% endif %}">
+                    <div class="rounded-[24px] relative {% if loop.index != 3 %}right-[-230px]{% else %}left-[100px]{% endif %} inline-block bg-[<$ it.backgroundColor $>] pb-3 pt-6 {% if loop.index != 3 %}pl-[140px] pr-10{% else %}pl-10 pr-[340px]{% endif %}">
                         {% for it_sub in it.list %}
-                        <div class="flex items-center mt-3">
+                        <div class="flex items-center mb-3">
                             <img src="<$ xfpageSeoResourceUrl $><$ it_sub.icon $>" class="w-[20px] h-[20px]" />
                             <div class="ml-3 text-gray-500 text-sm leading-relaxed">
                             <$ it_sub.content $>
@@ -37,9 +37,9 @@
                         {% endfor %}
                     </div>
         
-                    <div class="absolute bottom-0 {% if loop.index != 3 %}left-0{% else %}right-0{% endif %} w-[300px] h-[170px] bg-[url('<$ xfpageSeoResourceUrl $><$ it.backgroundUrl $>')] bg-cover bg-no-repeat bg-top font-medium text-md text-center">
+                    <div class="absolute bottom-0 {% if loop.index != 3 %}left-0{% else %}right-0{% endif %} w-[335px] h-[200px] bg-[url('<$ xfpageSeoResourceUrl $><$ it.backgroundUrl $>')] {% if loop.index == 1 %}bg-[length:365px]{% else %}bg-cover{% endif %} bg-no-repeat bg-top font-medium text-md text-center">
                         <div class="p-[60px] text-center text-white text-2xl">
-                            <$ it.title $>
+                            <$ it.title  | safe $>
                         </div>
                     </div>
                 </div>

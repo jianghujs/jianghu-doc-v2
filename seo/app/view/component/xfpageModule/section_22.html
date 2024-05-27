@@ -1,0 +1,45 @@
+<style>
+
+</style>
+{% set section = value %}
+
+<div class="container-lg relative py-16 flex section-53">
+
+  <div class="mt-md-0 text-base text-gray-500">
+    <h2 class="text-2xl font-bold text-black pl-10">
+      <div>
+        <$ section.category | safe $>
+      </div>
+      <div class="text-base font-normal mt-3 text-gray-400">
+        <$ section.desc | safe $>
+      </div>
+    </h2>
+    <div class="text-center mt-9">
+      <img src="<$ xfpageSeoResourceUrl $><$ section.cover $>" class="max-w-[{% if section.coverWidth %}<$ section.coverWidth $>{% else %}500{% endif %}px] max-h-[500px] inline"/>
+    </div>
+  </div>
+  <div class="border-1 border-[#E7F7F1] rounded-[24px] p-4 ml-8 shadow-[0_37px_31px_-32px_rgba(186,186,186,0.25)]">
+    <div class="mt-md-0 text-base text-gray-500 text-center">
+      <h2 class="text-2xl font-bold text-black">
+          <div>
+              <$ section.subtitle | safe $>
+          </div>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-{% if section.listRowLength %}<$ section.listRowLength $>{% else %}<$ section.list.length $>{% endif %} gap-3 p-2 mt-4">
+      {% for it in section.list %}
+      {% set itIndex = loop.index %}
+      <div class="mb-3">
+          <h3 class="text-md font-bold d-flex items-center">
+              <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="size-[{% if it.iconSize %}<$ it.iconSize $>{% else %}43{% endif %}px] mr-2" />
+              <$ it.title $>
+          </h3>
+          <p class="mt-2 text-gray-500 text-sm">
+              <$ it.content $>
+          </p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

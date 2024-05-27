@@ -46,6 +46,162 @@
       }
     ]
   },
+  "section_6": {
+    "title": "数字化是系统工程",
+    "desc": "数字化需要数字化理论支撑，需要顶层设计，不能拼拼凑凑",
+    "cover": "/upload/materialRepo/image/methodology/cover2.png",
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-1.png",
+        "title": "数字化是一场变革",
+        "content": "要么变革，要么被淘汰！"
+      },
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-2.png",
+        "title": "数据与应用是资产",
+        "content": "企业数据是资产，企业的应用也是资产！"
+      },
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-3.png",
+        "title": "数字化基础设施的构建",
+        "content": "数字化需要基础建设。没有基础建设的数字化是把楼建在沙滩上！"
+      },
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-4.png",
+        "title": "数字化项目管理",
+        "content": "数字化项目最难管理的就是变化，变化比计划还快！数字化项目不能套用传统的项目管理办法"
+      },
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-5.png",
+        "title": "数字化文化的建设",
+        "content": "建立企业数字化文化，是成本最低的数字化方案！"
+      },
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-6.png",
+        "title": "数字化团队的建设",
+        "content": "数字化团队是企业数字化的关键，决策，实施，落地，都需要高效的团队！"
+      },
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-7.png",
+        "title": "数字化下的企业业务流程重构",
+        "content": "数字化绝对不是把现有的流程搬到网页上！"
+      },
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-8.png",
+        "title": "数字化与企业管理",
+        "content": "数字化就是现代管理。没有数据支撑的管理是无效的！"
+      },
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-9.png",
+        "title": "数字化与客户体验",
+        "content": "数字化带来的客户体验提升企业竞争力！"
+      },
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-10.png",
+        "title": "数字化的投入与回报",
+        "content": "数字化的投入与回报需要从战略的角度去衡量！"
+      },
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-11.png",
+        "title": "数字化之路的探索",
+        "content": "数字化就是现代管理。没有数据支撑的管理是无效的！"
+      },
+      {
+        "icon": "/upload/materialRepo/image/methodology/icon-01-12.png",
+        "title": "数字化的阻力来源",
+        "content": "数字化就是现代管理。没有数据支撑的管理是无效的！"
+      }
+    ]
+  },
+  "section_13": {
+    "isNotInComputer": true,
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/1.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-2.png",
+        "title": "在线教学系统",
+        "content": "专为教育机构和培训机构设计的一站式教育解决方案，旨在提供全面的在线教学支持",
+        "url": "/doc/page/xfArticle/5769"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/2.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-3.png",
+        "title": "江湖PM",
+        "content": "为每家企业提供获客、销售和服务支持的智能客服平台，开箱即用",
+        "url": "/doc/page/xfArticle/5775"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/3.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-4.png",
+        "title": "CRM管理系统",
+        "content": "帮助企业实现市场营销、销售、服务的流程化管理的自动化，客户价值与企业收益最大化",
+        "url": "/doc/page/xfArticle/5777"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/4.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-5.png",
+        "title": "江湖知识付费",
+        "content": "专业内容付费系统，音频、视频、图文、直播、专栏等多种课程内容形式",
+        "url": "/doc/page/xfArticle/5768"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/5.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-6.png",
+        "title": "江湖客服",
+        "content": "为每家企业提供获客、销售和服务支持的智能客服平台，开箱即用",
+        "url": "/doc/page/xfArticle/5771"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/6.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-7.png",
+        "title": "江湖网站流量分析",
+        "content": "使企业可以轻松收集、分析和理解您的网络数据",
+        "url": "/doc/page/xfArticle/5772"
+      },
+       {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/7.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-8.png",
+        "title": "财务管理系统",
+        "content": "以企业财务管理人员为主实现客户-销售-库存-财务一体化智能管理",
+        "url": "/doc/page/xfArticle/5745"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/8.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-9.png",
+        "title": "江湖BI",
+        "content": "使企业可以轻松收集、分析和理解您的网络数据",
+        "url": "/doc/page/xfArticle/5776"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/9.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-10.png",
+        "title": "人力资源管理系统",
+        "content": "帮助企业有效推进人力资源的调整和优化实时调整人才战略，助力企业长远发展",
+        "url": "/doc/page/xfArticle/5758"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/10.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-11.png",
+        "title": "江湖审计",
+        "content": "帮助企业内部或外部审计过程管理，提高审计效率和质量。",
+        "url": "/doc/page/xfArticle/5773"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/11.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-12.png",
+        "title": "江湖OA",
+        "content": "帮助企业提高办公效率和沟通协作能力。",
+        "url": "/doc/page/xfArticle/5774"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-app-test/icon/12.png",
+        "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-13.png",
+        "title": "ERP管理系统",
+        "content": "助力企业优化 采购、销售、库存、客户、财务等企业资源实现企业管理效益最大化",
+        "url": "/doc/page/xfArticle/5748"
+      }
+    ]
+  },
   "section_16": {
     "category": "<h2 class='text-3xl'>比传统数据分析，再提效50%</h2>",
     "desc": "<p class='mt-2 text-sm'>通过实时反馈、深度分析、数据解释和分享协作</p><p class='mt-2 text-sm'>我们的数据分析工具能帮您比传统方法提升50%的效率</p>",
@@ -276,6 +432,114 @@
             "content": "例如防火墙，默认端口是否修改等，输出结果，并给出解决方案。"
           }
         ]
+      }
+    ]
+  },
+  "section_22": {
+    "category": "<h2 class='text-3xl'>数字化是系统工程</h2>",
+    "desc": "<p class='mt-2'>数字化需要数字化理论支撑，需要顶层设计，不能拼拼凑凑</p>",
+    "subtitle": "",
+    "cover": "/upload/materialRepo/image/jianghu-digital/illustration-2.png",
+    "coverWidth": 300,
+    "listRowLength": 3,
+    "list": [
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/1.png",
+        "title": "数字化是一场变革",
+        "content": "要么变革，要么被淘汰！",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/2.png",
+        "title": "数据与应用是资产",
+        "content": "企业数据是资产，企业的应用也是资产！",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/3.png",
+        "title": "数字化基础设施的构建",
+        "content": "数字化需要基础建设。没有基础建设的数字化是把楼建在沙滩上！",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/4.png",
+        "title": "数字化项目管理",
+        "content": "数字化项目最难管理的就是变化，变化比计划还快！数字化项目不能套用传统的项目管理办法",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/5.png",
+        "title": "数字化文化的建设",
+        "content": "建立企业数字化文化，是成本最低的数字化方案！",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/6.png",
+        "title": "数字化团队的建设",
+        "content": "数字化团队是企业数字化的关键，决策，实施，落地，都需要高效的团队！",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/7.png",
+        "title": "数字化下的企业业务流程重构",
+        "content": "数字化绝对不是把现有的流程搬到网页上！",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/8.png",
+        "title": "数字化与企业管理",
+        "content": "数字化就是现代管理。没有数据支撑的管理是无效的！",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/9.png",
+        "title": "数字化与客户体验",
+        "content": "数字化带来的客户体验提升企业竞争力！",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/10.png",
+        "title": "数字化的投入与回报",
+        "content": "数字化的投入与回报需要从战略的角度去衡量！",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/11.png",
+        "title": "数字化之路的探索",
+        "content": "数字化就是现代管理。没有数据支撑的管理是无效的！",
+        "iconSize": "36"
+      },
+      {
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/12.png",
+        "title": "数字化的阻力来源",
+        "content": "数字化就是现代管理。没有数据支撑的管理是无效的！",
+        "iconSize": "36"
+      }
+    ]
+  },
+  "section_23": {
+    "title": "<h2 class='text-3xl'>数字化转型金字塔</h2>",
+    "desc": "",
+    "backgroundUrl": "/upload/materialRepo/image/jianghu-digital/background-2.png",
+    "listBackgroundUrl": "/upload/materialRepo/image/jianghu-digital/illustration-3.png",
+    "list": [
+      {
+        "title": "数字化创新能力",
+        "content": "<p class='mt-2 text-sm'>利用智能技术推动企业创新，开发新的商业模式和产品服务。</p><p class='mt-2 text-sm'>形成企业新的核心业务能力，以适应市场变化和竞争需求。</p>",
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/13.png",
+        "iconSize": "36"
+      },
+      {
+        "title": "数字化洞察力",
+        "content": "<p class='mt-2 text-sm'>通过数字化手段，实现对企业数据的准确、灵活和清晰展现。</p><p class='mt-2 text-sm'>深入分析数据，挖掘数据背后的潜在规律和价值，为企业决策提供支持。</p>",
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/14.png",
+        "iconSize": "36"
+      },
+      {
+        "title": "数字化联接能力",
+        "content": "<p class='mt-2 text-sm'>建立覆盖企业业务全价值链的信息化能力。</p><p class='mt-2 text-sm'>通过业务、人员、智能设备等的互联互通，构建企业内部的大数据资源。</p>",
+        "icon": "/upload/materialRepo/image/jianghu-digital/icon/15.png",
+        "iconSize": "36"
       }
     ]
   },
