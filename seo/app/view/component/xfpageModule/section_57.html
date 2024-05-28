@@ -8,7 +8,7 @@
   <div class="container-lg relative">
     <div class="relative md:pb-10 d-md-flex align-center justify-content-between items-center px-20 {% if section.isImageOnRight %}flex-row-reverse{% endif %}">
       <div>
-        <img src="<$ xfpageSeoResourceUrl $><$ section.cover $>" class="max-w-[500px]" alt="">
+        <img src="<$ xfpageSeoResourceUrl $><$ section.cover $>" class="md:max-w-[500px]" alt="">
       </div>
       <div class="flex-1">
       </div>
@@ -26,19 +26,19 @@
     <div class="grid md:grid-cols-<$ section.list.length $> gap-5 p-2 mt-[59px]">
       {% for it in section.list %}
       <div class="bg-white p-12">
-          <div class="mt-3 font-medium text-md text-center">
-            <$ it.title $>
-          </div>
-          <div >
-            {% for it_sub in it.list %}
-            <div class="flex items-center mt-7">
-                <img src="<$ xfpageSeoResourceUrl $><$ it_sub.icon $>" class="w-[40px] h-[40px]" />
-                <div class="ml-3 text-gray-500 text-sm leading-relaxed">
-                  <$ it_sub.content $>
-                </div>
+        <div class="mt-3 font-medium text-md text-center">
+          <$ it.title $>
+        </div>
+        <div>
+          {% for it_sub in it.list %}
+          <div class="flex items-center mt-7">
+            <img src="<$ xfpageSeoResourceUrl $><$ it_sub.icon $>" class="w-[40px] h-[40px]" />
+            <div class="ml-3 text-gray-500 text-sm leading-relaxed">
+              <$ it_sub.content $>
             </div>
-            {% endfor %}
           </div>
+          {% endfor %}
+        </div>
       </div>
       {% endfor %}
     </div>

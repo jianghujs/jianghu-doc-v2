@@ -7,7 +7,7 @@
         background-repeat: no-repeat;
     }
 </style>
-
+<!-- 模块 20 -->
 <div class="jh-xfpage-<$ section $>">
     <div class="container-lg py-16 relative">
         <div class="mt-md-0 text-base text-gray-500 text-center">
@@ -24,8 +24,9 @@
         </div>
         <div class="grid md:grid-cols-{% if sectionData.listRowLength %}<$ sectionData.listRowLength $>{% else %}<$ sectionData.list.length $>{% endif %} gap-4 p-2 mt-7">
             {% for it in sectionData.list %}
-            <div class="text-center p-12 bg-[{% if it.backgroundColor %}<$ it.backgroundColor $>{% else %}white{% endif %}] border-1 border-[#E7F7F1] rounded-[24px] shadow-[0_37px_31px_-32px_rgba(186,186,186,0.25)]">
-                <div class="flex items-center justify-center">   
+            <div
+                class="text-center p-12 bg-[{% if it.backgroundColor %}<$ it.backgroundColor $>{% else %}white{% endif %}] border-1 border-[#E7F7F1] rounded-[24px] shadow-[0_37px_31px_-32px_rgba(186,186,186,0.25)]">
+                <div class="flex items-center justify-center">
                     <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="size-[{% if it.iconSize %}<$ it.iconSize $>{% else %}36{% endif %}px]" />
                     <div class="ml-3 text-[#42B883] text-4xl font-semibold">
                         <$ it.content $>

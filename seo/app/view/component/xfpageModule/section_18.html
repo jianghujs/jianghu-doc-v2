@@ -21,7 +21,7 @@
         {% for it in item.list %}
         <div class="flex md:items-center items-start md:p-12 p-4 bg-[{% if it.backgroundColor %}<$ it.backgroundColor $>{% else %}white{% endif %}]">
             <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-[63px] h-[63px] md:m-auto" />
-            <div class="ml-7">
+            <div class="ml-7 flex-1">
                 <div class="font-medium text-md">
                     <$ it.title $>
                 </div>

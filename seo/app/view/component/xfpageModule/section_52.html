@@ -2,7 +2,7 @@
 
 </style>
 {% set section = value %}
-<!-- 模块 4 -->
+<!-- 模块 52 -->
 <div class="container-lg relative py-10 flex section-52">
 
   <div class="mt-10 flex-1 mr-10 md:text-left text-center">
@@ -18,8 +18,8 @@
       {% for it in section.list %}
       {% set itIndex = loop.index %}
       <div class="py-4 pl-10 flex text-center">
-        <div class="mt-2 font-medium text-sm">
-          <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-16 h-16 m-auto"/>
+        <div class="mt-2 font-medium text-sm w-full">
+          <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-16 h-16 m-auto" />
           <div class="md:text-baseline text-xl py-4">
             <$ it.title $>
           </div>
@@ -32,6 +32,6 @@
     </div>
   </div>
   <div class="mt-10 mt-md-0 text-base text-gray-500 text-center">
-    <img src="<$ xfpageSeoResourceUrl $><$ section.cover $>" class="max-w-[500px] max-h-[490px] mr-4 md:block hidden"/>
+    <img src="<$ xfpageSeoResourceUrl $><$ section.cover $>" class="max-w-[500px] max-h-[490px] mr-4 md:block hidden" />
   </div>
 </div>
