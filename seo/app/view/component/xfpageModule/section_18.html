@@ -19,13 +19,13 @@
     </div>
     <div class="grid md:grid-cols-2 gap-5 p-2 mt-[59px]">
         {% for it in item.list %}
-        <div class="flex items-center p-12 bg-[{% if it.backgroundColor %}<$ it.backgroundColor $>{% else %}white{% endif %}]">
-            <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-[63px] h-[63px] m-auto" />
+        <div class="flex md:items-center items-start md:p-12 p-4 bg-[{% if it.backgroundColor %}<$ it.backgroundColor $>{% else %}white{% endif %}]">
+            <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="w-[63px] h-[63px] md:m-auto" />
             <div class="ml-7">
                 <div class="font-medium text-md">
                     <$ it.title $>
                 </div>
-                <p class="mt-3 text-gray-500 text-sm h-10 leading-relaxed">
+                <p class="mt-3 text-gray-500 text-sm md:h-10 leading-relaxed">
                     <$ it.content $>
                 </p>
             </div>
