@@ -93,6 +93,7 @@
 <main id="main" class="ThemePage {% if constantUiMap.submenu[xfPage.categoryGroup] %}jh-has-submenu{% endif %}">
     <!-- section_1 -->
     {% if xfPage.xfPageConfig.section_1 %}
+    {% set value = xfPage.xfPageConfig.section_1 %}
     {% include 'component/xfpageModule/section_1.html' %}
     {% endif %}
     <div class="bg-white">
