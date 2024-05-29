@@ -1,0 +1,41 @@
+{% set section = value %}
+<style>
+  .jh-xfpage-section-60 {
+    background-color: #FFFFFF;
+  }
+</style>
+<!-- 模块 60 -->
+<div class="jh-xfpage-section-60">
+  <div class="container-lg relative py-10">
+    <h2 class="text-2xl font-bold text-black pl-10 text-center py-5">
+      <div>
+        <$ section.category | safe $>
+      </div>
+      <div class="text-base font-normal mt-1 text-gray-400">
+        <$ section.desc | safe $>
+      </div>
+    </h2>
+    <div class="md:grid grid-cols-4 gap-4 pb-10">
+      {% for it in section.list %}
+      {% set itIndex = loop.index %}
+      <div class="text-center relative">
+        <div class="mx-auto rounded-full size-[170px] bg-green-50 flex items-center justify-center mb-4">
+          <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" alt="" class="m-auto size-[80px]">
+        </div>
+        <span class="md:text-baseline text-xl font-bold">
+          <span>0<$ itIndex $></span>
+          <span class="pl-2">
+            <$ it.title $>
+          </span>
+        </span>
+        <p class="mt-1 text-gray-500 md:text-sm font-normal pb-2">
+          <$ it.content | safe $>
+        </p>
+        {% if itIndex != 4 and itIndex != 8 %}
+        <img src="<$ xfpageSeoResourceUrl $>/upload/materialRepo/image/fyHome/Group 427318816.svg" alt="" class="absolute md:block hidden  top-[82px] left-2/3">
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

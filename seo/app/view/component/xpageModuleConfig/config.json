@@ -158,7 +158,7 @@
         "content": "使企业可以轻松收集、分析和理解您的网络数据",
         "url": "/doc/page/xfArticle/5772"
       },
-       {
+      {
         "icon": "/upload/materialRepo/image/jianghu-app-test/icon/7.png",
         "cover": "/upload/materialRepo/image/jianghu-app-test/illustration-8.png",
         "title": "财务管理系统",
@@ -381,7 +381,7 @@
     "desc": "",
     "list": [
       {
-        "title": "简单聪明的可视化操作", 
+        "title": "简单聪明的可视化操作",
         "backgroundUrl": "/upload/materialRepo/image/jianghu-panel/icon/14.png",
         "backgroundColor": "#D9F1E7",
         "list": [
@@ -400,7 +400,7 @@
         ]
       },
       {
-        "title": "轻松成为运维高手", 
+        "title": "轻松成为运维高手",
         "backgroundUrl": "/upload/materialRepo/image/jianghu-panel/icon/15.png",
         "backgroundColor": "#FFF6E2",
         "list": [
@@ -419,7 +419,7 @@
         ]
       },
       {
-        "title": "安全看得见", 
+        "title": "安全看得见",
         "backgroundUrl": "/upload/materialRepo/image/jianghu-panel/icon/16.png",
         "backgroundColor": "#D8E6FF",
         "list": [
@@ -743,7 +743,7 @@
     "cover": "/upload/materialRepo/image/jianghu-doc-test/illustration-2.png",
     "list": [
       {
-        "title": "分类", 
+        "title": "分类",
         "list": [
           {
             "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/5.png",
@@ -760,7 +760,7 @@
         ]
       },
       {
-        "title": "文章", 
+        "title": "文章",
         "list": [
           {
             "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/8.png",
@@ -777,7 +777,7 @@
         ]
       },
       {
-        "title": "素材", 
+        "title": "素材",
         "list": [
           {
             "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/11.png",
@@ -794,7 +794,7 @@
         ]
       },
       {
-        "title": "自定义页面", 
+        "title": "自定义页面",
         "list": [
           {
             "icon": "/upload/materialRepo/image/jianghu-doc-test/icon/14.png",
@@ -809,6 +809,26 @@
             "content": "json配置"
           }
         ]
+      }
+    ]
+  },
+  "section_58": {
+    "isImageOnRight": true,
+    "category": "<h2 class='text-3xl'>采购业务场景全覆盖</h2>",
+    "desc": "<p class='mt-2 text-sm'>供应商、采购订货、采购退货、采购订单管理、 开启关联审批，以销定购，合理预估市场。</p>",
+    "cover": "/upload/materialRepo/image/jianghu-erp/app/Group 427318824.svg",
+    "list": [
+      {
+        "title": "供应商360°全景画像",
+        "content": "系统记录勾画供应商全景画像，立体呈现供应商信息，随时查看账单、历史采购记录等功能， 提高采购工作的节奏与效率。"
+      },
+      {
+        "title": "采购订单管理，避免重复采购",
+        "content": "对采购订单和退货订单的高级筛选，避免重复采购与无用采购，对采购计划有效管理，提高公司资金使用效率。"
+      },
+      {
+        "title": "自定义采购审批流",
+        "content": "采购可开启自定义审批流程，设计多级审批促进采购信息的透明度。 同时采购信息随时共享和查阅的能力充分发挥了系统的监督作用，强化监督效果。"
       }
     ]
   },

@@ -1,0 +1,48 @@
+{% set section = value %}
+<style>
+  .jh-xfpage-section-58 {
+    background-image: url("<$ xfpageSeoResourceUrl $><$ section.backgroundUrl $>");
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+  }
+</style>
+<!-- 模块 58 -->
+<div class="jh-xfpage-section-58">
+  <div class="container-lg relative py-10 section-58">
+    <h2 class="text-2xl font-bold text-black md:pl-10 text-center md:py-5">
+      <div>
+        <$ section.category | safe $>
+      </div>
+      <div class="text-base font-normal mt-1 text-gray-400">
+        <$ section.desc | safe $>
+      </div>
+    </h2>
+    <div class="mt-10 mt-md-0 text-base text-gray-500 text-center md:hidden block ">
+      <img src="<$ xfpageSeoResourceUrl $><$ section.cover $>" class="w-auto mr-4" />
+    </div>
+    <div class="flex md:flex-row flex-col items-start">
+      <div class="mt-10 flex-1 border-l-4" style="border-color: rgb(66 184 131)!important;">
+        {% for it in section.list %}
+        {% set itIndex = loop.index %}
+        <div class="py-2 md:pl-5 pl-2 flex">
+          <div class="mt-2 font-medium text-sm p-4 shadow-white hover:shadow-black-200 cursor-pointer	 hover:shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)] rounded-lg">
+            <span class="md:text-baseline text-xl">
+              0<$ itIndex $>
+                <span class="pl-4">
+                  <$ it.title $>
+                </span>
+            </span>
+            <p class="mt-1 text-gray-500 md:text-sm font-normal pb-2">
+              <$ it.content | safe $>
+            </p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="mt-10 mt-md-0 text-base text-gray-500 text-center md:block hidden">
+        <img src="<$ xfpageSeoResourceUrl $><$ section.cover $>" class="w-auto h-[490px] mr-4" />
+      </div>
+    </div>
+  </div>
+</div>

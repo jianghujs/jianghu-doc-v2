@@ -1,0 +1,48 @@
+{% set section = value %}
+<style>
+  .jh-xfpage-section-62 {
+    background-color: #F9FBFF;
+  }
+</style>
+<!-- 模块 62 -->
+<div class="jh-xfpage-section-62">
+  <div class="container-lg relative py-10">
+    <h2 class="text-2xl font-bold text-black md:pl-10 pl-2 md:text-center md:py-5 md:mb-5 mb-2">
+      <div>
+        <$ section.category | safe $>
+      </div>
+      <div class="text-base font-normal mt-1 text-gray-400">
+        <$ section.desc | safe $>
+      </div>
+    </h2>
+    <div class="relative md:rounded-lg bg-white md:px-10 px-2 py-4">
+      <div class="max-w-[600px]">
+        <h2 class="text-2xl font-bold text-black">
+          <$ section.subTitle | safe $>
+        </h2>
+        <div class="py-4 text-gray-600">
+          <$ section.subDesc | safe $>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          {% for it in section.list %}
+          {% set itIndex = loop.index %}
+          <div class="flex">
+            <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" alt="" class="m-auto size-10 md:block hidden">
+            <div class="flex-1 ml-2">
+              <span class="md:text-baseline font-bold">
+                <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" alt="" class="m-auto size-4 md:hidden block inline">
+                <$ it.title $>
+              </span>
+              <p class="mt-1 text-gray-500 text-sm font-normal pb-2">
+                <$ it.content | safe $>
+              </p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="text-sm text-green-500 font-bold pt-3"><a href="">立即联系 ></a></div>
+      </div>
+      <img src="<$ xfpageSeoResourceUrl $><$ section.cover $>" class="md:absolute right-0 bottom-0 w-auto md:h-[373px]" alt="" />
+    </div>
+  </div>
+</div>

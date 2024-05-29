@@ -1,0 +1,37 @@
+{% set section = value %}
+<style>
+  .jh-xfpage-section-61 {
+    background-color: #FFFFFF;
+    background-image: url("<$ xfpageSeoResourceUrl $><$ section.backgroundUrl $>");
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+  }
+</style>
+<!-- 模块 61 -->
+<div class="jh-xfpage-section-61">
+  <div class="container-lg relative md:py-10 py-4">
+    <h2 class="text-2xl font-bold text-black md:pl-10 text-center py-5">
+      <div>
+        <$ section.category | safe $>
+      </div>
+      <div class="text-base font-normal mt-1 text-gray-400">
+        <$ section.desc | safe $>
+      </div>
+    </h2>
+    <div class="md:flex">
+      <img src="<$ xfpageSeoResourceUrl $><$ section.cover $>" class="w-auto md:h-[373px]" alt="" />
+      <div class="flex-1">
+        <h2 class="text-2xl font-bold text-black pl-10">
+          <$ section.content.title | safe $>
+        </h2>
+        <div class="pl-10 py-10 text-gray-600">
+          <$ section.content.desc | safe $>
+        </div>
+        <div class="pl-10 font-bold">
+          <$ section.content.info | safe $>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+{% set section = value %}
+<style>
+  .jh-xfpage-section-59 {
+    background-color: #F9FBFF;
+  }
+
+  .jh-xfpage-section-59 .itemBox>div>p {
+    padding-top: 10px;
+  }
+
+  .jh-xfpage-section-59 .itemBox>div {
+    background-size: contain;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    padding: 20px;
+  }
+</style>
+<!-- 模块 59 -->
+<div class="jh-xfpage-section-59">
+  <div class="container-lg relative md:py-10 py-4">
+    <h2 class="text-2xl font-bold text-black md:pl-10 text-center md:py-5 py-4">
+      <div>
+        <$ section.category | safe $>
+      </div>
+      <div class="text-base font-normal mt-1 text-gray-400">
+        <$ section.desc | safe $>
+      </div>
+    </h2>
+    <div class="md:relative min-h-[680px] itemBox">
+      <div class="md:absolute card bg-[url(<$ xfpageSeoResourceUrl $><$ section.list[0].icon $>)] md:left-0 md:top-0 md:right-1/3 md:h-[207px] md:mr-2">
+        <span class="md:text-baseline text-xl font-bold">
+          <$ section.list[0].title $>
+        </span>
+        <p class="mt-1 text-gray-500 md:text-sm font-normal pb-2">
+          <$ section.list[0].content | safe $>
+        </p>
+      </div>
+      <div class="md:absolute card bg-[url(<$ xfpageSeoResourceUrl $><$ section.list[1].icon $>)] md:left-0 md:top-[207px] md:right-2/3 md:h-[207px] md:mr-2 mt-4">
+        <span class="md:text-baseline text-xl font-bold">
+          <$ section.list[1].title $>
+        </span>
+        <p class="mt-1 text-gray-500 md:text-sm font-normal pb-2">
+          <$ section.list[1].content | safe $>
+        </p>
+      </div>
+
+      <div class="md:absolute card bg-[url(<$ xfpageSeoResourceUrl $><$ section.list[2].icon $>)] md:left-1/3 md:top-[207px] md:right-1/3 md:h-[207px] md:mx-2 mt-4">
+        <span class="md:text-baseline text-xl font-bold">
+          <$ section.list[2].title $>
+        </span>
+        <p class="mt-1 text-gray-500 md:text-sm font-normal pb-2">
+          <$ section.list[2].content | safe $>
+        </p>
+      </div>
+
+      <div class="md:absolute card bg-[url(<$ xfpageSeoResourceUrl $><$ section.list[3].icon $>)] md:left-2/3 md:top-0 md:right-0 md:h-[439px] md:ml-2 md:mt-0 mt-4">
+        <span class="md:text-baseline text-xl font-bold">
+          <$ section.list[3].title $>
+        </span>
+        <p class="mt-1 text-gray-500 md:text-sm font-normal pb-2">
+          <$ section.list[3].content | safe $>
+        </p>
+      </div>
+
+      <div
+        class="md:absolute card bg-right-bottom bg-[length:auto_100%] bg-[url(<$ xfpageSeoResourceUrl $><$ section.list[4].icon $>)] md:left-0 md:top-[434px] md:right-1/2 md:h-[207px] md:mr-2 mt-4">
+        <span class="md:text-baseline text-xl font-bold">
+          <$ section.list[4].title $>
+        </span>
+        <p class="mt-1 text-gray-500 md:text-sm font-normal pb-2">
+          <$ section.list[4].content | safe $>
+        </p>
+      </div>
+
+      <div
+        class="md:absolute card bg-right-bottom bg-[length:auto_100%] bg-[url(<$ xfpageSeoResourceUrl $><$ section.list[5].icon $>)] md:left-1/2 md:top-[434px] md:right-0 md:h-[207px] md:ml-2 mt-4">
+        <span class="md:text-baseline text-xl font-bold">
+          <$ section.list[5].title $>
+        </span>
+        <p class="mt-1 text-gray-500 md:text-sm font-normal pb-2">
+          <$ section.list[5].content | safe $>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
