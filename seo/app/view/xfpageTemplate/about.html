@@ -177,8 +177,10 @@
 {% include 'component/footer.html' %}
 
 <script type="text/javascript" src="<$ static $>/mdbootstrap/MDB5-Pro-Advanced_4.4.0.mdb.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+
+{% if xfPage.xfPageConfig.contact %}
+<script src="<$ static $>/maplibre/maplibre-gl.js"></script>
+<link href="<$ static $>/maplibre/maplibre-gl.css" rel="stylesheet" />
 <script>
   // 地图api容器
   const mapContainer = document.getElementById('map-container');
@@ -190,13 +192,23 @@
     const map = new maplibregl.Map({
       container: 'map-container',
       style: 'https://api.maptiler.com/maps/streets/style.json?key=9HpY7i5aFibOlQ5RyBJ9', // 更详细的街道地图样式
-      center: [103.8516, 1.2903], // 默认中心点坐标（新加坡市中心）
+      center: [<$ xfPage.xfPageConfig.contact.position $>], // 默认中心点坐标（新加坡市中心）
       zoom: 14 // 增加默认缩放级别以显示更多细节
     });
     
-    // 添加标记
-    const marker = new maplibregl.Marker()
-      .setLngLat([116.404, 39.915]) // 设置标记位置
+    // 创建自定义标记元素
+    const el = document.createElement('div');
+    el.className = 'custom-marker';
+    el.style.width = '25px';
+    el.style.height = '25px';
+    el.style.borderRadius = '50%';
+    el.style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+    el.style.border = '2px solid #fff';
+    el.style.boxShadow = '0 0 10px rgba(255, 0, 0, 0.7)';
+    
+    // 添加当前位置标记
+    const marker = new maplibregl.Marker(el)
+      .setLngLat([<$ xfPage.xfPageConfig.contact.position $>]) // 使用配置的位置
       .addTo(map);
       
     // 添加导航控件
@@ -214,5 +226,6 @@
     });
   });
 </script>
+{% endif %}
 <style>
 </style>
