@@ -20,6 +20,10 @@
         <!-- pc端的搜索条件表单 >>>>>>>> -->
         <v-col cols="12" xs="12" sm="12" md="8" xl="9">
           <v-row class="jh-backend-form-container justify-end ma-0 py-3">
+            <v-btn color="primary" @click="openMaterialUploadDrawer()" small class="mr-1">
+              <v-icon class="mr-1" small>mdi-folder-multiple-image</v-icon>
+              文章素材
+            </v-btn>
             <v-btn class="mr-2" v-if="editItem.xfPageId && editItem.xfPagePublishStatus !== 'deleted'" @click="deletedxfPage" color="error" small>移到回收站
             </v-btn>
             <v-btn class="mr-2" v-if="editItem.xfPagePublishStatus === 'deleted'" @click="restorexfPage" color="error" small>恢复文章
@@ -258,8 +262,29 @@
           </v-toolbar-items>
         </v-toolbar>
         <v-divider style="border-color: #eff2f5;opacity:0.8;"></v-divider>
-        <file-browser v-if="isEditDrawerShown" v-on:use-material="useMaterial"
-                      v-on:close-material-picker="closeMaterialPicker" :material-type="materialType">
+
+        <file-browser
+          ref="fileBrowser"
+          v-if="isEditDrawerShown"
+          @use-material="useMaterial"
+          @close-material-picker="closeMaterialPicker"
+          :material-type="materialType"
+          :material-dir="material.dir"
+          :path="material.path"
+          use-file-btn
+          page-id="xfPageEdit"
+          :operation-option="{delete: true, recycle: true, copy: true, renameFile: true}"
+        >
+          <template slot="importMaterial">
+            <import-material 
+              @close-material-picker="closeImportMaterialPicker" 
+              @use-material="useMaterial"
+              :material-type="materialType"
+              page-id="xfPageEdit"
+              :material-target="{dir: 'xfPageMaterial', path: xfPageId}"
+            >
+            </import-material>
+          </template>
         </file-browser>
       </v-card>
     </v-dialog>
@@ -354,6 +379,10 @@ new Vue({
     editor: null,
     jsonError: false,
     categorySearchInput: null,
+    material: {
+      dir: "xfPageMaterial", // config dir 'materialRepo' | 'articleMaterial' | 'xfPageMaterial'
+      path: '/'
+    },
   }),
   computed: {
     tableData() {
@@ -382,6 +411,7 @@ new Vue({
   },
   async mounted() {
     if (this.xfPageId) {
+      this.material.dir = 'xfPageMaterial/' + this.xfPageId;
       await this.getTableData();
     }
   },
@@ -396,6 +426,18 @@ new Vue({
           break;
       }
 
+    },
+    async openMaterialUploadDrawer() {
+      if (this.xfPageId) {
+        this.materialType = '';
+        this.writeBackType = '';
+        this.isEditDrawerShown = true;
+      } else {
+        window.vtoast.fail("请填写文章信息后,再点击上传文件!");
+      }
+    },
+    closeImportMaterialPicker() {
+      this.$refs.fileBrowser.closeImportMaterialPicker();
     },
     async buildSelectCategoryOptionList() {
       const {rows} = (await window.jianghuAxios({
