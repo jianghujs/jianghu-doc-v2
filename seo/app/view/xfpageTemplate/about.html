@@ -38,14 +38,14 @@
       <!-- body -->
       {% if section == "body" %}
       <div class="container-lg mt-4">
-        <div class="bg-[#42B883] flex md:p-4 p-3 rounded-2xl relative flex-col md:flex-row">
+        <div class="bg-[#42B883] flex md:!p-4 p-3 rounded-2xl relative flex-col md:!flex-row">
           <!-- xfPage.xfPageConfig[section].list 宽度 3/5  -->
-          <div class="w-full md:w-3/5 flex flex-col md:flex-row md:gap-4 gap-2 pr-4 md:mb-0 mb-3">
+          <div class="w-full md:!w-3/5 flex flex-col md:!flex-row md:!gap-4 gap-2 pr-4 md:!mb-0 mb-3">
             {% for it in xfPage.xfPageConfig[section].list %}
-            <div class="w-full md:w-1/3">
-              <div class="flex md:flex-col flex-row items-center">
+            <div class="w-full md:!w-1/3">
+              <div class="flex md:!flex-col flex-row">
                 <!-- icon -->
-                <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="md:w-8 md:h-8 w-5 h-5 mr-2 mb-2">
+                <img src="<$ xfpageSeoResourceUrl $><$ it.icon $>" class="md:!w-8 md:!h-8 w-5 h-5 mr-2 mb-2">
                 <!-- title -->
                 <div class="text-md font-bold text-white mb-2"><$ it.title $></div>
               </div>
@@ -55,7 +55,7 @@
             {% endfor %}
           </div>
           <!-- xfPage.xfPageConfig[section].countList 宽度 2/5  -->
-          <div class="w-full md:w-2/5 flex flex-col p-3 gap-2 rounded-2xl bg-white md:absolute right-4 bottom-4 opacity-90 shadow-lg">
+          <div class="w-full md:!w-2/5 flex flex-col p-3 gap-2 rounded-2xl bg-white md:!absolute right-4 bottom-4 opacity-90 shadow-lg">
             <div class="w-full text-sm"><$ xfPage.xfPageConfig[section].title $></div>
             <div class="w-full flex gap-3">
               {% for it in xfPage.xfPageConfig[section].countList %}
@@ -74,9 +74,9 @@
       {% if section == "growth" %}
       <div class="container-lg pt-10">
         <div class="text-2xl font-bold mb-4"><$ xfPage.xfPageConfig[section].title $></div>
-        <div class="flex rounded-md relative bg-white shadow-md flex-col md:flex-row">
+        <div class="flex rounded-md relative bg-white shadow-md flex-col md:!flex-row">
           <!-- xfPage.xfPageConfig[section].list 宽度 3/5  -->
-          <div class="w-full md:w-3/5 flex gap-4 pr-4 min-h-full items-center justify-center md:pt-0 pt-4">
+          <div class="w-full md:!w-3/5 flex gap-4 pr-4 min-h-full items-center justify-center md:!pt-0 pt-4">
             {% for it in xfPage.xfPageConfig[section].list %}
             <div class="w-1/3 text-center">
               <!-- content -->
@@ -87,7 +87,7 @@
             {% endfor %}
           </div>
           <!-- xfPage.xfPageConfig[section].countList 宽度 2/5  -->
-          <div class="w-full md:w-2/5 flex flex-col p-3 gap-2 bg-[#F8FCFB]">
+          <div class="w-full md:!w-2/5 flex flex-col p-3 gap-2 bg-[#F8FCFB]">
             <div class="w-full text-xs"><$ xfPage.xfPageConfig[section].content $></div>
           </div>
         </div>
@@ -98,11 +98,11 @@
       {% if section == "case" %}
       <div class="container-lg pt-10">
         <div class="text-2xl font-bold mb-4"><$ xfPage.xfPageConfig[section].title $></div>
-        <div class="grid md:grid-cols-2 grid-cols-1 md:gap-4 gap-3">
+        <div class="grid md:!grid-cols-2 grid-cols-1 md:!gap-4 gap-3">
 
           {% for it in xfPage.xfPageConfig[section].list %}
           <div class="flex bg-white rounded-md justify-between overflow-hidden">
-            <div class="md:p-3 p-2">
+            <div class="md:!p-3 p-2">
               <!-- title -->
               <div class="text-xs mb-2 flex items-center gap-2">
                 <!-- 图片 -->
@@ -113,7 +113,7 @@
               <div class="text-sm text-gray-500"><$ it.content $></div>
             </div>
             <!-- 图片 -->
-            <img src="<$ xfpageSeoResourceUrl $><$ it.cover $>" class="h-28 aspect-[1.2/1] object-cover bg-gray-200">
+            <img src="<$ xfpageSeoResourceUrl $><$ it.cover $>" class="h-28 md:aspect-[3/2] aspect-[1.2/1] object-cover bg-gray-200">
           </div>
           {% endfor %}
 
@@ -126,10 +126,10 @@
       <div class="container-lg pt-10">
         <div class="text-2xl font-bold mb-4"><$ xfPage.xfPageConfig[section].title $>
         </div>
-        <div class="grid md:grid-cols-4 grid-cols-2 md:gap-4 gap-2">
+        <div class="grid md:!grid-cols-4 grid-cols-2 md:!gap-4 gap-2">
 
           {% for it in xfPage.xfPageConfig[section].list %}
-          <div class="flex bg-white rounded-md p-2 md:h-32 h-24 shadow-xs">
+          <div class="flex bg-white rounded-md p-2 md:!h-32 h-24 shadow-xs">
             <!-- 图片 -->
             <img src="<$ xfpageSeoResourceUrl $><$ it $>" class="max-w-full max-h-full object-contain m-auto">
           </div>
@@ -144,12 +144,12 @@
       {% if section == "contact" %}
       <div class="container-lg pt-10">
         <div class="text-2xl font-bold mb-4"><$ xfPage.xfPageConfig[section].title $></div>
-        <div class="flex flex-col md:flex-row">
+        <div class="flex flex-col md:!flex-row">
           <!-- 左侧 3/5 地图api容器 -->
-          <div class="md:w-3/5 w-full h-40 md:h-auto map-container" id="map-container">
+          <div class="md:!w-3/5 w-full h-40 md:!h-auto map-container" id="map-container">
           </div>
           <!-- 右侧 2/5 联系我们容器 -->
-          <div class="md:w-2/5 w-full md:py-5 py-2 px-3 bg-white">
+          <div class="md:!w-2/5 w-full md:!py-8 py-2 px-3 bg-white">
             {% for it in xfPage.xfPageConfig[section].list %}
             <div class="flex bg-white rounded-md p-2 min-h-12 items-center gap-2">
               <!-- 图片 -->
